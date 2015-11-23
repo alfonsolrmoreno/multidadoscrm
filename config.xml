@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:android = "http://schemas.android.com/apk/res/android"
+        id        = "br.com.multidadosti.crm201511"
+        version   = "1.0.0"
+        versionCode="100"
+> 
+    
+    <!-- rudi 07/10/2015 a versao mais nova (5.2) do cordova crashava no android em qqer tentativa de carregar recursos externos (js, etc)-->
+    <!-- forçando versao antiga -->
+    <!-- rudi 13/10/2015 : <preference name='phonegap-version' value='cli-5.2.0' /> -->
+    <!-- <preference name="phonegap-version" value="3.7.0" /> -->
+    <preference name='phonegap-version' value='cli-5.2.0' />
+    <!-- rudi 9/10/2015 webview novo : <gap:plugin name='org.crosswalk.engine' version='1.3.0' source='pgb' /> -->
+
+    <!-- rudi 14/10/2015 setar versao minima do sdk do android para backward compat (android 2.3+)) -->
+    <preference name="android-minSdkVersion" value="10" />
+    
+    <name>MultidadosTI - CRM</name>
+    
+    <description>O aplicativo MultidadosTI - CRM</description>
+    
+    <author href="http://www.multidadosti.com.br" email="alfonso@multidadosti.com.br">MultidadosTI Team</author>
+    
+    <access origin="*" />
+    
+    <!-- rudi 9/10/2015 precisa desse plugin de whitelist e essas configs pra funcionar no pgb 5.2+  -->
+    <gap:plugin name="cordova-plugin-whitelist" version="1.0.0" source="npm" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="ftp://*/*" />
+    <allow-navigation href="data:*" />
+    <allow-intent href="*" />
+    
+    <gap:plugin name="org.apache.cordova.inappbrowser" source="npm" />
+    <gap:plugin name="org.apache.cordova.geolocation" source="npm" />
+    
+    <preference name="orientation" value="portrait" />
+    <gap:plugin name="org.apache.cordova.network-information" source="npm" />
+    <gap:plugin name="org.apache.cordova.camera" source="npm" />
+    <gap:plugin name="nl.x-services.plugins.toast" />
+    <gap:plugin name="org.apache.cordova.media-capture" source="npm" />
+    <gap:plugin name="org.apache.cordova.file" source="npm" />
+    <!-- ANDRE RENOVATO - COMENTADO ESTA LINHA PQ ESTAVA DANDO ERRO PARA COMPILAR ANDROID-->
+    <!--    <gap:plugin name="org.apache.cordova.file-transfer" version="0.4.6" />-->
+    <gap:plugin name="org.apache.cordova.dialogs" source="npm" />
+    <gap:plugin name="org.apache.cordova.splashscreen" source="npm" />
+    <gap:plugin name="org.apache.cordova.device-orientation" source="npm" />
+    <gap:plugin name="org.apache.cordova.device" source="npm" />
+    <gap:plugin name="org.apache.cordova.console" source="npm" />
+    
+    <feature name="http://api.phonegap.com/1.0/camera" />
+    <feature name="http://api.phonegap.com/1.0/file" />
+    <feature name="http://api.phonegap.com/1.0/network" />
+    <feature name="http://api.phonegap.com/1.0/notification" />
+
+    <!-- Preferences for Android -->
+    <!-- Preferences for iOS -->
+    <!-- unpaginated, leftToRight, topToBottom, bottomToTop, rightToLeft -->
+    <feature name="Geolocation">
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
+    <feature name="Device">
+        <param name="ios-package" value="CDVDevice" />
+    </feature>
+    <feature name="Accelerometer">
+        <param name="ios-package" value="CDVAccelerometer" />
+    </feature>
+    <feature name="Compass">
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
+    <feature name="Media">
+        <param name="ios-package" value="CDVSound" />
+    </feature>
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
+    <feature name="Contacts">
+        <param name="ios-package" value="CDVContacts" />
+    </feature>
+    <feature name="File">
+        <param name="ios-package" value="CDVFile" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
+    <!-- ANDRE RENOVATO - COMENTADO ESTA LINHA PQ ESTAVA DANDO ERRO PARA COMPILAR ANDROID
+    <feature name="FileTransfer">
+        <param name="ios-package" value="CDVFileTransfer" />
+    </feature>-->
+    <feature name="Capture">
+        <param name="ios-package" value="CDVCapture" />
+    </feature>
+    <feature name="Battery">
+        <param name="ios-package" value="CDVBattery" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen" />
+    </feature>
+    <feature name="Echo">
+        <param name="ios-package" value="CDVEcho" />
+    </feature>
+    <feature name="Globalization">
+        <param name="ios-package" value="CDVGlobalization" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
+    <feature name="Logger">
+        <param name="ios-package" value="CDVLogger" />
+    </feature>
+    <feature name="LocalStorage">
+        <param value="CDVLocalStorage" name="ios-package" />
+    </feature>
+    
+    <preference value="true" name="AllowInlineMediaPlayback" />
+    <preference value="false" name="MediaPlaybackRequiresUserAction" />
+    <preference value="true" name="OpenAllWhitelistURLsInWebView" />
+    
+    <preference value="true" name="AutoHideSplashScreen" />
+    <preference value="cloud" name="BackupWebStorage" />
+    <preference value="false" name="DisallowOverscroll" />
+    <preference value="false" name="EnableViewportScale" />
+    <preference value="true" name="FadeSplashScreen" />
+    <preference value=".25" name="FadeSplashScreenDuration" />
+    <preference value="false" name="HideKeyboardFormAccessoryBar" />
+    <preference value="true" name="KeyboardDisplayRequiresUserAction" />
+    <preference value="false" name="KeyboardShrinksView" />
+    <preference value="true" name="ShowSplashScreenSpinner" />
+    <preference value="false" name="SuppressesIncrementalRendering" />
+    <preference value="gray" name="TopActivityIndicator" />
+    <preference value="0" name="GapBetweenPages" />
+    <preference value="0" name="PageLength" />
+    <preference value="page" name="PaginationBreakingMode" />
+    <!-- page, column -->
+    <preference value="unpaginated" name="PaginationMode" />
+	
+    <gap:plugin name="com.phonegap.plugin.statusbar" />
+	
+    <preference name="StatusBarOverlaysWebView" value="true" />
+    <preference name="StatusBarBackgroundColor" value="#EAEAEA" />
+    <preference name="stay-in-webview" value="true" />    
+
+    <icon src="icon.png" />
+    <icon src="icon/ios/icon-57.png" gap:platform="ios" width="57" height="57" />
+    <icon src="icon/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="icon/ios/icon-76.png" gap:platform="ios" width="76" height="76" />
+    <icon src="icon/ios/icon-120.png" gap:platform="ios" width="120" height="120" />
+    <icon src="icon/ios/icon-152.png" gap:platform="ios" width="152" height="152" />
+    <icon src="icon/ios/icon_at_2x.png" gap:platform="ios" width="114" height="114" />
+    <!-- retina iPad support: PhoneGap 2.5.0+ only -->
+    <icon src="icon/ios/icon-72_at_2x.png" gap:platform="ios" width="144" height="144" />
+
+    <gap:splash src="icon/ios/screen-iphone-portrait.png" width="320" height="480" />
+    <gap:splash src="icon/ios/screen-iphone-portrait.png" gap:platform="android" gap:qualifier="port-mdpi" />
+    
+    <gap:splash src="icon/ios/screen-iphone-portrait.png" gap:platform="ios" width="320" height="480" />
+    <gap:splash src="icon/ios/screen-iphone-portrait-2x.png" gap:platform="ios" width="640" height="960" />
+    <gap:splash src="icon/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios" width="640" height="1136" />
+    <gap:splash src="icon/ios/screen-ipad-portrait.png" gap:platform="ios" width="768" height="1024" />
+    <gap:splash src="icon/ios/screen-ipad-landscape.png" gap:platform="ios" width="1024" height="768" />
+</widget>
