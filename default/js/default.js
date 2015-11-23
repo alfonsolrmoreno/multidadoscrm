@@ -485,6 +485,7 @@ function mobile_login(obj) {
                                 'codigo_auxiliar': data['codigo_auxiliar'],
                                 'url_foto_user': data['url_foto_user'],
                                 'url_logo_cliente': data['url_logo_cliente'],
+                                'dashboard_default': data['dashboard_default'],
                                 'cnpj': data['cnpj']};
                             localStorage.setItem('mobile_login', JSON.stringify(Objeto));
                             var Objeto_real = localStorage['mobile_login'];
@@ -704,8 +705,6 @@ function popMenuDash() {
                 tipo: 'menu'
             }
         }).then(function(data) {
-            console.log('popmenudash data');
-            console.dir(data);
             if (data) {
                 $("#lista_dashboard").html(data);
             }
@@ -1690,7 +1689,7 @@ $(document).ready(function() {
         type: 'success'
     });
     //Define footer para todas as páginas
-    $(".name_powered").html('Powered by MultidadosTI &copy; ' + vs_mobile);
+    $(".name_powered").html('Powered by MultidadosTI - CRM &copy; ' + vs_mobile);
 
     $(document).on("pageinit", function() {
 
