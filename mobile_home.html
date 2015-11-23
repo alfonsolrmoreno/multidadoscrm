@@ -151,12 +151,12 @@
 
                     //Recupera dashboard padrao e seta o link na home
                     var idDash = Objeto_json['dashboard_default'];
-                    if(idDash > 0 && typeoff(idDash) != 'undefined'){
+                    if(idDash > 0 && typeof(idDash) != 'undefined'){
                         var lnk = "?display=portal&m=dashboards&a=view_dashboard_portal&iddashboards="+idDash+"&nomenu=1&menuItem=1";
                     }else{
                         var lnk = "?display=portal&m=dashboards&a=view_dashboard_portal&iddashboards=1&nomenu=1&menuItem=1";
                     }
-                    
+                    //
                     $("#dashboard_padrao").attr("id",lnk);
                 });
             }
