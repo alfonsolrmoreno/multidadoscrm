@@ -3,8 +3,8 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "br.com.multidadosti.crm201511"
-        version   = "3.0.0"
-        versionCode="300"
+        version   = "3.0.1"
+        versionCode="301"
 > 
     
     <!-- rudi 07/10/2015 a versao mais nova (5.2) do cordova crashava no android em qqer tentativa de carregar recursos externos (js, etc)-->

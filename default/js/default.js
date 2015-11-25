@@ -1,5 +1,5 @@
 //versao do mobile para mostrar no footer
-var vs_mobile = 'v.3.0.0';
+var vs_mobile = 'v.3.0.1';
 var debug_mode = false;
 var debug_js_errors = false;
 
