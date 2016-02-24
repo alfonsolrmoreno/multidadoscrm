@@ -322,7 +322,10 @@ function mobile_login(obj) {
     if (debug_mode)
         alert('mobile_login');
 
+    //loading de login
     loading('show');
+    
+    
     var dados = new Object();
 
     if (debug_mode)
