@@ -52,10 +52,15 @@
                                 <i class="fa fa-th-list"></i>
                                 <div>Consultar</div>
                             </a>
-							<a class="icon-btn link" id="?display=portal&m=servicedesk&a=ocorrencias&nomenu=1">
+							<a class="icon-btn link" id="?display=portal&m=servicedesk&a=consultar_ocs_portal&nomenu=1&modal=false&nofilter=1&pendentes=1">
+                                <i class="fa fa-th-list"></i>
+                                <div>Pendentes</div>
+                                <span class="badge badge-warning larger-badge" id='count_oco_pendentes'><b>0</b></span>
+                            </a>
+							<!--<a class="icon-btn link" id="?display=portal&m=servicedesk&a=ocorrencias&nomenu=1">
                                 <i class="fa fa-desktop"></i>
                                 <div>Portal</div>
-                            </a>
+                            </a>-->
 							<a class="icon-btn link" id="?display=portal&m=servicedesk&a=aprovacoes_ocs_portal&nomenu=1">
                                 <i class="fa fa-check-square-o"></i>
                                 <div>Aprovar Ocs</div>
@@ -156,8 +161,14 @@
                     }else{
                         var lnk = "?display=portal&m=dashboards&a=view_dashboard_portal&iddashboards=1&nomenu=1&menuItem=1";
                     }
-                    //
+                    
                     $("#dashboard_padrao").attr("id",lnk);
+                    
+                    //Andre Renovato - 24/02/2016
+                    //setando contador de ocorrencias pendentes no botao de atalho 
+                    if(Objeto_json['count_oco_pendentes'] > 0){
+                        $("#count_oco_pendentes").html('<b>'+Objeto_json['count_oco_pendentes']+'</b>');
+                    }                    
                 });
             }
 
