@@ -489,8 +489,8 @@ function mobile_login(obj) {
                                 'url_foto_user': data['url_foto_user'],
                                 'url_logo_cliente': data['url_logo_cliente'],
                                 'dashboard_default': data['dashboard_default'],
-                                'cnpj': data['cnpj'],
-                                'count_oco_pendentes': data['count_oco_pendentes']};
+                                'cnpj': data['cnpj']};
+                                //'count_oco_pendentes': data['count_oco_pendentes']};
                             localStorage.setItem('mobile_login', JSON.stringify(Objeto));
                             var Objeto_real = localStorage['mobile_login'];
                             var Objeto_json = JSON.parse(Objeto_real);
