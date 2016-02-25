@@ -1,6 +1,6 @@
 //versao do mobile para mostrar no footer
 var vs_mobile = 'v.3.0.1';
-var debug_mode = true;
+var debug_mode = false;
 var debug_js_errors = false;
 
 var Objeto_real = localStorage['mobile_login'];
@@ -69,8 +69,6 @@ function send_js_error(errorMsg, url, lineNumber, column, errorObj) {
 
     for (var i in jsdata)
         msg += "\n" + i + " : " + jsdata[i];
-
-    alert(msg);
 
     return;
 
