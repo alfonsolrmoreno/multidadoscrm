@@ -1,6 +1,6 @@
 //versao do mobile para mostrar no footer
 var vs_mobile = 'v.3.0.1';
-var debug_mode = false;
+var debug_mode = true;
 var debug_js_errors = false;
 
 var Objeto_real = localStorage['mobile_login'];
@@ -333,19 +333,19 @@ function mobile_login(obj) {
 
     //Retorno do object no valida login
     if (obj) {
-        if (debug_mode) {
-            alert('Tempo Obj');
-            alert(obj);
-        }
-
         var dadosArray = JSON.parse(obj);
         dados['USUARIO'] = dadosArray.user_bd;
         dados['SENHA'] = dadosArray.senha;
         dados['URL'] = dadosArray.url;
+        
+        if (debug_mode) {
+            alert('Tempo Obj');
+            alert('USUARIO: '+dadosArray.user_bd+' SENHA: '+dadosArray.senha);
+            alert(obj);
+        }        
     } else {
-
         if (debug_mode)
-            alert('sem Obj');
+            alert('sem Obj - LOGIN PELO FORM');
 
         dados['USUARIO'] = $("#usuario").val();
         dados['SENHA'] = $("#senha").val();
@@ -354,7 +354,7 @@ function mobile_login(obj) {
         //valida se todos os campos de login estao preechidos
         if (!notNull(getUrlVal()) || !notNull($("#usuario").val()) || !notNull($("#senha").val())) {
             loading('hide');
-            $().toastmessage('showErrorToast', 'Para acessar o sistema Multidados entre todas as informa&ccedil;&odblac;es');
+            $().toastmessage('showErrorToast', 'Para acessar o sistema Multidados entre com todas as informa&ccedil;&odblac;es');
             return false;
         }
     }
@@ -409,7 +409,7 @@ function mobile_login(obj) {
         }
 
         if (debug_mode)
-            alert('efetuar login');
+            alert('verifica URL');
 
         var ajax_file = dados['URL'] + '/mobile/login_mobile.php';
         COMMON_URL_MOBILE = dados['URL'] + '/mobile';
@@ -430,7 +430,6 @@ function mobile_login(obj) {
                 url: COMMON_URL_MOBILE
             },
             error: function () {
-
                 if (debug_mode) {
                     alert('ERROR MOBILE');
                 }
@@ -439,9 +438,8 @@ function mobile_login(obj) {
                 $().toastmessage('showErrorToast', 'Falha de comunica&ccedil;&atilde;o com o servidor. Verifique sua conex&atilde;o e se a URL est&aacute; correta');
             },
             success: function (data) {
-
                 if (debug_mode) {
-                    alert('SUCCESS');
+                    alert('OK VERIFICA URL: ' + data);
                 }
 
                 $.ajax({
@@ -476,6 +474,11 @@ function mobile_login(obj) {
                             loading('hide');
                             $().toastmessage('showErrorToast', data['erro']);
                         } else {
+                            if (debug_mode) {
+                                //$().toastmessage('showErrorToast', 'OK');
+                                alert('Retorno dos dados ok: '+data['usuario']+' - cnpj: '+data['cnpj']);
+                            }
+                            
                             var Objeto = {
                                 'db': data['db'],
                                 'nome_senha': data['nome_senha'],
