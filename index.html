@@ -660,20 +660,9 @@
     <script>
         $(function() {
             if (verifica_logado()) {
-                 popMenuDash();
-                if (debug_mode)
-                    alert('Metronic.init');
-
+                popMenuDash();
                 Metronic.init(); // init metronic core componets
-
-                if (debug_mode)
-                    alert('Layout.init');
-
                 Layout.init(); // init layout
-
-                if (debug_mode)
-                    alert('setSaudacao');
-
                 setSaudacao();
 
                 if (Layout.is_init) {

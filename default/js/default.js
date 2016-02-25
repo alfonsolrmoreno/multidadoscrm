@@ -339,7 +339,7 @@ function mobile_login(obj) {
         dados['URL'] = dadosArray.url;
         
         if (debug_mode) {
-            alert('Tempo Obj');
+            alert('Tem Obj');
             alert('USUARIO: '+dadosArray.user_bd+' SENHA: '+dadosArray.senha);
             alert(obj);
         }        
@@ -414,12 +414,6 @@ function mobile_login(obj) {
         var ajax_file = dados['URL'] + '/mobile/login_mobile.php';
         COMMON_URL_MOBILE = dados['URL'] + '/mobile';
 
-        if (debug_mode) {
-            alert('COMMON_URL_MOBILE: ' + COMMON_URL_MOBILE);
-            alert(dados['URL'] + '/mobile/' + ajax_file_url);
-        }
-
-
         $.ajax({
             type: 'POST',
             url: dados['URL'] + '/mobile/' + ajax_file_url,
@@ -446,7 +440,7 @@ function mobile_login(obj) {
                     type: 'POST',
                     url: ajax_file,
                     dataType: "jsonp",
-                    timeout: 5000,
+                    timeout: 10000,
                     crossDomain: true,
                     data: {
                         usuario: dados['USUARIO'],
@@ -513,6 +507,68 @@ function mobile_login(obj) {
             }
         });
     }
+}
+
+
+//rudi 7/10/2015 retornando true tambem, e soh seguindo se for true na index.html
+function verifica_logado() {
+
+    if (debug_mode)
+        alert('verifica_logado');
+
+    var Objeto_real = localStorage.getItem('mobile_login')
+
+    if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
+
+        if (debug_mode)
+            alert('redirecionar para a tela pages.html#page_login');
+
+        window.location.href = 'pages.html#page_login';
+
+        return false;
+    } else {
+        mobile_login(Objeto_real);
+        
+        return true;
+        /*
+        if (debug_mode)
+            alert('tem Objeto real');
+
+        if (debug_mode)
+            alert('URL Atual = ' + COMMON_URL_MOBILE);
+
+        var redirecting = false;
+
+        $.ajax({
+            type: 'GET',
+            url: COMMON_URL_MOBILE + '/checkServerOnline.php',
+            dataType: "json",
+            timeout: 1000,
+            crossDomain: true,
+            async: false,
+            error: function () {
+                if (debug_mode)
+                    alert('erro no verifica_logado');
+
+                //CASO A URL ESTEJA INATIVA RETORNA PARA TELA DE LOGIN
+                window.location.href = 'pages.html#page_login';
+                redirecting = true;
+            },
+            success: function (data) {
+
+                if (debug_mode)
+                    alert('success no verifica_logado idvendedor:' + data.idvendedor);
+
+                if (typeof data.idvendedor == 'undefined' || data.idvendedor == '') {
+                    mobile_login(Objeto_real);
+                }
+            }
+        });
+
+        return redirecting ? false : true;
+        */
+    }
+
 }
 
 function ajusteUrl(url) {
@@ -629,62 +685,6 @@ function setSaudacao() {
 //Valida array
 function isArray(o) {
     return(typeof (o.length) == "undefined") ? false : true;
-}
-
-//rudi 7/10/2015 retornando true tambem, e soh seguindo se for true na index.html
-function verifica_logado() {
-
-    if (debug_mode)
-        alert('verifica_logado');
-
-    var Objeto_real = localStorage.getItem('mobile_login')
-
-    if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
-
-        if (debug_mode)
-            alert('redirecionar para a tela pages.html#page_login');
-
-        window.location.href = 'pages.html#page_login';
-
-        return false;
-    } else {
-        if (debug_mode)
-            alert('tem Objeto real');
-
-        if (debug_mode)
-            alert('URL Atual = ' + COMMON_URL_MOBILE);
-
-        var redirecting = false;
-
-        $.ajax({
-            type: 'GET',
-            url: COMMON_URL_MOBILE + '/checkServerOnline.php',
-            dataType: "json",
-            timeout: 1000,
-            crossDomain: true,
-            async: false,
-            error: function () {
-                if (debug_mode)
-                    alert('erro no verifica_logado');
-
-                //CASO A URL ESTEJA INATIVA RETORNA PARA TELA DE LOGIN
-                window.location.href = 'pages.html#page_login';
-                redirecting = true;
-            },
-            success: function (data) {
-
-                if (debug_mode)
-                    alert('success no verifica_logado idvendedor:' + data.idvendedor);
-
-                if (typeof data.idvendedor == 'undefined' || data.idvendedor == '') {
-                    mobile_login(Objeto_real);
-                }
-            }
-        });
-
-        return redirecting ? false : true;
-    }
-
 }
 
 //####################### FIM LOGIN ###########################################
