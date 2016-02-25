@@ -318,17 +318,35 @@ function notNull(valor) {
 
 //Controle de login
 function mobile_login(obj) {
+
+    if (debug_mode)
+        alert('mobile_login');
+
+    //loading de login
     loading('show');
+
 
     var dados = new Object();
 
+    if (debug_mode)
+        alert('dados new Object');
+
     //Retorno do object no valida login
     if (obj) {
+        if (debug_mode) {
+            alert('Tempo Obj');
+            alert(obj);
+        }
+
         var dadosArray = JSON.parse(obj);
         dados['USUARIO'] = dadosArray.user_bd;
         dados['SENHA'] = dadosArray.senha;
         dados['URL'] = dadosArray.url;
     } else {
+
+        if (debug_mode)
+            alert('sem Obj');
+
         dados['USUARIO'] = $("#usuario").val();
         dados['SENHA'] = $("#senha").val();
         dados['URL'] = getUrlVal();
@@ -336,7 +354,7 @@ function mobile_login(obj) {
         //valida se todos os campos de login estao preechidos
         if (!notNull(getUrlVal()) || !notNull($("#usuario").val()) || !notNull($("#senha").val())) {
             loading('hide');
-            $().toastmessage('showErrorToast', 'Para acessar o sistema Multidados entre com todas as informa&ccedil;&odblac;es');
+            $().toastmessage('showErrorToast', 'Para acessar o sistema Multidados entre todas as informa&ccedil;&odblac;es');
             return false;
         }
     }
@@ -612,18 +630,19 @@ function isArray(o) {
 
 //rudi 7/10/2015 retornando true tambem, e soh seguindo se for true na index.html
 function verifica_logado() {
+
     if (debug_mode)
         alert('verifica_logado');
-
-        alert(Objeto_real);
 
     var Objeto_real = localStorage.getItem('mobile_login')
 
     if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
+
         if (debug_mode)
             alert('redirecionar para a tela pages.html#page_login');
 
         window.location.href = 'pages.html#page_login';
+
         return false;
     } else {
         if (debug_mode)
@@ -662,6 +681,7 @@ function verifica_logado() {
 
         return redirecting ? false : true;
     }
+
 }
 
 //####################### FIM LOGIN ###########################################
@@ -672,6 +692,11 @@ function verifica_logado() {
 //#############################################################################
 function popMenuDash() {
     if ($("#lista_dashboard").length > 0 && $("#lista_dashboard").html() == '') {
+        if (debug_mode)
+            alert('Lista os dashs popMenuDash');
+
+        if (debug_mode)
+            alert('COMMON_URL_MOBILE: ' + COMMON_URL_MOBILE);
 
         var dados = new Object();
         var ajax_file = COMMON_URL_MOBILE + '/getDashboards.php';
@@ -803,6 +828,9 @@ function selecionaValor(valor, tipo, id, id2, nome2, tipo_projeto)
 
     $("ul").empty();
 }
+
+
+
 
 //############# DESPESA #####################################################
 //###########################################################################
