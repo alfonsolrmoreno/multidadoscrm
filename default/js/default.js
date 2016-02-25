@@ -44,6 +44,31 @@ if (typeof Objeto_real != 'undefined' && Objeto_real != '' && Objeto_real) {
         var Objeto_json = {};
     }
 }
+
+function irPara_mobile() {
+    var numero = $("#numero").val().trim();
+    var url = COMMON_URL + '/?display=portal&m=servicedesk/ocorrencias&a=oco_detalhes&modal=false&numero=' + numero;
+
+    $("#go_form").attr('action', url);
+
+    if (numero != '') {
+        $.ajax({
+            url: COMMON_URL + "/mobile/call_funcs.php",
+            method: "POST",
+            dataType: "jsonp",
+            crossDomain: true,
+            data: {val: numero, sel: 'oco', func: 'ir_para'},
+        }).done(function (result) {
+            if (result == '1') {
+                $("#go_form").submit();
+            } else {
+                //alert('Registro não encontrado, ou você não tem permissão para visualizá-lo');
+                alert(result);
+            }
+        });
+    }
+}
+
 function send_js_error(errorMsg, url, lineNumber, column, errorObj) {
 //erro de NPObject é muito comum quando o client tem extensoes instaladas como guard de bancos online e outros
     if (typeof errorMsg != 'undefined' && typeof errorMsg.indexOf != 'undefined' && errorMsg.indexOf('Error calling method on NPObject') != -1)

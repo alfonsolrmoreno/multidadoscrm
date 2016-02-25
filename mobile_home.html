@@ -173,28 +173,6 @@
                 });
             }
 
-            function irPara_mobile() {
-                var numero = $("#numero").val().trim();
-                var url = COMMON_URL + '/?display=portal&m=servicedesk/ocorrencias&a=oco_detalhes&modal=false&numero=' + numero;
-                $("#go_form").attr('action', url);
-
-                if (numero != '') {
-                    $.ajax({
-                        url: COMMON_URL + "/mobile/call_funcs.php",
-                        method: "POST",
-                        dataType: "jsonp",
-                        crossDomain: true,
-                        data: {val: numero, sel: 'oco', func: 'ir_para'},
-                    }).done(function (result) {
-
-                        if (result != '0') {
-                            $("#go_form").submit();
-                        } else {
-                            alert('Registro não encontrado, ou você não tem permissão para visualizá-lo');
-                        }
-                    });
-                }
-            }
         </script>
         <!-- END JAVASCRIPTS -->
     </body>
