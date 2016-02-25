@@ -615,6 +615,8 @@ function verifica_logado() {
     if (debug_mode)
         alert('verifica_logado');
 
+        alert(Objeto_real);
+
     var Objeto_real = localStorage.getItem('mobile_login')
 
     if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
