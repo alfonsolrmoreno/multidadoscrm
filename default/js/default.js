@@ -33,7 +33,16 @@ if (typeof Objeto_real != 'undefined' && Objeto_real != '' && Objeto_real) {
     var Objeto_json = JSON.parse(Objeto_real)
     var COMMON_URL_MOBILE = Objeto_json.url + '/mobile/';
     var COMMON_URL = Objeto_json.url;
-
+    
+    //Andre Renovato - 26-02-2016
+    //Mantendo dados no formulario de login
+    $(function(){
+        $("#url").val(COMMON_URL);
+        $("#usuario").val(Objeto_json.usuario_nome);
+        if(typeof Objeto_json.senha != 'undefined'){
+            $("#senha").val(Objeto_json.senha);
+        }
+    })
 } else {
     if (typeof getUrlVal() != 'undefined') {
         var COMMON_URL_MOBILE = getUrlVal() + '/mobile/';
@@ -512,7 +521,8 @@ function mobile_login(obj) {
                                 'cnpj': data['cnpj']};
                             //'count_oco_pendentes': data['count_oco_pendentes']};
                             localStorage.setItem('mobile_login', JSON.stringify(Objeto));
-                            var Objeto_real = localStorage['mobile_login'];
+                            //var Objeto_real = localStorage['mobile_login'];
+                            var Objeto_real = localStorage.getItem('mobile_login')
                             var Objeto_json = JSON.parse(Objeto_real);
 
                             loading('hide');
@@ -532,16 +542,15 @@ function mobile_login(obj) {
     }
 }
 
-
 //rudi 7/10/2015 retornando true tambem, e soh seguindo se for true na index.html
 function verifica_logado() {
-
     if (debug_mode)
         alert('verifica_logado');
 
     var Objeto_real = localStorage.getItem('mobile_login')
 
-    if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
+    //if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
+    if (!isLogado()) {
 
         if (debug_mode)
             alert('redirecionar para a tela pages.html#page_login');
@@ -594,6 +603,67 @@ function verifica_logado() {
 
 }
 
+function mobile_logout() {
+
+    if (debug_mode)
+        alert('mobile_logout');
+
+    var dados = new Object();
+    var ajax_file = COMMON_URL_MOBILE + '/login_mobile.php?logout=1';
+
+    $.ajax({
+        type: 'POST',
+        url: ajax_file,
+        dataType: "jsonp",
+        timeout: 5000,
+        crossDomain: true,
+        data: {
+            usuario: dados['USUARIO'],
+            senha: dados['SENHA'],
+            url: dados['URL']
+        },
+        error: function () {
+            loading('hide');
+            //caso servidor nao esteja disponivel vamos apenas limpar os dados de conexao e redirecionar para pagina de login
+            //localStorage.clear();
+            Storagelogout();
+
+            window.location.href = 'pages.html#page_login';
+        },
+        success: function (data) {
+            if (data) {
+                //localStorage.clear();
+                
+                Storagelogout();
+                window.location.href = 'pages.html#page_login';
+            }
+        }
+    });
+}
+
+function isLogado(){
+    if(!localStorage.getItem('mobile_login')){
+        return false
+    }else{
+        var Objeto_json = JSON.parse(localStorage.getItem('mobile_login'));
+        if(typeof Objeto_json.senha != 'undefined'){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+function Storagelogout(){
+    if(localStorage.getItem('mobile_login')){
+        var Objeto_json = JSON.parse(localStorage.getItem('mobile_login'));
+        if(typeof Objeto_json.senha != 'undefined')
+            delete Objeto_json.senha;
+
+        localStorage.setItem('mobile_login',JSON.stringify(Objeto_json));
+    }    
+}
+
 function ajusteUrl(url) {
 //Verifica se existe http:// e se existe "/" no final
     if ((url.substr(0, 7)) != 'http://') {
@@ -628,51 +698,6 @@ function ajusteUrl(url) {
 
         return url;
     }
-}
-
-function mobile_logout() {
-
-    if (debug_mode)
-        alert('mobile_logout');
-
-    var dados = new Object();
-    var ajax_file = COMMON_URL_MOBILE + '/login_mobile.php?logout=1';
-
-    $.ajax({
-        type: 'POST',
-        url: ajax_file,
-        dataType: "jsonp",
-        timeout: 5000,
-        crossDomain: true,
-        data: {
-            usuario: dados['USUARIO'],
-            senha: dados['SENHA'],
-            url: dados['URL']
-        },
-        error: function () {
-            loading('hide');
-            //caso servidor nao esteja disponivel vamos apenas limpar os dados de conexao e redirecionar para pagina de login
-            localStorage.clear();
-            window.location.href = 'pages.html#page_login';
-        },
-        success: function (data) {
-            if (data) {
-                localStorage.clear();
-                window.location.href = 'pages.html#page_login';
-            }
-        }
-    });
-}
-
-function mobile_logout_OLD() {
-    var url = window.location;
-    var urlString = url.toString();
-    var urlArray = urlString.split("/");
-
-    var urlLogin = urlArray[0] + '//' + urlArray[2] + '/' + urlArray[3] + '/' + urlArray[4] + '/pages.html';
-
-    localStorage.clear();
-    window.location.href = 'pages.html#page_login';
 }
 
 function setSaudacao() {
@@ -1951,13 +1976,132 @@ $(document).ready(function () {
             }
         });
     });
+});
 
+
+
+//Andre Renovato e Rudi - 26-02-2016
+//Codigos abaixo para validacao de conexao internet, caso nao tenha conexao vamos persistir as tentativas a cada 5 segundos
+APP_ONLINE = true;
+APP_OFFLINE_WARN_TO = false;
+APP_INIT_INTERVAL = false;
+ALERT_OFFLINE = '';
+
+MSG_SEM_NET = "Este aplicativo precisa de internet. Por favor verifique sua conexão e tente de novo.";
+
+function onOnline() {
+    if (APP_OFFLINE_WARN_TO !== false) {
+        window.clearTimeout(APP_OFFLINE_WARN_TO);
+    }
+    if (!APP_ONLINE) {
+        //$.mobile.loading('hide');
+    }
+    APP_ONLINE = true;
+    ALERT_OFFLINE = false;
+}
+
+function onOffline() {
+    if (typeof APP_OFFLINE_WARN_TO !== false) {
+        window.clearTimeout(APP_OFFLINE_WARN_TO);
+    }
+
+    APP_OFFLINE_WARN_TO = window.setTimeout(function() {
+        APP_ONLINE = false;
+        //verificar se ja esta sendo mostrada a msg de "sem net"
+        if (!ALERT_OFFLINE) {
+            ALERT_OFFLINE = true;
+            alert(MSG_SEM_NET)
+        }
+    }, 5000)
+}
+
+function onDeviceready() {
+    document.addEventListener("online", onOnline, false);
+    document.addEventListener("offline", onOffline, false);
+    startApp();
+}
+
+
+function app_connected() {
+    if (typeof navigator == 'undefined' || typeof navigator.connection == 'undefined')
+        return true;
+
+    //nova API (direto em navigator.connection)
+    if (typeof navigator.connection != 'undefined'
+            && typeof navigator.connection.type != 'undefined'
+            && navigator.connection.type == Connection.NONE)
+        return false;
+
+    return true;
+}
+
+function loadIniScript(){
     //Verifica se existe user logado    
-    if (!objIsEmpty(Objeto_json)) {
+    //if (!objIsEmpty(Objeto_json)) {
+    if (isLogado()) {
         //Inclui js manipula upload camera. Incluimos um get randomico para n?o correr o risco do arquivo n?o ser instanciado
         var rand = Math.ceil(Math.random() * 999999999999999) + 1;
         var x = COMMON_URL_MOBILE + '/js/upload-despesa.js?v=' + rand;
         var scriptAppend = '<script type="text/javascript" src="' + x + '"></script>';
         $('head').append(scriptAppend);
     }
-});
+    
+    
+    if (verifica_logado()) {
+        popMenuDash();
+        Metronic.init(); // init metronic core componets
+        Layout.init(); // init layout
+        setSaudacao();
+
+        if (Layout.is_init) {
+            //popula Menu de Dashboards
+            popMenuDash();
+        } else {
+            var linit_interval = window.setInterval(function() {
+                if (Layout.is_init) {
+                    window.console.log(linit_interval);
+                    popMenuDash();
+                }
+            }, 10);
+        }
+    }    
+    
+}
+
+function startApp() {
+    //$('body').append('<img src="app_res/images/loading.gif" id="img_loading_gif" style="z-index:10001;position:absolute;width:170px;height:227px;left:50%;top:50%;margin-left:-85px;margin-top:-114px">');
+    //$.backstretch("app_res/images/w.png");
+    //$.backstretch("app_res/images/splashes/splash-port.png");
+    //$('.backstretch').prop({id: 'img_white_bg'}).css('z-index', '10000')
+
+    var wait_one_int = true;
+    if (app_connected()) {
+        loadIniScript();
+    } else {
+        //verificar se ja esta sendo mostrada a msg de "sem net"
+        if (!ALERT_OFFLINE) {
+            ALERT_OFFLINE = true;
+            alert(MSG_SEM_NET)
+        }        
+        APP_INIT_INTERVAL = window.setInterval(function() {
+            if (app_connected()) {
+                window.clearInterval(APP_INIT_INTERVAL);
+                loadIniScript();
+            } else {
+                if (wait_one_int) {
+                    wait_one_int = false;
+                }
+            }
+        }, 1000);
+    }
+}
+
+$(function() {
+    //o event onDeviceready soh existe em mobile/cordova
+    //!!window.cordova resolve true se for cordova
+    if (!!window.cordova) {
+        document.addEventListener("deviceready", onDeviceready, false);
+    } else {
+        onDeviceready();
+    }
+})
