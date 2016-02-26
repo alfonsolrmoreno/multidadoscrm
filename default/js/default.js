@@ -642,6 +642,7 @@ function mobile_logout() {
 }
 
 function isLogado(){
+    alert(123);
     if(!localStorage.getItem('mobile_login')){
         return false
     }else{
@@ -1977,7 +1978,6 @@ $(document).ready(function () {
         });
     });
 });
-
 
 
 //Andre Renovato e Rudi - 26-02-2016
