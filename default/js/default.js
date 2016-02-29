@@ -551,12 +551,13 @@ function verifica_logado() {
 
     //if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
     if (!isLogado()) {
-
         if (debug_mode)
             alert('redirecionar para a tela pages.html#page_login');
-
-        window.location.href = 'pages.html#page_login';
-
+        
+        //validacao de pagina
+        if(window.location.href.indexOf('pages.html#page_login') === -1){
+            window.location.href = 'pages.html#page_login';
+        }
         return false;
     } else {
         mobile_login(Objeto_real);
@@ -642,7 +643,6 @@ function mobile_logout() {
 }
 
 function isLogado(){
-    alert(123);
     if(!localStorage.getItem('mobile_login')){
         return false
     }else{
