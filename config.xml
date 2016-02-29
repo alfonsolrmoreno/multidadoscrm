@@ -37,7 +37,13 @@
     <gap:plugin name="org.apache.cordova.geolocation" source="npm" />
     
     <preference name="orientation" value="portrait" />
+    
     <gap:plugin name="org.apache.cordova.network-information" source="npm" />
+    <feature name="NetworkStatus" value="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
+    
     <gap:plugin name="org.apache.cordova.camera" source="npm" />
     <gap:plugin name="nl.x-services.plugins.toast" />
     <gap:plugin name="org.apache.cordova.media-capture" source="npm" />
@@ -82,9 +88,9 @@
     <feature name="File">
         <param name="ios-package" value="CDVFile" />
     </feature>
-    <feature name="NetworkStatus">
+<!--    <feature name="NetworkStatus">
         <param name="ios-package" value="CDVConnection" />
-    </feature>
+    </feature>-->
     <!-- ANDRE RENOVATO - COMENTADO ESTA LINHA PQ ESTAVA DANDO ERRO PARA COMPILAR ANDROID
     <feature name="FileTransfer">
         <param name="ios-package" value="CDVFileTransfer" />

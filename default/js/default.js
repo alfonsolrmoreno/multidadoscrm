@@ -1984,7 +1984,7 @@ APP_OFFLINE_WARN_TO = false;
 APP_INIT_INTERVAL = false;
 ALERT_OFFLINE = '';
 
-MSG_SEM_NET = "Este aplicativo precisa de internet. Por favor verifique sua conexão e tente de novo.";
+MSG_SEM_NET = "Este aplicativo precisa de internet. Por favor verifique sua conex&atilde;o e tente de novo.";
 
 function onOnline() {
     if (APP_OFFLINE_WARN_TO !== false) {
