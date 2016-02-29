@@ -1,6 +1,6 @@
 //versao do mobile para mostrar no footer
 var vs_mobile = 'v.3.0.1';
-var debug_mode = true;
+var debug_mode = false;
 var debug_js_errors = false;
 
 var Objeto_real = localStorage['mobile_login'];
@@ -550,14 +550,11 @@ function verifica_logado() {
     var Objeto_real = localStorage.getItem('mobile_login')
 
     //if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
-    if (!isLogado()) {
+    if (window.location.href.indexOf('#page_login') === -1 && !isLogado()) {
         if (debug_mode)
             alert('redirecionar para a tela pages.html#page_login');
         
-        //validacao de pagina
-        if(window.location.href.indexOf('pages.html#page_login') === -1){
-            window.location.href = 'pages.html#page_login';
-        }
+        window.location.href = 'pages.html#page_login';
         return false;
     } else {
         mobile_login(Objeto_real);
