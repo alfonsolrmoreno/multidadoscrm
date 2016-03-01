@@ -557,8 +557,8 @@ function verifica_logado() {
 
     var Objeto_real = localStorage.getItem('mobile_login')
 
-    //if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
-    if (window.location.href.indexOf('#page_login') === -1 && !isLogado()) {
+    if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
+    //if (window.location.href.indexOf('#page_login') === -1 && !isLogado()) {
         if (debug_mode)
             alert('redirecionar para a tela pages.html#page_login');
         
@@ -1987,6 +1987,7 @@ $(document).ready(function () {
 
 //Andre Renovato e Rudi - 26-02-2016
 //Codigos abaixo para validacao de conexao internet, caso nao tenha conexao vamos persistir as tentativas a cada 5 segundos
+/*
 APP_ONLINE = true;
 APP_OFFLINE_WARN_TO = false;
 APP_INIT_INTERVAL = false;
@@ -2057,28 +2058,7 @@ function loadIniScript(){
         var x = COMMON_URL_MOBILE + '/js/upload-despesa.js?v=' + rand;
         var scriptAppend = '<script type="text/javascript" src="' + x + '"></script>';
         $('head').append(scriptAppend);
-    }
-    
-    
-    /*if (verifica_logado()) {
-        popMenuDash();
-        Metronic.init(); // init metronic core componets
-        Layout.init(); // init layout
-        setSaudacao();
-
-        if (Layout.is_init) {
-            //popula Menu de Dashboards
-            popMenuDash();
-        } else {
-            var linit_interval = window.setInterval(function() {
-                if (Layout.is_init) {
-                    window.console.log(linit_interval);
-                    popMenuDash();
-                }
-            }, 10);
-        }
-    }  */  
-    
+    }    
 }
 
 function startApp() {
@@ -2118,4 +2098,4 @@ $(function() {
     } else {
         onDeviceready();
     }
-})
+})*/

@@ -34,11 +34,12 @@
     <allow-navigation href="data:*" />
     <allow-intent href="*" />
     
+    <preference name="orientation" value="portrait" />
+    
     <gap:plugin name="org.apache.cordova.inappbrowser" source="npm" />    
     <!--<gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.geolocation" />
     
-    <preference name="orientation" value="portrait" />
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.camera" version="0.3.2" />
     <gap:plugin name="nl.x-services.plugins.toast" />
