@@ -2023,13 +2023,19 @@ function onOffline() {
 }
 
 function onDeviceready() {
-    document.addEventListener("online", onOnline, false);
-    document.addEventListener("offline", onOffline, false);
+    if (!!window.cordova) {
+        document.addEventListener("online", onOnline, false);
+        document.addEventListener("offline", onOffline, false);
+    }
     startApp();
 }
 
 
 function app_connected() {
+    if (!window.cordova){
+        return true
+    }
+    
     if (typeof navigator == 'undefined' || typeof navigator.connection == 'undefined')
         return true;
 
