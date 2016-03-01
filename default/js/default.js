@@ -2017,7 +2017,7 @@ function onOffline() {
         if (!ALERT_OFFLINE) {
             ALERT_OFFLINE = true;
             $().toastmessage('showErrorToast', MSG_SEM_NET);
-            window.location.href = 'pages.html#page_login';
+            //window.location.href = 'pages.html#page_login';
             //alert(MSG_SEM_NET);
         }
     }, 5000)
@@ -2055,7 +2055,7 @@ function loadIniScript(){
     }
     
     
-    if (verifica_logado()) {
+    /*if (verifica_logado()) {
         popMenuDash();
         Metronic.init(); // init metronic core componets
         Layout.init(); // init layout
@@ -2072,7 +2072,7 @@ function loadIniScript(){
                 }
             }, 10);
         }
-    }    
+    }  */  
     
 }
 
@@ -2089,7 +2089,8 @@ function startApp() {
         //verificar se ja esta sendo mostrada a msg de "sem net"
         if (!ALERT_OFFLINE) {
             ALERT_OFFLINE = true;
-            alert(MSG_SEM_NET)
+            //alert(MSG_SEM_NET)
+            $().toastmessage('showErrorToast', MSG_SEM_NET);
         }        
         APP_INIT_INTERVAL = window.setInterval(function() {
             if (app_connected()) {
