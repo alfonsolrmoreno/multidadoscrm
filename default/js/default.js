@@ -1,3 +1,12 @@
+//Este evento serve para exibir qualquer erro de javascript.
+window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+    if (typeof errorMsg != 'undefined' && typeof errorMsg.indexOf == 'function' && errorMsg.indexOf('StatusBar') !== -1) {
+        return;
+    }
+    alert("Desculpe, um erro ocorreu: \n" + errorMsg + "\n" + url + "\n" + lineNumber + "\n");
+}
+
+
 //versao do mobile para mostrar no footer
 var vs_mobile = 'v.3.0.1';
 var debug_mode = false;
