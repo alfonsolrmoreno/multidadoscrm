@@ -26,29 +26,51 @@
     <access origin="*" />
     
     <!-- rudi 9/10/2015 precisa desse plugin de whitelist e essas configs pra funcionar no pgb 5.2+  -->
-    <gap:plugin name="cordova-plugin-whitelist" version="1.0.0" source="npm" />
+    <!--<plugin name="cordova-plugin-whitelist" version="1.0.0" />-->
+    <plugin name="cordova-plugin-whitelist"/>
     <allow-navigation href="http://*/*" />
     <allow-navigation href="https://*/*" />
     <allow-navigation href="ftp://*/*" />
     <allow-navigation href="data:*" />
     <allow-intent href="*" />
     
-    <gap:plugin name="org.apache.cordova.inappbrowser" source="npm" />
-    <gap:plugin name="org.apache.cordova.geolocation" source="npm" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" source="npm" />    
+    <!--<gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.geolocation" />
     
     <preference name="orientation" value="portrait" />
-    <gap:plugin name="org.apache.cordova.network-information" source="npm" />
-    <gap:plugin name="org.apache.cordova.camera" source="npm" />
+    <gap:plugin name="org.apache.cordova.network-information" />
+    <gap:plugin name="org.apache.cordova.camera" version="0.3.2" />
     <gap:plugin name="nl.x-services.plugins.toast" />
-    <gap:plugin name="org.apache.cordova.media-capture" source="npm" />
-    <gap:plugin name="org.apache.cordova.file" source="npm" />
+    <gap:plugin name="org.apache.cordova.media-capture" />
+    <gap:plugin name="org.apache.cordova.file" />
+    <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.splashscreen" />
+    <gap:plugin name="org.apache.cordova.device-orientation" />
+    <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.console" />-->
     <!-- ANDRE RENOVATO - COMENTADO ESTA LINHA PQ ESTAVA DANDO ERRO PARA COMPILAR ANDROID-->
     <!--    <gap:plugin name="org.apache.cordova.file-transfer" version="0.4.6" />-->
-    <gap:plugin name="org.apache.cordova.dialogs" source="npm" />
-    <gap:plugin name="org.apache.cordova.splashscreen" source="npm" />
-    <gap:plugin name="org.apache.cordova.device-orientation" source="npm" />
-    <gap:plugin name="org.apache.cordova.device" source="npm" />
-    <gap:plugin name="org.apache.cordova.console" source="npm" />
+    
+    <plugin name="com.adobe.plugins.gaplugin" source="pgb" />
+    <plugin name="com.phonegap.plugin.statusbar" source="pgb" />
+    <plugin name="com.phonegap.plugins.pushplugin" source="pgb"/>
+    <plugin name="nl.x-services.plugins.socialsharing" source="pgb"  />
+    <plugin name="nl.x-services.plugins.toast" source="pgb"  />
+    <plugin name="org.apache.cordova.camera" source="npm" />
+    <plugin name="org.apache.cordova.console" source="pgb"  />
+    <plugin name="org.apache.cordova.contacts" source="pgb" />
+    <plugin name="org.apache.cordova.device" source="pgb" />
+    <plugin name="org.apache.cordova.device-motion" source="pgb"  />
+    <plugin name="org.apache.cordova.device-orientation" source="pgb"  />
+    <plugin name="org.apache.cordova.dialogs" source="pgb"  />
+    <plugin name="org.apache.cordova.file" source="pgb"  />
+    <plugin name="org.apache.cordova.file-transfer" source="pgb"/>
+    <plugin name="org.apache.cordova.geolocation" source="pgb" />
+    <plugin name="org.apache.cordova.media-capture" source="pgb"  />
+    <plugin name="org.apache.cordova.network-information" source="pgb"  />
+    <plugin name="org.apache.cordova.splashscreen" source="pgb" />
+    <plugin name="org.apache.cordova.vibration" source="pgb"  />    
     
     <feature name="http://api.phonegap.com/1.0/camera" />
     <feature name="http://api.phonegap.com/1.0/file" />
