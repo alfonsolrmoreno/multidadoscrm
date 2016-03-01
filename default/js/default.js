@@ -2007,9 +2007,9 @@ function onOffline() {
         //verificar se ja esta sendo mostrada a msg de "sem net"
         if (!ALERT_OFFLINE) {
             ALERT_OFFLINE = true;
-            //$().toastmessage('showErrorToast', 'URL incorreta ou vers&atilde;o incompat&iacute;vel');
-            //window.location.href = 'pages.html#page_login';
-            alert(MSG_SEM_NET)
+            $().toastmessage('showErrorToast', MSG_SEM_NET);
+            window.location.href = 'pages.html#page_login';
+            //alert(MSG_SEM_NET);
         }
     }, 5000)
 }
