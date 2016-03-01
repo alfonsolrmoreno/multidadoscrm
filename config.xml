@@ -36,7 +36,7 @@
     
     <preference name="orientation" value="portrait" />
     
-    <gap:plugin name="org.apache.cordova.inappbrowser" source="npm" />    
+    <plugin name="org.apache.cordova.inappbrowser" spec="1.3.0" />
     <!--<gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.geolocation" />
     
