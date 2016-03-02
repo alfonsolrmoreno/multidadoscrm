@@ -507,6 +507,7 @@ function mobile_login(obj) {
                         if (data['erro']) {
                             loading('hide');
                             $().toastmessage('showErrorToast', data['erro']);
+                            window.location.href = 'pages.html#page_login';
                         } else {
                             if (debug_mode) {
                                 //$().toastmessage('showErrorToast', 'OK');
@@ -633,7 +634,6 @@ function mobile_logout() {
             //caso servidor nao esteja disponivel vamos apenas limpar os dados de conexao e redirecionar para pagina de login
             //localStorage.clear();
             Storagelogout();
-
             window.location.href = 'pages.html#page_login';
         },
         success: function (data) {
