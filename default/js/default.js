@@ -46,7 +46,7 @@ if (typeof Objeto_real != 'undefined' && Objeto_real != '' && Objeto_real) {
     //Mantendo dados no formulario de login
     $(function(){
         $("#url").val(COMMON_URL);
-        $("#usuario").val(Objeto_json.usuario_nome);
+        $("#usuario").val(Objeto_json.user_bd);
         if(typeof Objeto_json.senha != 'undefined'){
             $("#senha").val(Objeto_json.senha);
         }
