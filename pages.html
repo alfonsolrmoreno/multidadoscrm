@@ -9,7 +9,7 @@
 
         <!-- rudi 6/10/2015 manter o cordova no topo -->
         <!-- Andre Renovato - 14/04/2015 - Este js é incluido automaticamente pelo phonegap -->
-        <script type="text/javascript" src="cordova.js"></script>
+        <!--<script type="text/javascript" src="cordova.js"></script>-->
 
         <link href="css/jqm-neue.css" rel="stylesheet">
         <link href="css/codiqa.ext.min.css" rel="stylesheet">
@@ -24,14 +24,16 @@
 
         <script src="js/jquery-1.9.1.min.js"></script>
         <script src="js/jquery.mobile-1.3.1.min.js"></script>
+        <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
+        <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />-->
         <script src="js/codiqa.ext.min.js"></script>
         <script src="js/mobile-multidados.js"></script>
 
-        <script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
-        <script type="text/javascript" src="js/jqm-datebox-1.4.0.core.min.js"></script>
-        <script type="text/javascript" src="js/jqm-datebox-1.4.0.mode.calbox.min.js"></script>
-        <script type="text/javascript" src="js/jqm-datebox-1.4.0.mode.datebox.min.js"></script>
-        <script type="text/javascript" src="js/jquery.mobile.datebox.i8n.pt-BR.js"></script>
+        <!-- NOVO PLUGINS DE DATA E HORA COM SCROOLL  -->
+        <link rel="stylesheet" href="css/mobiscroll-2.4.custom.min.css" />    
+        <script src="js/mobiscroll-2.4.custom.min.js"></script>          
+        <!-- FIM NOVO PLUGINS DE DATA E HORA COM SCROOLL -->
+        
 
         <!-- configuracoes Multidados -->
         <link href="default/css/css.css" rel="stylesheet">
@@ -41,7 +43,7 @@
         <script type="text/javascript" src="js/calendar/jquery.calendario.js"></script>
         <script type="text/javascript" src="js/calendar/data.js"></script>
 
-        <script type="text/javascript">
+        <script type="text/javascript">            
             try {
                 Typekit.load();
             } catch (e) {
@@ -109,7 +111,6 @@
 
                 <div style="margin-top:30px; text-align:center;">
                     <label class="name_powered">
-
                     </label>
                 </div>
             </div>
@@ -213,13 +214,15 @@
             <div    id="page_timesheet_clientes"></div>
             <div    id="page_timesheet_projetos"></div>
             <div data-role="content" style="padding: 0px" id="page_timesheet_sub">
-
                 <input type='hidden' name='idtimecard' id='idtimecard' />
                 <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+                    <div id="topo"></div>
                     <label for="data_trabalhada">
                         Data
                     </label>
-                    <input name="data_trabalhada" id="data_trabalhada" value=""  data-role="datebox" type="date" data-options='{"mode": "calbox"}' >
+                    <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+                    <!--<input name="data_trabalhada" id="data_trabalhada" value=""  data-role="datebox" type="date" data-options='{"mode": "calbox"}' >-->
+                    <input name="data_trabalhada" id="data_trabalhada" value="" >
                 </div>
                 <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
                     <label for="search_cliente">
@@ -245,17 +248,17 @@
                         Fase
                     </label>
                     <select id="codigo_fase" name="codigo_fase" data-theme="c">
-                        <option value="">
+                        <option value=''>
                             Selecione uma fase
                         </option>
                     </select>
                 </div>
-                <div id="atividade_task" data-role="fieldcontain" data-controltype="selectmenu" class="box_form">
+                <div id="atividade_task" data-role="fieldcontain" class="box_form">
                     <label for="codigo_atividade">
                         Atividade
                     </label>
                     <select id="codigo_atividade" name="codigo_atividade" data-theme="c">
-                        <option value="">
+                        <option value=''>
                             Selecione uma atividade
                         </option>
                     </select>
@@ -273,22 +276,63 @@
                     <label for="hora_inicial">
                         Hora Inicial
                     </label>
-                    <input name="hora_inicial" id="hora_inicial" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
+                    <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+                    <!--<input name="hora_inicial" id="hora_inicial" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>-->
+                    <input class="click_datetime" name="hora_ini" id="hora_ini" readonly="readonly">
+                    <div id="hora_inicial_div" style="display:none;">
+                        <input type="hidden" name="hora_inicial" id="hora_inicial">
+                    </div>
                 </div>
                 <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
                     <label for="hora_final">
                         Hora Final
                     </label>
-                    <input name="hora_final" id="hora_final" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >
+                    <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+                    <!--<input name="hora_final" id="hora_final" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
+                    <input class="click_datetime" name="hora_fim" id="hora_fim" readonly="readonly">
+                    <div id="hora_final_div" style="display:none;">
+                        <input type="hidden" name="hora_final" id="hora_final">
+                    </div>                    
                 </div>
+                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+                    <div id="monstrarIntervalo" style="width: -moz-max-content">
+                        <img data-transition="slide" src="img/icon_intervalo.png" width="32" height="32"/>
+                        <label> Exibir Intervalo </label>
+                    </div>                  
+                </div>
+                <!-- Intervalo -->
+                <div id="div_intervalo">
+                    <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+                        <label>
+                            Intervalo Inicial
+                        </label>
+                        <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+                        <!--<input name="intervalo_hr_inicial" id="intervalo_hr_inicial" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
+                        <input class="click_datetime" name="intervalo_hr_ini" id="intervalo_hr_ini" readonly="readonly">
+                        <div id="intervalo_hr_inicial_div" style="display:none;">
+                            <input type="hidden" name="intervalo_hr_inicial" id="intervalo_hr_inicial">
+                        </div>
+                    </div>
+                    <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+                        <label>
+                            Intervalo Final
+                        </label>
+                        <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+                        <!--<input name="intervalo_hr_final" id="intervalo_hr_final" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
+                        <input class="click_datetime" name="intervalo_hr_fim" id="intervalo_hr_fim" readonly="readonly">
+                        <div id="intervalo_hr_final_div" style="display:none;">
+                            <input type="hidden" name="intervalo_hr_final" id="intervalo_hr_final">
+                        </div>
+                    </div>
+                </div>
+                
                 <div data-role="fieldcontain" data-controltype="textarea" class="box_form">
                     <label for="narrativa_principal">
                         Narrativa
                     </label>
-                    <textarea name="narrativa_principal" id="narrativa_principal" placeholder=""></textarea>
+                    <textarea name="narrativa_principal" id="narrativa_principal" placeholder="" style="height:100px !important;"></textarea>
                 </div>
-                <a id="save_timecard_bottom" data-role="button" href="#page_timesheet"
-                   data-icon="check" data-iconpos="right" class="box_form btn_default" >
+                <a id="save_timecard_bottom" data-role="button" href="#page_timesheet" data-icon="check" data-iconpos="right" class="box_form btn_default">
                     Salvar
                 </a>
             </div>
@@ -300,7 +344,8 @@
                     <label for="filtro_data_trabalhada">
                         Filtro de Data
                     </label>
-                    <input name="filtro_data_trabalhada" id="filtro_data_trabalhada" data-role="datebox" type="date" data-options='{"mode": "calbox"}' >
+                    <!--<input name="filtro_data_trabalhada" id="filtro_data_trabalhada" data-role="datebox" type="date" data-options='{"mode": "calbox"}' >-->
+                    <input class="click_datetime" name="filtro_data_trabalhada" id="filtro_data_trabalhada" readonly="readonly">
                 </div>
             </div>
             <div data-role="content" style="padding: 0px">
@@ -325,10 +370,10 @@
 
         <div data-role="page" class="pagina" data-control-title="Relatório Despesas" data-theme="b" id="relatorio_despesa">
             <div data-theme="b" data-role="header" class="header_default">
-                <a id="novo_despesa_top" data-role="button" data-theme="a" href="#page_despesa"
+                <!--<a id="novo_despesa_top" data-role="button" data-theme="a" href="#page_despesa"
                    data-icon="add" data-iconpos="left" class="ui-btn-right">
                     Novo
-                </a>
+                </a>-->
                 <a data-role="button" data-theme="a" href="#page_home" data-icon="arrow-l"
                    data-iconpos="left" class="ui-btn-left btn_default" style="display: none">
                     Voltar
@@ -340,7 +385,7 @@
                     <label for="dateinput2">
                         Filtro de Data
                     </label>
-                    <input name="filtro_data_trabalhada" id="dateinput2" data-role="datebox" type="date" data-options='{"mode": "calbox"}' >
+                    <input name="filtro_data_trabalhada" id="dateinput2">
                 </div>
             </div>
             <div data-role="content" style="padding: 0px" >
@@ -388,8 +433,11 @@
                     <label for="textinput8" class="ui-input-text" >
                         Data
                     </label>
-                    <input name="data_lcto" id="data_lcto" value=""  data-role="datebox" type="date" data-options='{"mode": "calbox"}'  >
+                    <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+                    <!--<input name="data_lcto" id="data_lcto" value=""  data-role="datebox" type="date" data-options='{"mode": "calbox"}'>-->
+                    <input name="data_lcto" id="data_lcto" value="" class="i-txt">
                 </div>
+                
                 <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
                     <label for="textinput9" >
                         Cliente
@@ -419,68 +467,85 @@
                         </option>
                     </select>
                 </div>
+                
                 <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="vlr_unitario">
-                        Valor Unitário
-                    </label>
-                    <input name="vlr_unitario" id="vlr_unitario" placeholder="" value="" type="text">
+                    <fieldset class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <label for="vlr_unitario">
+                                Valor Unitário 
+                            </label>        
+                            <input name="vlr_unitario" id="vlr_unitario" placeholder="" value="" type="text">    
+                        </div>
+                        <div class="ui-block-b ">
+                            <label for="qtde_despesa">
+                                Qtde.
+                            </label>        
+                            <input name="qtde_despesa" id="qtde_despesa" placeholder="" value="" type="number"> 
+                        </div>	   
+                    </fieldset>     
                 </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="qtde_despesa">
-                        Qtde.
-                    </label>
-                    <input name="qtde_despesa" id="qtde_despesa" placeholder="" value="" type="number" >
-                </div>
+
                 <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
                     <label for="valor_total">
                         Valor Total
                     </label>
                     <input name="valor_total" id="valor_total" value="" type="number" readonly="true" />
                 </div>
+                
                 <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="local_despesa">
-                        Local da Despesa
-                    </label>
-                    <input name="local_despesa" id="local_despesa" placeholder="" value=""
-                           type="text">
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="num_documento">
-                        Nº do documento
-                    </label>
-                    <input name="num_documento" id="num_documento" placeholder="" value=""
-                           type="text">
-                </div>
-
+                    <fieldset class="ui-grid-a">
+                        <div class="ui-block-b">
+                            <label for="num_documento">
+                                Nº documento
+                            </label>
+                            <input name="num_documento" id="num_documento" placeholder="" value="" type="text">
+                        </div>                        
+                        <div class="ui-block-a">
+                            <label for="local_despesa">
+                                Local Despesa
+                            </label>
+                            <input name="local_despesa" id="local_despesa" placeholder="" value="" type="text">
+                        </div>	   
+                    </fieldset>     
+                </div>                
+ 
                 <div data-role="fieldcontain" data-controltype="textinput" class="box_form" id="upload_despesa" >
-                    <div id="uploadArquivo" style="width: -moz-max-content">
-                        <img data-transition="slide" title="Fotografar documento" src="img/blue_cam2.png" width="32" height="32"/>
-                        <label for="arq_despesa"> Anexar Documento </label>
-                    </div>
-                    <!--
+                    <label for="arq_despesa">
+                        Documento Fiscal
+                    </label>
+
                     <form method="post" id="form_arquivo" action="#" enctype="multipart/form-data">
+                        <!--<div id="uploadArquivo" style="">
+                            <a href="#" class="btn_default" onclick="" data-role="button">Anexo</a>                        
+                        </div>   -->                     
+                        
                         <div id="upload_arquivos" >
                             <input type="file" onchange="upload();" accept="image/*" name="arq_despesa" id="arq_despesa" class="ui-input-text ui-body-c">
                         </div>
-                        <div    id="popup_imagem">
-                        </div>
-                    </form>-->
-                    <form method="post" id="form_arquivo" action="#" enctype="multipart/form-data">
                         <div id="popup_imagem"> </div>
-                    </form>
-                </div>
-                <!-- Lista de tipo foto/upload -->
-                <div id="optionsUpload"  data-role="controlgroup">
-                    <a href="#" class="btn_default" onclick="capturePhoto()" data-role="button">Tirar foto</a>
-                    <a href="#" class="btn_default" onclick="capturePhoto(Camera.PictureSourceType.SAVEDPHOTOALBUM)" data-role="button">Escolher da biblioteca</a>
-                    <a href="#" id="cancel_upload" data-theme="a" data-role="button">Cancelar</a>
+                    </form>                    
                 </div>
 
+                <!--<div data-role="fieldcontain" data-controltype="textinput" class="box_form" id="upload_despesa" >
+                    <div id="uploadArquivo" style="">
+                        <img data-transition="slide" title="Fotografar documento" src="img/blue_cam2.png" width="32" height="32"/>
+                        <label for="arq_despesa"> Anexar Documento </label>
+                        <form method="post" id="form_arquivo" action="#" enctype="multipart/form-data">
+                            <div id="popup_imagem"> </div>
+                        </form>-->
+                        <!-- Lista de tipo foto/upload -->
+                        <!--<div id="optionsUpload" data-role="controlgroup" data-type="horizontal">
+                            <a href="#" class="btn_default" onclick="capturePhoto()" data-role="button">Foto</a>
+                            <a href="#" class="btn_default" onclick="capturePhoto(Camera.PictureSourceType.SAVEDPHOTOALBUM)" data-role="button">Galeria</a>
+                        </div>
+                    </div>
+                </div>-->
+                
                 <div data-role="fieldcontain" data-controltype="textarea" class="box_form">
                     <label for="textarea2" class="ui-input-text">
                         Narrativa
                     </label>
-                    <textarea name="narrativa_principal_despesa" id="narrativa_principal_despesa" placeholder=""></textarea>
+                    <textarea name="narrativa_principal_despesa" id="narrativa_principal_despesa" placeholder="" style="height:100px !important;"></textarea>
                 </div>
                 <div id="btn_save_despesa">
                     <a id="save_despesa_bottom" data-role="button" href="javascript:;" data-icon="check" data-iconpos="right" class="box_form btn_default">Salvar</a>
@@ -489,11 +554,9 @@
         </div>
 
         <div data-role="page" class="class_page pagina" data-control-title="P&aacute;gina em constru&ccedil;&atilde;o" data-theme="b"
-             id="page_scheduler" style="background: url('img/bg_app_new.jpg') no-repeat"
-             >
+             id="page_scheduler" style="background: url('img/bg_app_new.jpg') no-repeat">
             <script type="text/javascript">
-                $(function() {
-
+                /*$(function() {
                     var transEndEventNames = {
                         'WebkitTransition': 'webkitTransitionEnd',
                         'MozTransition': 'transitionend',
@@ -554,14 +617,9 @@
                             Modernizr.csstransitions ? $events.on(transEndEventName, function() {
                                 $(this).remove();
                             }) : $events.remove();
-
                         }
-
                     }
-
-
-                });
-
+                });*/
             </script>
             <div data-role="content" style="padding: 0px">
                 <div data-controltype="htmlblock" class="box_logotipo">
@@ -588,5 +646,6 @@
                 </div>
             </div>
         </div>
+        
     </body>
 </html>

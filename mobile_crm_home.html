@@ -22,7 +22,7 @@
         <link href="assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
         <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
         <!-- END GLOBAL MANDATORY STYLES -->
-        
+
         <!-- BEGIN THEME STYLES -->
         <link href="assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
         <link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
@@ -39,25 +39,36 @@
                 <div class="">
                     <div class="page-content">
                         <center>
+							<!--<h3>Centro de Serviços Compartilhados</h3>-->
                             <img src="img/logomultidados.png" alt="logo" class="logo-multidados" style="max-width: 250px;max-height: 200px;"/>
                             <br>
                             <br>
-                            <!--<a class="icon-btn" mobile="true" href="pages.html#page_timesheet">-->
-                            <a class="linkHome icon-btn" mobile="true" id="page_timesheet">
-                                <i class="icon-calendar"></i>
-                                <div>TimeSheet</div>
-                                <span class="badge badge-info larger-badge"><b>+</b></span>
-                            </a>
-                            <!--<a class="icon-btn" mobile="true" href="pages.html#page_despesa">-->
-                            <a class="linkHome icon-btn" mobile="true" id="page_despesa">
-                                <i class="icon-notebook"></i>
-                                <div>Despesas</div>
-                                <span class="badge badge-info larger-badge"><b>+</b></span>
-                            </a>
                             <a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=abrir_oc_portal&nomenu=1" id="add_ocorrencia">
                                 <i class="fa fa-ticket icon-size-mobile"></i>
                                 <div>Ocorrência</div>
                                 <span class="badge badge-info larger-badge"><b>+</b></span>
+                            </a>
+							<a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=consultar_ocs_portal&nomenu=1&modal=false" id="listar_ocorrencia">
+                                <i class="fa fa-th-list"></i>
+                                <div>Consultar</div>
+                            </a>
+
+							<a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=consultar_ocs_portal&nomenu=1&modal=false&nofilter=1&pendentes=1" id="listar_ocorrencia_p">
+                                <i class="fa fa-th-list"></i>
+                                <div>Pendentes</div>
+                                <span class="badge badge-warning larger-badge" id='count_oco_pendentes'></span>
+                            </a>                        
+							<!--<a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=ocorrencias&nomenu=1" id="portal_ocorrencia">
+                                <i class="fa fa-desktop"></i>
+                                <div>Portal</div>
+                            </a>-->
+							<a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=aprovacoes_ocs_portal&nomenu=1" id="aprovar_ocorrencia">
+                                <i class="fa fa-check-square-o"></i>
+                                <div>Aprovar Ocs</div>
+                            </a>
+							<a class="icon-btn linkHome" link="" id="dashboard_padrao">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <div>Dashboards</div>
                             </a>
                         </center>
                         <div class="col-xs-12" style="margin: 8px 0  0  0;">
@@ -77,14 +88,15 @@
                                 </div>
                             </form>
                         </div>
+						<!--
                         <div class="well" style="padding: 0px;margin-top: 20px;background-color:#F1F3FA;font-size: 11px !important;margin-bottom:0px;">
                             <address>
-                                <div id="feedback_sd"></div> <!-- lista de recados do servicedesk -->
-                                <!-- <strong>Login:</strong> <span class="exibe_user"></span><br>-->
+                                <div id="feedback_sd"></div> <!-- lista de recados do servicedesk 
+                                <strong>Login:</strong> <span class="exibe_user"></span><br>
                                 <strong>URL:</strong> <span class="exibe_url"></span><br>
-                                <!-- <strong>BANCO:</strong> <span class="banco-nome"></span><br>-->
+                                <strong>BANCO:</strong> <span class="banco-nome"></span><br>
                             </address>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <!-- END CONTENT -->
@@ -130,14 +142,29 @@
 
                     var Objeto_json = JSON.parse(objuser)
                     $('.logo-multidados').attr('src', Objeto_json['url_logo_cliente']);
-                    $('.exibe_url').html(Objeto_json['url']);
                     
-                    //Andre Renovato - 11/11/2015
-                    //Agora o nome do banco e login esta sendo inserido em index.html
-                    //$('.banco-nome').html(Objeto_json['db']);
-                    //$('.exibe_user').html(Objeto_json['user_bd']);
-
                     permissaoMenu(); //recupera permissao de menu e atalhos
+                    
+                    //Andre Renovato - 24/02/2016
+                    //setando contador de ocorrencias pendentes no botao de atalho
+                    $.ajax({
+                        type: 'POST',
+                        url: COMMON_URL+'/ajax_bootstrap.php',
+                        dataType: "json",
+                        timeout: 1000,
+                        crossDomain: true,
+                        data: {
+                            cm: 'UsuarioPaineis->getOcorrenciasPendentes',
+                            returnCount: true
+                        },
+                        success: function (data) {
+                            if(data > 0){
+                                $("#count_oco_pendentes").html(data);
+                            }
+                        }
+                    });                    
+                    
+                    
                 });
             }
         </script>
@@ -145,3 +172,4 @@
     </body>
     <!-- END BODY -->
 </html>
+
