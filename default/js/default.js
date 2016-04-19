@@ -9,7 +9,7 @@
 //
 var version_system = '2016.01';
 //versao do mobile para mostrar no footer
-var vs_mobile = 'v.3.0.5';
+var vs_mobile = 'v.3.0.6';
 var debug_mode = false;
 var debug_js_errors = false;
 var StatusMobiscroll = false;
@@ -408,7 +408,6 @@ function mobile_login(obj) {
 
     if (dados['URL'] != "") {
         var ajax_file_url = 'verifica_url.php';
-
         //Trata URL sem http://
         if ((dados['URL'].substr(0, 7)) != 'http://') {
             //AQUI VALIDAMOS A URL PELA SEGUNDA (/) PARA RECUPERAR O ENDERECO CORRETO
@@ -471,7 +470,7 @@ function mobile_login(obj) {
             type: 'POST',
             url: dados['URL'] + '/mobile/' + ajax_file_url,
             dataType: "jsonp",
-            timeout: 10000,
+            timeout: 15000,
             crossDomain: true,
             data: {
                 url: COMMON_URL_MOBILE
@@ -495,7 +494,7 @@ function mobile_login(obj) {
                     type: 'POST',
                     url: ajax_file,
                     dataType: "jsonp",
-                    timeout: 5000,
+                    timeout: 15000, // aguarda 15s 
                     crossDomain: true,
                     data: {
                         usuario: dados['USUARIO'],
@@ -506,7 +505,8 @@ function mobile_login(obj) {
                         loading('hide');
                         //Andre Renovato - 03/03/2016
                         //Tentando identificar pq as vezes nao faz login na primeira tentativa
-                        $().toastmessage('showErrorToast', 'URL incorreta ou vers&atilde;o incompat&iacute;vel');
+                        //$().toastmessage('showErrorToast', 'URL incorreta ou vers&atilde;o incompat&iacute;vel' + statusText + ' - ' + error);
+                        $().toastmessage('showErrorToast', '15 segundos se passaram sem resposta, verifique a URL informada');
 
                         console.log('mobile_login error : ');
                         console.log('statusText = ');
@@ -522,14 +522,14 @@ function mobile_login(obj) {
                     },
                     success: function (data) {
                         //alert(version_system +' - '+ data['version']);
-                        if (version_system != data['version']) {
-                            loading('hide');
-                            $().toastmessage('showErrorToast', 'Aplica&ccedil;&atilde;o web incompat&iacute;vel com o Aplicativo. Entre em contato com o suporte! ' + version_system + ' -> ' + data['version']);
-                            window.location.href = 'pages.html#page_login';                            
-                        }else if (data['erro']) {
+                        if (data['erro']) {
                             loading('hide');
                             $().toastmessage('showErrorToast', data['erro']);
-                            window.location.href = 'pages.html#page_login';
+                            window.location.href = 'pages.html#page_login';                         
+                        }else if (version_system != data['version']) {
+                            loading('hide');
+                            $().toastmessage('showErrorToast', 'Aplica&ccedil;&atilde;o web incompat&iacute;vel com o Aplicativo. Entre em contato com o suporte! ' + version_system + ' -> ' + data['version']);
+                            window.location.href = 'pages.html#page_login';                               
                         } else {
                             var Objeto = {
                                 'db': data['db'],
@@ -1051,7 +1051,7 @@ function salvar_despesa() {
 
 //Buscar DESPESA conforme as datas
 function buscar_despesa(data) {
-    clearInputs();
+    //clearInputs();
     //if (data) {
     var ajax_file = COMMON_URL_MOBILE + '/busca_despesa.php';
     loading('show');
@@ -1392,7 +1392,7 @@ $(document).delegate("[id^='idclienteprojeto_']", 'click', function () {
 
 //Buscar timesheet conforme as datas
 function buscar_timesheet(data) {
-    clearInputs();
+    //clearInputs();
     //if (data) {
     loading('show');
     if (data) {

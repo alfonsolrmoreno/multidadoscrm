@@ -855,7 +855,8 @@ Page container
     margin-top: 68px !important;
   }
 }
-@media (max-width: 480px) {
+/* Incluido para o samsung galaxy tab 3 */
+@media (max-width: 903px) {
   /* Page container */
   .page-header-fixed.page-header-fixed-mobile .page-container {
     margin-top: 136px !important;
@@ -2105,7 +2106,7 @@ Page content
   background-color: #fff;
 }
 .page-container-bg-solid .page-content {
-  background: #F1F3FA;
+  background: #FFF;
 }
 .page-full-width .page-content {
   margin-left: 0px !important;
