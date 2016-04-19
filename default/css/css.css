@@ -5,13 +5,13 @@
 .box_btentrar, .bt_voltar, .btn_default
 {
     background-color: #455A6D !important;
-    border-color: #455A6D !important;    
+    border-color: #FFF !important;    
 	margin:0px 30px 0px 30px;
 }
 .btn_default
 {
     background-color: #455A6D !important;
-    border-color: #455A6D !important;
+    border-color: #FFF !important;
 }
 
 #page_home

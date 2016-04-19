@@ -3,8 +3,8 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "br.com.multidadosti.crm201511"
-        version   = "3.0.1"
-        versionCode="301"
+        version   = "3.0.6"
+        versionCode="306"
 > 
     
     <!-- rudi 07/10/2015 a versao mais nova (5.2) do cordova crashava no android em qqer tentativa de carregar recursos externos (js, etc)-->
@@ -35,16 +35,16 @@
     <allow-intent href="*" />
     
     <preference name="orientation" value="portrait" />
-    
-    <plugin name="org.apache.cordova.inappbrowser" spec="1.3.0" />
     <!--<gap:plugin name="org.apache.cordova.inappbrowser" />
     <gap:plugin name="org.apache.cordova.geolocation" />
     
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.camera" version="0.3.2" />
+
     <gap:plugin name="nl.x-services.plugins.toast" />
     <gap:plugin name="org.apache.cordova.media-capture" />
     <gap:plugin name="org.apache.cordova.file" />
+
     <gap:plugin name="org.apache.cordova.dialogs" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.device-orientation" />
@@ -159,10 +159,14 @@
     <!-- page, column -->
     <preference value="unpaginated" name="PaginationMode" />
 	
-    <gap:plugin name="com.phonegap.plugin.statusbar" />
+    <plugin name="com.phonegap.plugin.statusbar" spec="1.1.0" source="pgb" />
 	
-    <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="StatusBarBackgroundColor" value="#EAEAEA" />
+    <feature name="StatusBar">
+        <param name="ios-package" value="CDVStatusBar" onload="true" />
+    </feature>
+    
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#455A6D" />
     <preference name="stay-in-webview" value="true" />    
 
     <icon src="icon.png" />

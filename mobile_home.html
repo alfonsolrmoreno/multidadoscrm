@@ -31,78 +31,70 @@
         <link href="assets/admin/layout2/css/custom.css" rel="stylesheet" type="text/css"/>
         <!-- END THEME STYLES -->
     </head>
-    <body class="page-boxed page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo" id="body_mobile_home" style="display:none">
+    <body class="page-boxed page-header-fixed  page-container-bg-solid page-sidebar-closed-hide-logo" id="body_mobile_home" style="display:none; background-color: #FFFFFF !important;">
         <div class="container">
             <!-- BEGIN CONTAINER -->
-            <div class="">
+            <div class="page-content">
                 <!-- BEGIN CONTENT -->
-                <div class="">
-                    <div class="page-content">
-                        <center>
-							<h3>CRM v2015.11</h3>
-                            <img src="img/logomultidados.png" alt="logo" class="logo-multidados" style="max-width: 250px;max-height: 200px;"/>
-                            <br>
-                            <br>
-							<a class="icon-btn link" id="?display=portal&m=servicedesk&a=abrir_oc_portal&nomenu=1">
-                                <i class="fa fa-ticket icon-size-mobile"></i>
-                                <div>Ocorrência</div>
-                                <span class="badge badge-info larger-badge"><b>+</b></span>
-                            </a>
-							<a class="icon-btn link" id="?display=portal&m=servicedesk&a=consultar_ocs_portal&nomenu=1&modal=false">
-                                <i class="fa fa-th-list"></i>
-                                <div>Consultar</div>
-                            </a>
-							<a class="icon-btn link" id="?display=portal&m=servicedesk&a=consultar_ocs_portal&nomenu=1&modal=false&nofilter=1&pendentes=1">
-                                <i class="fa fa-th-list"></i>
-                                <div>Pendentes</div>
-                                
-                                <!--<span class="badge badge-warning larger-badge" id='count_oco_pendentes'></span>-->
-                            </a>
-							<!--<a class="icon-btn link" id="?display=portal&m=servicedesk&a=ocorrencias&nomenu=1">
-                                <i class="fa fa-desktop"></i>
-                                <div>Portal</div>
-                            </a>-->
-							<a class="icon-btn link" id="?display=portal&m=servicedesk&a=aprovacoes_ocs_portal&nomenu=1">
-                                <i class="fa fa-check-square-o"></i>
-                                <div>Aprovar Ocs</div>
-                            </a>
-							<a class="icon-btn link" id="dashboard_padrao">
-                                <i class="fa fa-bar-chart-o"></i>
-                                <div>Dashboards</div>
-                            </a>
-                        </center>
-                        <div class="col-xs-12" style="margin: 8px 0  0  0;">
-                            <form class="form" name="go_form" id="go_form" method="post">
-                                <div class="form-group">
-                                    <div class="center-block" style="width: 184px;">
-                                        <div class="input-group">
-                                            <div class="input-group-addon" id="box-lupa"><i class="fa fa-search"></i></div>
-                                            <div>
-                                                <input type="number" class="form-control input-sm" id="numero" name="numero" placeholder="Nº da OC" style="width: 100px; ">
-                                                <div class="input-group-addon" style="border:none; padding:0px; width:40px;">
-                                                    <div onclick='irPara_mobile()' class="btn blue btn-sm">GO</div>
-                                                </div>
-                                            </div>
+                <!--<div class="">-->
+                <!--<div class="">-->
+                <center>
+                    <img src="img/logomultidados.png" alt="logo" class="logo-multidados" style="max-width: 250px;max-height: 200px;"/>
+                    <br>
+                    <br>
+                    <!--<a class="icon-btn" mobile="true" href="pages.html#page_timesheet">-->
+                    <a class="linkHome icon-btn" mobile="true" id="page_timesheet">
+                        <i class="icon-calendar"></i>
+                        <div>TimeSheet</div>
+                        <span class="badge badge-info larger-badge"><b>+</b></span>
+                    </a>
+                    <!--<a class="icon-btn" mobile="true" href="pages.html#page_despesa">-->
+                    <a class="linkHome icon-btn" mobile="true" id="page_despesa">
+                        <i class="icon-notebook"></i>
+                        <div>Despesas</div>
+                        <span class="badge badge-info larger-badge"><b>+</b></span>
+                    </a>
+                    <a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=abrir_oc_portal&nomenu=1" id="add_ocorrencia">
+                        <i class="fa fa-ticket icon-size-mobile"></i>
+                        <div>Ocorrência</div>
+                        <span class="badge badge-info larger-badge"><b>+</b></span>
+                    </a>
+                </center>
+                <div class="col-xs-12" style="margin: 8px 0  0  0;">
+                    <form class="form" name="go_form" id="go_form" method="post">
+                        <div class="form-group">
+                            <div class="center-block" style="width: 184px;">
+                                <div class="input-group">
+                                    <div class="input-group-addon" id="box-lupa"><i class="fa fa-search"></i></div>
+                                    <div>
+                                        <input type="number" class="form-control input-sm" id="numero" name="numero" placeholder="Nº da OC" style="width: 100px; ">
+                                        <div class="input-group-addon" style="border:none; padding:0px; width:40px;">
+                                            <div onclick='irPara_mobile()' class="btn blue btn-sm">GO</div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-						<!--
-                        <div class="well" style="padding: 0px;margin-top: 20px;background-color:#F1F3FA;font-size: 11px !important;margin-bottom:0px;">
-                            <address>
-                                <div id="feedback_sd"></div> <!-- lista de recados do servicedesk 
-                                <strong>Login:</strong> <span class="exibe_user"></span><br>
-                                <strong>URL:</strong> <span class="exibe_url"></span><br>
-                                <strong>BANCO:</strong> <span class="banco-nome"></span><br>
-                            </address>
-                        </div>-->
-                    </div>
+                    </form>
                 </div>
+                <center>
+                <div class="well" style="padding: 0px;margin-top: 20px;background-color:#FFF;font-size: 11px !important;margin-bottom:0px;">
+                    <address>
+                        <div id="feedback_sd"></div> <!-- lista de recados do servicedesk -->
+                        <!-- <strong>Login:</strong> <span class="exibe_user"></span><br>-->
+                        <strong>URL:</strong> <span class="exibe_url"></span><br>
+                        <!-- <strong>BANCO:</strong> <span class="banco-nome"></span><br>-->
+                    </address>
+                </div>
+                </center>
+                <!--</div>-->
+
                 <!-- END CONTENT -->
                 <!-- BEGIN QUICK SIDEBAR -->
                 <!--Cooming Soon...-->
                 <!-- END QUICK SIDEBAR -->
+                <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
 
@@ -122,13 +114,12 @@
         <script src="assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
         <script src="assets/admin/layout2/scripts/demo.js" type="text/javascript"></script>
 
-        <script src="js/infinity-scroll.js"></script>
+        <!--<script src="js/infinity-scroll.js"></script>-->
         <script src="js/jquery.toastmessage.js"></script>
         <script src="default/js/default.js"></script>
 
         <!-- Script que carrega mensagens do servicedesk na home -->
-        <!-- COMECOU DAR ERRO 01-03-2016 -->
-        <!--<script src="default/js/feedback_sd.js"></script>-->
+        <script src="default/js/feedback_sd.js"></script>
 
         <script>
             var objuser = localStorage['mobile_login'];
@@ -143,34 +134,14 @@
 
                     var Objeto_json = JSON.parse(objuser)
                     $('.logo-multidados').attr('src', Objeto_json['url_logo_cliente']);
-                    $('.exibe_user').html(Objeto_json['user_bd']);
                     $('.exibe_url').html(Objeto_json['url']);
-                    $('.banco-nome').html(Objeto_json['db']);
 
+                    //Andre Renovato - 11/11/2015
+                    //Agora o nome do banco e login esta sendo inserido em index.html
+                    //$('.banco-nome').html(Objeto_json['db']);
+                    //$('.exibe_user').html(Objeto_json['user_bd']);
 
-                    var link = '';
-                    //Acao do click do servicedesk em home, encaminha para pagina abertura ocorrencia
-                    $('.link').click(function () {
-                        if (typeof $(this).attr('id') != 'undefined') {
-                            window.location.href = Objeto_json['url'] + $(this).attr('id');
-                        }
-                    })
-
-                    //Recupera dashboard padrao e seta o link na home
-                    var idDash = Objeto_json['dashboard_default'];
-                    if(idDash > 0 && typeof(idDash) != 'undefined'){
-                        var lnk = "?display=portal&m=dashboards&a=view_dashboard_portal&iddashboards="+idDash+"&nomenu=1&menuItem=1";
-                    }else{
-                        var lnk = "?display=portal&m=dashboards&a=view_dashboard_portal&iddashboards=1&nomenu=1&menuItem=1";
-                    }
-                    
-                    $("#dashboard_padrao").attr("id",lnk);
-                    
-                    //Andre Renovato - 24/02/2016
-                    //setando contador de ocorrencias pendentes no botao de atalho 
-                    //if(Objeto_json['count_oco_pendentes'] > 0){
-                    //    $("#count_oco_pendentes").html('<b>'+Objeto_json['count_oco_pendentes']+'</b>');
-                    //}                    
+                    permissaoMenu(); //recupera permissao de menu e atalhos
                 });
             }
         </script>
@@ -178,4 +149,3 @@
     </body>
     <!-- END BODY -->
 </html>
-
