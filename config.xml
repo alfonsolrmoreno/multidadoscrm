@@ -5,8 +5,17 @@
         id        = "br.com.multidadosti.crm201511"
         version   = "3.0.6"
         versionCode="306"
-> 
+
     
+    <!--
+    Andre Renovato - 21/03/2016
+    ID MOBILE MULTIDADOS E CRM NA COMPILACAO ESCOLHER QUAL E O ID
+
+    
+    id        = "br.com.multidadosti.mobile"
+    id        = "br.com.multidadosti.crm201511"
+    -->
+
     <!-- rudi 07/10/2015 a versao mais nova (5.2) do cordova crashava no android em qqer tentativa de carregar recursos externos (js, etc)-->
     <!-- forçando versao antiga -->
     <!-- rudi 13/10/2015 : <preference name='phonegap-version' value='cli-5.2.0' /> -->
@@ -19,7 +28,7 @@
     
     <name>MultidadosTI</name>
     
-    <description>O aplicativo MultidadosTI - CRM</description>
+    <description>O aplicativo MultidadosTI</description>
     
     <author href="http://www.multidadosti.com.br" email="alfonso@multidadosti.com.br">MultidadosTI Team</author>
     
