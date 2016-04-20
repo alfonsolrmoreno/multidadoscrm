@@ -1,15 +1,9 @@
-$(document).ready(function () {
-	//Andre Renovato - 11/04/2016
-	//Gambi para remover attr de onclick do menu dashboards, por algum motivo existe chamadas para carregar
-	//os dashboards antes de logar, e neste caso o menu inclui um alert no botao dashboards e em outro momento
-	//inclui a lista de dashboards.
-    if($("#menu_dashboards").html().length > 0){
-        setTimeout(function(){
-            $("#menu_dashboards").removeAttr("onclick");            
-			//popMenuDash();    
-        },6000);
-    }
-});
+//#############################################################################################
+//###################################### TODO - 2016-04-20 ####################################
+//########## TODAS AS FUNCOES DO MOBILE DEVEM SER SETADAS NO ARQUIVO main-funcs.js,       #####
+//########## QUE SERA INCLUIDO DINAMICAMENTE E PODERA SER ACESSADA EXTERNAMENTE           #####
+//#############################################################################################
+//#############################################################################################
 
 function upload() {
     var data = new FormData();
