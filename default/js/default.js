@@ -1221,13 +1221,6 @@ function geraDespesa(idclienteprojeto, selecionado) {
     });
 }
 
-//Calcula Total Despesa
-function calcula_total_despesa() {
-    vlr_unitario = parseFloat($("#vlr_unitario").val().replace(',', '.'));
-    vlr_total = vlr_unitario * $("#qtde_despesa").val();
-    $("#valor_total").val(formatNumber(vlr_total, '.', 2, 2));
-}
-
 //Pega dados do  que foi clicado e deleta apaga
 $(document).delegate('#list_despesa .delete_despesa', 'click', function () {
     idlctodespesa = $(this).attr('id');
@@ -2090,29 +2083,32 @@ $(document).ready(function () {
     $(document).delegate('#codigo_fase', 'change', function () {
         seleciona_atividade(0);
     });
-    $("#vlr_unitario").blur(function ()
-    {
+        
+    $("#vlr_unitario").blur(function (){
         if ($("#vlr_unitario").val() != '') {
             if ($("#qtde_despesa").val() == 0 || $("#qtde_despesa").val() == '') {
                 $("#qtde_despesa").val(1);
             }
+            elValueToCurrency($("#vlr_unitario"));
             calcula_total_despesa();
+            
             //valor_unitario = parseFloat($("#vlr_unitario").val().replace(',', '.'));
-            valor_unitario = formatNumber(unformatNumber(this.value, ',', '.', 2, 2), ',', '.', 2, 2);
-            $("#vlr_unitario").val(valor_unitario);
+            //valor_unitario = formatNumber(unformatNumber(this.value, ',', '.', 2, 2), ',', '.', 2, 2);
+            //$("#vlr_unitario").val(valor_unitario);
         }
     });
-    $("#qtde_despesa").blur(function ()
-    {
+    
+    $("#qtde_despesa").blur(function (){
         calcula_total_despesa();
     });
-    $("#novo_timecard_top").click(function ()
-    {
+    
+    $("#novo_timecard_top").click(function (){
         clearInputs();
         $("#page_timesheet #selecione_cliente .ui-btn-text").text('Buscar Cliente');
         $("#page_timesheet #selecione_projeto .ui-btn-text").text('Buscar Projeto');
         $("#data_trabalhada").val(data_hoje);
     });
+    
     $("#novo_despesa_top").click(function () {
         clearInputs();
         $("#arquivo_md5").val('');
@@ -2393,10 +2389,12 @@ $(document).ready(function () {
 
     //Verifica se existe user logado    
     if (!objIsEmpty(Objeto_json)) {
-        //Inclui js manipula upload camera. Incluimos um get randomico para n?o correr o risco do arquivo n?o ser instanciado
+        //Inclui js externo. Incluimos um get randomico para nao correr o risco do arquivo nao ser instanciado apos alguma modificado
         var rand = Math.ceil(Math.random() * 999999999999999) + 1;
-        var x = COMMON_URL_MOBILE + '/js/upload-despesa.js?v=' + rand;
+        var x = COMMON_URL_MOBILE + 'js/upload-despesa.js?v=' + rand;
+        var mainFuncs = COMMON_URL_MOBILE + 'js/main-funcs.js?v=' + rand;
         var scriptAppend = '<script type="text/javascript" src="' + x + '"></script>';
+        scriptAppend += '<script type="text/javascript" src="' + mainFuncs + '"></script>';
 
         $('head').append(scriptAppend);
      }
