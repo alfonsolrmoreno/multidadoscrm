@@ -2395,7 +2395,6 @@ $(document).ready(function () {
         var mainFuncs = COMMON_URL_MOBILE + 'js/main-funcs.js?v=' + rand;
         var scriptAppend = '<script type="text/javascript" src="' + x + '"></script>';
         scriptAppend += '<script type="text/javascript" src="' + mainFuncs + '"></script>';
-
         $('head').append(scriptAppend);
      }
 
