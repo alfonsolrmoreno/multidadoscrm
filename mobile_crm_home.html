@@ -39,16 +39,18 @@
                 <div class="">
                     <div class="page-content">
                         <center>
-							<!--<h3>Centro de Serviços Compartilhados</h3>-->
+                        <br>
                             <img src="img/logomultidados.png" alt="logo" class="logo-multidados" style="max-width: 250px;max-height: 200px;"/>
                             <br>
                             <br>
                             <a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=abrir_oc_portal&nomenu=1" id="add_ocorrencia">
-                                <i class="fa fa-ticket icon-size-mobile"></i>
+                                <!-- <i class="fa fa-ticket icon-size-mobile"></i> inacio 10-05-2016 com esse icon-size estava desalinhando as boxs --> 
+                                <i class="fa fa-ticket"></i>
                                 <div>Ocorrência</div>
                                 <span class="badge badge-info larger-badge"><b>+</b></span>
                             </a>
-							<a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=consultar_ocs_portal&nomenu=1&modal=false" id="listar_ocorrencia">
+                            
+                            <a class="icon-btn linkHome" link="?display=portal&m=servicedesk&a=consultar_ocs_portal&nomenu=1&modal=false" id="listar_ocorrencia">
                                 <i class="fa fa-th-list"></i>
                                 <div>Consultar</div>
                             </a>
@@ -80,7 +82,7 @@
                                             <div>
                                                 <input type="number" class="form-control input-sm" id="numero" name="numero" placeholder="Nº da OC" style="width: 100px; ">
                                                 <div class="input-group-addon" style="border:none; padding:0px; width:40px;">
-                                                    <div onclick='irPara_mobile()' class="btn blue btn-sm">GO</div>
+                                                    <div onclick='parent.preloadIframe(); irPara_mobile()' class="btn blue btn-sm">GO</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -130,7 +132,7 @@
         <script src="default/js/feedback_sd.js"></script>
 
         <script>
-            var objuser = localStorage['mobile_login'];
+            var objuser = localStorage[app_multi+'mobile_login'];
             //rudi 7/10/2015 escondendo o body, soh exibindo se estiver logado
             if (typeof objuser == "undefined" || !objuser || objuser === null) {
 
@@ -147,11 +149,12 @@
                     
                     //Andre Renovato - 24/02/2016
                     //setando contador de ocorrencias pendentes no botao de atalho
+                    
                     $.ajax({
                         type: 'POST',
                         url: COMMON_URL+'/ajax_bootstrap.php',
                         dataType: "jsonp",
-                        timeout: 1000,
+                        timeout: 5000,
                         crossDomain: true,
                         data: {
                             cm: 'UsuarioPaineis->getOcorrenciasPendentes',
@@ -161,10 +164,11 @@
                             if(data > 0){
                                 $("#count_oco_pendentes").html(data);
                             }
+                        },
+                        error:  function (data) {
+                            alert('error:');
                         }
-                    });                    
-                    
-                    
+                    });  
                 });
             }
         </script>

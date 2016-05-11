@@ -439,16 +439,17 @@ Page Header
 }
 .page-header.navbar .page-top div > .saudacao {
     display: inline-block;
-    font-size: 11px;
+    font-size: 0.9em;
     font-weight: 400;
     padding:15px 0 0 5px;
     margin-left: 10px;
 }
 .page-header.navbar .page-top div > .saudacao-data {
     display: inline-block;
-    font-size: 11px;
+    font-size: 0.9em;
     font-weight: 400;
     padding:0 0 0 5px;
+    margin-top: 3px;
     margin-left: 10px;
     float:left;
 }
@@ -855,13 +856,22 @@ Page container
     margin-top: 68px !important;
   }
 }
+
 /* Incluido para o samsung galaxy tab 3 */
 @media (max-width: 903px) {
+  /* Page container */
+  .page-header-fixed.page-header-fixed-mobile .page-container {
+    margin-top: 69px !important;
+  }
+}
+
+@media (max-width: 350px) {
   /* Page container */
   .page-header-fixed.page-header-fixed-mobile .page-container {
     margin-top: 136px !important;
   }
 }
+
 /******************
 Page Quick Sidebar
 ******************/
@@ -2210,7 +2220,7 @@ Page footer
 ***/
 .page-footer {
   padding: 8px 20px 5px 20px;
-  font-size: 12px;
+  font-size: 1.0em;
   height: 33px;
 }
 .page-footer:before, .page-footer:after {

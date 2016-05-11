@@ -34,11 +34,9 @@
     <body class="page-boxed page-header-fixed  page-container-bg-solid page-sidebar-closed-hide-logo" id="body_mobile_home" style="display:none; background-color: #FFFFFF !important;">
         <div class="container">
             <!-- BEGIN CONTAINER -->
-            <div class="page-content">
-                <!-- BEGIN CONTENT -->
-                <!--<div class="">-->
-                <!--<div class="">-->
+            <div>
                 <center>
+                    <br>
                     <img src="img/logomultidados.png" alt="logo" class="logo-multidados" style="max-width: 250px;max-height: 200px;"/>
                     <br>
                     <br>
@@ -87,14 +85,6 @@
                     </address>
                 </div>
                 </center>
-                <!--</div>-->
-
-                <!-- END CONTENT -->
-                <!-- BEGIN QUICK SIDEBAR -->
-                <!--Cooming Soon...-->
-                <!-- END QUICK SIDEBAR -->
-                <!--</div>-->
-                <!--</div>-->
             </div>
         </div>
 
@@ -118,11 +108,12 @@
         <script src="js/jquery.toastmessage.js"></script>
         <script src="default/js/default.js"></script>
 
-        <!-- Script que carrega mensagens do servicedesk na home -->
+        <!-- Script que carrega mensagens do servicedesk na home 
         <script src="default/js/feedback_sd.js"></script>
+        -->
 
         <script>
-            var objuser = localStorage['mobile_login'];
+            var objuser = localStorage[app_multi+'mobile_login'];
             //rudi 7/10/2015 escondendo o body, soh exibindo se estiver logado
             if (typeof objuser == "undefined" || !objuser || objuser === null) {
 

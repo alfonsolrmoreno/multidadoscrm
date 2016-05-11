@@ -23,6 +23,7 @@ var Layout = function() {
 
         if (body.hasClass("page-footer-fixed") === true && body.hasClass("page-sidebar-fixed") === false) {
             var available_height = Metronic.getViewPort().height - $('.page-footer').outerHeight() - $('.page-header').outerHeight();
+            available_height = available_height - 55; // inacio 04-05-2016 
             if (content.height() < available_height) {
                 content.attr('style', 'min-height:' + available_height + 'px');
             }

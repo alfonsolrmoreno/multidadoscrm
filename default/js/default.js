@@ -7,13 +7,15 @@
 }*/
 
 //
+var app_multi = 'crm'; // isso ser para separar os storage
+//var app_multi = 'crm';
 var version_system = '2016.01';
 //versao do mobile para mostrar no footer
 var vs_mobile = 'v.3.0.6';
 var debug_mode = false;
 var debug_js_errors = false;
 var StatusMobiscroll = false;
-var Objeto_real = localStorage['mobile_login'];
+var Objeto_real = localStorage[app_multi+'mobile_login'];
 
 var arrayDia = new construirArray(7);
 arrayDia[0] = "Domingo";
@@ -207,24 +209,24 @@ function getDiaExtenso(dia) {
 
 pesq_autocomplete = '';
 
-function clearInputs() {
+function clearInputs(op) {
     $(":input").each(function () {
-        $(this).val('');
+        value = '';
+        if(this.name == 'data_trabalhada' || this.name == 'data_lcto') {
+            value = data_hoje;
+        }
+        
+        $(this).val(value);
     });
     
     $("#selecione_cliente .ui-btn-text").text('Buscar Cliente');
     $("#selecione_projeto .ui-btn-text").text('Buscar Projeto');
 
-
-
-
-    //$("#codigo_despesa").html('<option selected="selected" >Selecione uma despesa</option>');
-    //$("#codigo_atividade").html('<option selected="selected">Selecione uma atividade</option>');
-    //$("#codigo_fase").html('<option selected="selected">Selecione uma fase</option>');
-
     $("#popup_imagem").html('');
 
-    geraDespesa(0, 0);
+    if(typeof op == 'undefined' || op != 'ts') {
+        geraDespesa(0, 0);
+    }
 }
 
 //Verifica se suporta web storage
@@ -363,10 +365,13 @@ function formatNumber(n, dec_sep, round, precision) {
 
 //############## INICIO LOGIN #################################################
 //#############################################################################
-function loading(showOrHide) {
+function loading(showOrHide,texto) {
+    
+    if(typeof texto == 'undefined') texto = 'Carregando...';
+    
     if (typeof $.mobile != 'undefined' && typeof $.mobile.loading != 'undefined') {
         $.mobile.loading(showOrHide, {
-            text: 'Carregando...',
+            text: texto,
             textVisible: true,
             theme: 'b'
         });
@@ -407,6 +412,9 @@ function mobile_login(obj) {
     }
 
     if (dados['URL'] != "") {
+        
+        loading('show','Verificando a URL');
+        
         var ajax_file_url = 'verifica_url.php';
         //Trata URL sem http://
         if ((dados['URL'].substr(0, 7)) != 'http://') {
@@ -441,7 +449,7 @@ function mobile_login(obj) {
 
             dados['URL'] = 'http://' + url_new;
         }
-
+        
         //VERIFICA SE EXISTE (/) NO FIM DA URL E REMOVE CASO EXISTA
         if ((dados['URL'].substr(dados['URL'].length - 1, 1)) == '/') {
             dados['URL'] = dados['URL'].substr(0, dados['URL'].length - 1);
@@ -464,7 +472,6 @@ function mobile_login(obj) {
             alert('COMMON_URL_MOBILE: ' + COMMON_URL_MOBILE);
             alert(dados['URL'] + '/mobile/' + ajax_file_url);
         }
-
 
         $.ajax({
             type: 'POST',
@@ -489,6 +496,8 @@ function mobile_login(obj) {
                 if (debug_mode) {
                     alert('SUCCESS');
                 }
+                
+                loading('show','Autenticando o Usuario');
 
                 $.ajax({
                     type: 'POST',
@@ -521,7 +530,6 @@ function mobile_login(obj) {
                         window.location.href = 'pages.html#page_login';
                     },
                     success: function (data) {
-                        //alert(version_system +' - '+ data['version']);
                         if (data['erro']) {
                             loading('hide');
                             $().toastmessage('showErrorToast', data['erro']);
@@ -548,20 +556,18 @@ function mobile_login(obj) {
                                 'version': data['version'],
                                 'page_home': data['page_home']};
                                 //'count_oco_pendentes': data['count_oco_pendentes']};
-                            localStorage.setItem('mobile_login', JSON.stringify(Objeto));
-                            //var Objeto_real = localStorage['mobile_login'];
-                            var Objeto_real = localStorage.getItem('mobile_login')
+                            localStorage.setItem(app_multi+'mobile_login', JSON.stringify(Objeto));
+
+                            var Objeto_real = localStorage.getItem(app_multi+'mobile_login')
                             var Objeto_json = JSON.parse(Objeto_real);
 
                             loading('hide');
-                            popMenuDash();
-
+                            
                             if (obj) {
                                 $().toastmessage('showSuccessToast', 'Login realizado com sucesso');
                             } else {
                                 window.location.href = 'index.html';
                             }
-
                         }
                     }
                 });
@@ -570,12 +576,41 @@ function mobile_login(obj) {
     }
 }
 
+
+//inacio 5/5/2016 so para saber se a sessao no server esta OK
+function verifica_sessao() {
+    
+    
+        $.ajax({
+            type: 'GET',
+            url: COMMON_URL_MOBILE + '/session.php',
+            dataType: "jsonp",
+            timeout: 1000,
+            crossDomain: true,
+            async: false,
+            error: function () {
+                    alert('erro');
+
+            },
+            success: function (data) {
+                
+                 console.log(data);
+                
+            }
+        });
+    
+}
+    
+    
+
+
 //rudi 7/10/2015 retornando true tambem, e soh seguindo se for true na index.html
 function verifica_logado() {
+    
     if (debug_mode)
         alert('verifica_logado');
 
-    var Objeto_real = localStorage.getItem('mobile_login')
+    var Objeto_real = localStorage.getItem(app_multi+'mobile_login')
 
     if (typeof Objeto_real == "undefined" || !Objeto_real || Objeto_real === null) {
         if (debug_mode)
@@ -594,42 +629,64 @@ function verifica_logado() {
 
         $.ajax({
             type: 'GET',
-            url: COMMON_URL_MOBILE + '/checkServerOnline.php',
-            dataType: "json",
+            url: COMMON_URL_MOBILE + 'checkServerOnlineNew.php',
+            dataType: "jsonp", // aqui estava json e isso não pega a sessão corretamente. //inacio 06-05-2016
             timeout: 1000,
             crossDomain: true,
-            async: false,
+            //async: false, // comentei isso, pois se a URL estivesse incorreta nao caia no error simplesmente trava. //inacio 06-05-2016
+            success: function (data) {
+                if (typeof data.idvendedor == 'undefined' || data.idvendedor == '') {
+                    mobile_login(Objeto_real);
+                }
+            
+                $("#conteudo").attr("src", pageHome); //Carregando home padrao
+                setSaudacao(); //inclui saudacao (nome user, dia ano e mes)  
+                popMenuDash(); //recupera menu dashboards
+                
+                //Andre Renovato - 11/11/2015
+                //Incluindo nome do banco e user no menu desconectar
+                var namedb = Objeto_json['db'];
+                var nomeuser = Objeto_json['user_bd'];
+                $('.banco-nome').html(namedb.toLowerCase());
+                $('.exibe_user').html(nomeuser.toLowerCase());
+                
+                permissaoMenu(); //recupera permissao de menu e atalhos
+                
+            },
             error: function () {
                 if (debug_mode)
                     alert('erro no verifica_logado');
 
                 //CASO A URL ESTEJA INATIVA RETORNA PARA TELA DE LOGIN
+                window.location.href = 'pages.html#page_login';                
+                return false;
+            }/*,
+            jsonpCallback: function () {
+                alert('Erro inesperado, endereco de checagem do servidor incorreto');
                 window.location.href = 'pages.html#page_login';
-                redirecting = true;
-            },
-            success: function (data) {
-                if (debug_mode)
-                    alert('success no verifica_logado idvendedor:' + data.idvendedor);
-
-                if (typeof data.idvendedor == 'undefined' || data.idvendedor == '') {
-                    mobile_login(Objeto_real);
-                }
-            }
+                return false;
+            }*/
         });
-
-        return redirecting ? false : true;
-
     }
 }
 
 function Storagelogout(){
-    if(localStorage.getItem('mobile_login')){
-        var Objeto_json = JSON.parse(localStorage.getItem('mobile_login'));
-        if(typeof Objeto_json.senha != 'undefined')
-            delete Objeto_json.senha;
+    if(localStorage.getItem(app_multi+'mobile_login')){
+        var Objeto_json = JSON.parse(localStorage.getItem(app_multi+'mobile_login'));
+        
+        // inacio 04-05-2016
+        // limpa todos caches e só deixa a URL e o nome usuario
+        url_cache = Objeto_json.url;
+        user_bd_cache = Objeto_json.usuario_nome;
 
-        localStorage.setItem('mobile_login',JSON.stringify(Objeto_json));
-    }    
+        localStorage.clear();
+        
+        var Objeto = {
+            'url': url_cache,
+            'user_bd': user_bd_cache};
+        
+        localStorage.setItem(app_multi+'mobile_login', JSON.stringify(Objeto));
+    }
 }
 
 function ajusteUrl(url) {
@@ -707,7 +764,7 @@ function setSaudacao() {
     var saudacao = '';
     var saudacao_data = '';
 
-    var dados = JSON.parse(localStorage['mobile_login']);
+    var dados = JSON.parse(localStorage[app_multi+'mobile_login']);
     var nome_user = dados['nome_senha'];
 
     var d = new Date();
@@ -767,6 +824,7 @@ function popMenuDash() {
 }
 
 function attrSrcIframe(url) {
+    preloadIframe();
     $("#conteudo").attr("src", COMMON_URL + url);
 }
 
@@ -936,7 +994,6 @@ function selecionaValor(valor, tipo, id, id2, nome2, tipo_projeto) {
     }
     else if (tipo == 'p')
     {
-
         $("#codigo").val(id);
         $("#page_timesheet #selecione_projeto .ui-btn-text").text(valor);
         //$('#busca_projeto_timesheet').show();
@@ -944,20 +1001,22 @@ function selecionaValor(valor, tipo, id, id2, nome2, tipo_projeto) {
         if ($("#codigo_auxiliar").val() == '')
         {
             $("#codigo_auxiliar").val(id2);
-            //$(".ui-body-c").val(nome2);
             $("#page_timesheet #selecione_cliente .ui-btn-text").text(nome2);
-            //$('#busca_cliente_timesheet').show();
-            //$("#busca_cliente_timesheet").val(nome2);
-            if (tipo_projeto == 'P') {
-                seleciona_task_parent($("#codigo_auxiliar").val(), id, 0);
-            } else {
-                seleciona_fase($("#codigo_auxiliar").val(), id, 0, 0);
+
+            if($(location).attr('hash') == '#page_timesheet') {
+                if (tipo_projeto == 'P') {
+                    seleciona_task_parent($("#codigo_auxiliar").val(), id, 0);
+                } else {
+                    seleciona_fase($("#codigo_auxiliar").val(), id, 0, 0);
+                }
             }
         } else {
-            if (tipo_projeto == 'P') {
-                seleciona_task_parent($("#codigo_auxiliar").val(), id, 0);
-            } else {
-                seleciona_fase($("#codigo_auxiliar").val(), id, 0, 0);
+            if($(location).attr('hash') == '#page_timesheet') {
+                if (tipo_projeto == 'P') {
+                    seleciona_task_parent($("#codigo_auxiliar").val(), id, 0);
+                } else {
+                    seleciona_fase($("#codigo_auxiliar").val(), id, 0, 0);
+                }
             }
         }
     }
@@ -1214,8 +1273,9 @@ function geraDespesa(idclienteprojeto, selecionado) {
         });
         $("#codigo_despesa").html(options);
         loading('hide');
-        //$("#codigo_despesa").selectmenu("refresh");
-        $(document).bind('pageinit', function () {
+        
+        $(document).on("pageinit", "#page_despesa", function () {
+        //$(document).bind('pageinit', function () {
             $('#codigo_despesa').selectmenu('refresh');
         });
     });
@@ -1240,7 +1300,7 @@ $(document).delegate('#list_despesa .delete_despesa', 'click', function () {
         }).then(function (data)
         {
             if (data == 'T') {
-                $().toastmessage('showSuccessToast', 'Despesa inativada com sucesso!');
+                $().toastmessage('showSuccessToast', 'Despesa exclu&iacute;da com sucesso!');
                 $("#despesa_" + idlctodespesa).hide(500);
             } else {
                 $().toastmessage('showErrorToast', data);
@@ -1278,7 +1338,7 @@ function selecionaValorDespesa(valor, tipo, id, id2, nome2){
 
 //Lista clientes despesa
 $(document).delegate('#page_despesa #selecione_cliente', 'click', function () {
-    var Objeto_json = JSON.parse(localStorage.getItem('mobile_login'));
+    var Objeto_json = JSON.parse(localStorage.getItem(app_multi+'mobile_login'));
     $("#page_despesa_sub").hide();
     $("#save_despesa_top").hide();
 
@@ -1295,7 +1355,7 @@ $(document).delegate('#page_despesa #selecione_cliente', 'click', function () {
         // displayed. You can change this if you want.
         delay: 500, // When you scroll down the posts will load after a delayed amount of time.
         // This is mainly for usability concerns. You can alter this as you see fit
-        scroll: true, // The main bit, if set to false posts will not load as the user scrolls.
+        scroll: false, // tirando por estar influenciando na tela de lancamento qdo rola a barra // The main bit, if set to false posts will not load as the user scrolls.
         // but will still load if the user clicks.
         q: $('#busca_cliente_despesa').val(),
         idempresa: Objeto_json.idempresa_vendedor,
@@ -1327,7 +1387,7 @@ $(document).delegate("#page_despesa [id^='idcliente_']", 'click', function () {
 });
 //LISTA PROJETOS DESPESA
 $(document).delegate('#page_despesa #selecione_projeto', 'click', function () {
-    var Objeto_json = JSON.parse(localStorage.getItem('mobile_login'));    
+    var Objeto_json = JSON.parse(localStorage.getItem(app_multi+'mobile_login'));    
     
     pesq_autocomplete = 'p';
     $("#divautocomplete_despesa").show();
@@ -1343,7 +1403,7 @@ $(document).delegate('#page_despesa #selecione_projeto', 'click', function () {
         // displayed. You can change this if you want.
         delay: 500, // When you scroll down the posts will load after a delayed amount of time.
         // This is mainly for usability concerns. You can alter this as you see fit
-        scroll: true, // The main bit, if set to false posts will not load as the user scrolls.
+        scroll: false, // tirando por estar influenciando na tela de lancamento qdo rola a barra // The main bit, if set to false posts will not load as the user scrolls.
         // but will still load if the user clicks.
         q: $('#busca_projeto_despesa').val(),
         url: COMMON_URL_MOBILE + '/search.php',
@@ -1385,8 +1445,6 @@ $(document).delegate("[id^='idclienteprojeto_']", 'click', function () {
 
 //Buscar timesheet conforme as datas
 function buscar_timesheet(data) {
-    //clearInputs();
-    //if (data) {
     loading('show');
     if (data) {
         data = dateFormatDisplayToTimestamp(data);
@@ -1405,11 +1463,9 @@ function buscar_timesheet(data) {
     }).then(function (data)
     {
         $("#list").html(data);
-        //$("#list").listview("refresh");
         $('#list').listview().listview('refresh');
         loading('hide');
     });
-    //}
 }
 
 
@@ -1479,7 +1535,7 @@ $(document).delegate('#list .btn-timesheet', 'click', function () {
 });
 //Lista clientes no timesheet
 $(document).delegate('#page_timesheet #selecione_cliente', 'click', function () {
-    var Objeto_json = JSON.parse(localStorage.getItem('mobile_login'));
+    var Objeto_json = JSON.parse(localStorage.getItem(app_multi+'mobile_login'));
     
     pesq_autocomplete = 'c';
     $("#divautocomplete_timecard").show();
@@ -1496,7 +1552,7 @@ $(document).delegate('#page_timesheet #selecione_cliente', 'click', function () 
         // displayed. You can change this if you want.
         delay: 500, // When you scroll down the posts will load after a delayed amount of time.
         // This is mainly for usability concerns. You can alter this as you see fit
-        scroll: true, // The main bit, if set to false posts will not load as the user scrolls.
+        scroll: false, // tirando por estar influenciando na tela de lancamento qdo rola a barra // The main bit, if set to false posts will not load as the user scrolls.
         // but will still load if the user clicks.
         q: $('#busca_cliente_timesheet').val(),
         url: COMMON_URL_MOBILE + '/search.php',
@@ -1527,7 +1583,7 @@ $(document).delegate("[id^='idcliente_']", 'click', function () {
 });
 //Seleciona o projeto
 $(document).delegate('#page_timesheet #selecione_projeto', 'click', function () {
-    var Objeto_json = JSON.parse(localStorage.getItem('mobile_login'));
+    var Objeto_json = JSON.parse(localStorage.getItem(app_multi+'mobile_login'));
     
     pesq_autocomplete = 'p';
     $("#divautocomplete_timecard").show();
@@ -1542,7 +1598,7 @@ $(document).delegate('#page_timesheet #selecione_projeto', 'click', function () 
         // displayed. You can change this if you want.
         delay: 500, // When you scroll down the posts will load after a delayed amount of time.
         // This is mainly for usability concerns. You can alter this as you see fit
-        scroll: true, // The main bit, if set to false posts will not load as the user scrolls.
+        scroll: false, // tirando por estar influenciando na tela de lancamento qdo rola a barra // The main bit, if set to false posts will not load as the user scrolls.
         // but will still load if the user clicks.
         q: $('#busca_projeto_timesheet').val(),
         url: COMMON_URL_MOBILE + '/search.php',
@@ -1912,6 +1968,7 @@ function onFail(message) {
 
 //TODA ACAO COMUM EM JAVASCRIPT DEVE SER TRATADA AQUI
 $(document).ready(function () {
+    
     //exibe campos de intervalo para apontar horas
     $("#div_intervalo").hide()
     $("#monstrarIntervalo").click(function () {
@@ -1921,6 +1978,9 @@ $(document).ready(function () {
     var link = '';
     //Acao do click dos botoes de atalho na home(mobile_home.html / mobile_crm_home.html), onde encaminha para pagina correta.
     $('.linkHome').click(function () {
+        
+        parent.preloadIframe();
+        
         //alert('VERSAO MOBILE: '+version_system+' - VERSAO APLICAO: ');
         //valida se e uma page do index mobile antigo, tela do portal ou nova pagina
         if ($(this).attr('id') == 'sem_acesso') {
@@ -1945,33 +2005,6 @@ $(document).ready(function () {
         }
     })
 
-    //Acao do click no menu, onde encaminha para pagina correta.
-    $('.link').click(function () {
-        //alert('VERSAO MOBILE: '+version_system+' - VERSAO APLICAO: ');
-        //valida se e uma page do index mobile antigou, tela do portal ou nova pagina
-        //if ($(this).attr('id') == 'mobile_home.html') {
-        if ($(this).attr('id') == 'page_home') {
-            link = pageHome;
-        } else if ($(this).attr('id') == 'sem_acesso') {
-            link = COMMON_URL + '/timesheet/multidados/module/';
-        } else {
-            if ($(this).attr('mobile') == 'true') {
-                //setar o caminho absoluto, para o aplicativo ler a pagina da sua raiz
-                link = 'pages.html#' + $(this).attr('id');
-            } else {
-                //setar url do sistema, pois o portal é chamado atraves da url
-                //Andre Renovato - 12/11/2015
-                //nao estamos mais tratando pelo id porque o jquery apresentava problema ao tentar setar o id para fazer alguma ação, provavelmente
-                //por causa dos caracteres "?#=". Neste caso no menu os links externos vamos remover a url que ficava no id e jogar para o novo paramentro link, 
-                //e o id vai ficar com o nome da acao menu. Ex. Aprovar Horas (id="aprov_horas" link="?display=portal&m=timesheet&a=timesheet_aprovacoes_portal&nomenu=1")                
-                //link = COMMON_URL + $(this).attr('id');
-                link = COMMON_URL + $(this).attr('link');
-            }
-        }
-
-        //Andre Renovato - 16/11/2015
-        $("#conteudo").attr("src", link);
-    })
 
     //Pega data do dia ########################################################
     var data = new Date();
@@ -1990,14 +2023,11 @@ $(document).ready(function () {
         position: 'middle-center',
         type: 'success'
     });
+    
     //Define footer para todas as páginas
     $(".name_powered").html('Powered by MultidadosTI &copy; ' + vs_mobile);
 
     $(document).on("pageinit", function () {
-        // Inacio 30/09/2015
-        // Agora é só na página index.html     
-        //$resposta = verifica_logado();
-
         $("#data_lcto").val(data_hoje);
         $("#data_trabalhada").val(data_hoje);
         if ($("#filtro_data_trabalhada").val() == '') {
@@ -2006,19 +2036,9 @@ $(document).ready(function () {
         if ($("#dateinput2").val() == '') {
             $("#dateinput2").val(data_hoje);
         }
-
-        //buscar_timesheet($("#filtro_data_trabalhada").val());
-        //buscar_despesa($("#dateinput2").val());
     });
 
-    $("#botao_entrar").click(function ()
-    {
-        mobile_login();
-    });
-    $("#icon_sair").click(function ()
-    {
-        mobile_logout();
-    });
+    
     $("#save_timecard_top").click(function ()
     {
         salvar_timesheet();
@@ -2035,6 +2055,7 @@ $(document).ready(function () {
     {
         salvar_despesa();
     });
+    
     ua = navigator.userAgent.toLowerCase();
     //verifica se é ios
     if (ua.indexOf('iphone') != -1 || ua.indexOf('ipod') != -1) {
@@ -2103,7 +2124,7 @@ $(document).ready(function () {
     });
     
     $("#novo_timecard_top").click(function (){
-        clearInputs();
+        clearInputs('ts');
         $("#page_timesheet #selecione_cliente .ui-btn-text").text('Buscar Cliente');
         $("#page_timesheet #selecione_projeto .ui-btn-text").text('Buscar Projeto');
         $("#data_trabalhada").val(data_hoje);
@@ -2367,10 +2388,6 @@ $(document).ready(function () {
             myselect[0].selectedIndex = 0;
             myselect.selectmenu("refresh");
             
-            var myselect = $("select#codigo_despesa");
-            myselect[0].selectedIndex = 0;
-            myselect.selectmenu("refresh");
-            
         }        
     });
 
@@ -2382,22 +2399,21 @@ $(document).ready(function () {
             var myselect = $("select#codigo_despesa");
             myselect[0].selectedIndex = 0;
             myselect.selectmenu("refresh");
-            
         }        
     });
     //Fim limpeza inputs 17/03/2016
 
-    //Verifica se existe user logado    
-    if (!objIsEmpty(Objeto_json)) {
+    //Verifica se existe user logado
+    if (!objIsEmpty(Objeto_json) && Objeto_json.usuario_id) {
         //Inclui js externo. Incluimos um get randomico para nao correr o risco do arquivo nao ser instanciado apos alguma modificado
         var rand = Math.ceil(Math.random() * 999999999999999) + 1;
         var x = COMMON_URL_MOBILE + 'js/upload-despesa.js?v=' + rand;
         var mainFuncs = COMMON_URL_MOBILE + 'js/main-funcs.js?v=' + rand;
         var scriptAppend = '<script type="text/javascript" src="' + x + '"></script>';
         scriptAppend += '<script type="text/javascript" src="' + mainFuncs + '"></script>';
+
         $('head').append(scriptAppend);
      }
-
 });//fim doc ready
 
 function LoadMobiScroll() {

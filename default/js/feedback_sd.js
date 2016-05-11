@@ -1,4 +1,4 @@
-var Objeto_real = localStorage['mobile_login'];
+var Objeto_real = localStorage[app_multi+'mobile_login'];
 
 var Objeto_json = JSON.parse(Objeto_real)
 var COMMON_URL_MOBILE = Objeto_json.url + '/mobile/';

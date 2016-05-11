@@ -61,11 +61,53 @@
 
             @media (max-width: 767px){
                 .page-content-wrapper .page-content {
-                    padding: 5px 5px 0px 5px !important;
+                    padding: 0px !important;
                 }
             }
 
         </style>
+        
+        <script>
+            var conexao_ativa = true;
+            var verificacao_rapida = false;
+            var tempo_verificacao = 30000;  // a cada 30 segundos verifica a conexao
+            
+            function checkNetConnection() {
+
+                    var d = new Date();
+                    console.log('verifica: ' + d.toLocaleString() );
+
+                    var scriptElem = document.createElement('script');
+                    scriptElem.type = 'text/javascript';
+
+                    scriptElem.onerror = function () { 
+                             
+                            if(conexao_ativa) {
+                                loading('show',"Sem conexão com a Internet. Favor verificar o sinal."); 
+                            }
+                            
+                            conexao_ativa = false;
+                            if(verificacao_rapida == false) {
+                                    verificacao_rapida = setInterval(checkNetConnection, 1000); // a cada 2 segundos verifica a conexao, para ser mais rápido
+                            }
+                    };
+
+                    scriptElem.src = COMMON_URL_MOBILE+'/checkConexaoCliente.php';
+                    document.getElementsByTagName("body")[0].appendChild(scriptElem);
+
+                    if(conexao_ativa && verificacao_rapida) {
+                            console.log('Limpar: ' + d.toLocaleString() + '('+verificacao_rapida+')');
+
+                            clearInterval(verificacao_rapida);
+                            verificacao_rapida = false;
+                    }
+
+                    conexao_ativa = true;
+                    loading('hide');	
+            }
+            
+        </script>
+        
     </head>
     <!-- END HEAD -->
     <!-- BEGIN BODY -->
@@ -607,9 +649,14 @@
                 <!-- BEGIN CONTENT -->
                 <div class="page-content-wrapper">
                     <div class="page-content">
+                        
+                <!-- inacio testes pq nao estava encontrando a session aberta no login. 
+                <a href="javascript:verifica_logado()">logado</a>
+                <a href="javascript:verifica_sessao()">session</a>-->
                         <div class="wrapper">
                             <div class="h_iframe">
                                 <iframe id="conteudo" src="" frameborder="0" allowfullscreen></iframe>
+                                
                             </div>
                         </div>
                     </div>
@@ -670,51 +717,77 @@
         <script src="js/jquery.toastmessage.js"></script>
         <script src="default/js/default.js"></script>
         <!-- END JAVASCRIPTS -->
-    </body>
+        <script>
+            
+            function preloadIframe() {
+                $('.h_iframe').css('display', 'none');
+                loading('show','Aguarde, carregando o conteudo');
+
+                $(document).ready(function() {
+                    $('iframe').load(function() {
+                        $('.h_iframe').css('display', 'block');
+                        loading('hide');
+                    });
+                });
+            }
+            
+            </script>
+        
     <script>
         $(function () {
-            //Andre Renovato - 16/11/2015
-            //Carregando home padrao
-            $("#conteudo").attr("src", pageHome);
+            Metronic.init(); // init metronic core componets
+            Layout.init(); // init layout
             
-            if (verifica_logado()) {
-                popMenuDash(); //recupera menu dashboards
-                Metronic.init(); // init metronic core componets
-                Layout.init(); // init layout
-                setSaudacao(); //inclui saudacao (nome user, dia ano e mes)             
-                
-                //Andre Renovato - 11/11/2015
-                //Incluindo nome do banco e user no menu desconectar
-                var namedb = Objeto_json['db'];
-                var nomeuser = Objeto_json['user_bd'];
-                $('.banco-nome').html(namedb.toLowerCase());
-                $('.exibe_user').html(nomeuser.toLowerCase());
-                
-                if (Layout.is_init) {
-                    //popula Menu de Dashboards
-                    popMenuDash();
+            //Acao do click no menu, onde encaminha para pagina correta.
+            $('.link').click(function () {
+
+                //alert('VERSAO MOBILE: '+version_system+' - VERSAO APLICAO: ');
+                //valida se e uma page do index mobile antigou, tela do portal ou nova pagina
+                //if ($(this).attr('id') == 'mobile_home.html') {
+                if ($(this).attr('id') == 'page_home') {
+                    link = pageHome;
+                } else if ($(this).attr('id') == 'sem_acesso') {
+                    link = COMMON_URL + '/timesheet/multidados/module/';
                 } else {
-                    var linit_interval = window.setInterval(function () {
-                        if (Layout.is_init) {
-                            window.console.log(linit_interval);
-                            popMenuDash();
-                        }
-                    }, 10);
+                    if ($(this).attr('mobile') == 'true') {
+                        //setar o caminho absoluto, para o aplicativo ler a pagina da sua raiz
+                        link = 'pages.html#' + $(this).attr('id');
+                    } else {
+                        preloadIframe();
+                        //setar url do sistema, pois o portal é chamado atraves da url
+                        //Andre Renovato - 12/11/2015
+                        //nao estamos mais tratando pelo id porque o jquery apresentava problema ao tentar setar o id para fazer alguma ação, provavelmente
+                        //por causa dos caracteres "?#=". Neste caso no menu os links externos vamos remover a url que ficava no id e jogar para o novo paramentro link, 
+                        //e o id vai ficar com o nome da acao menu. Ex. Aprovar Horas (id="aprov_horas" link="?display=portal&m=timesheet&a=timesheet_aprovacoes_portal&nomenu=1")                
+                        //link = COMMON_URL + $(this).attr('id');
+                        link = COMMON_URL + $(this).attr('link');
+                    }
                 }
-                permissaoMenu(); //recupera permissao de menu e atalhos
-            }
-			
+
+                //Andre Renovato - 16/11/2015
+                $("#conteudo").attr("src", link);
+            });
+            
+            $("#icon_sair").click(function ()
+            {
+                mobile_logout();
+            });
+            
             //Andre Renovato - 16/11
             //Feito por Ig, apenas repliquei para nossa versao.
             //Realiza ajuste do iframe
             //alert('width: '+$(window).width()+' - height: '+$(window).height());
-			if($(window).width() == 600 && $(window).width() == 1024) {
-				$('.wrapper').css('position', 'relative');
-				$('.wrapper').css('top', $('.page-top').height());
-			}
-			$('.h_iframe iframe').css('height', $('.page-content').height() - $('.page-top').height() - $('.page-footer').height());
-
+            if($(window).width() == 600 && $(window).width() == 1024) {
+                    $('.wrapper').css('position', 'relative');
+                    $('.wrapper').css('top', $('.page-top').height());
+            }
+            $('.h_iframe iframe').css('height', $('.page-content').height() - $('.page-footer').height());
+            
+            verifica_logado();
         });
+        
+        setInterval(checkNetConnection,tempo_verificacao);
     </script>
+    </body>
     <!-- END BODY -->
 </html>

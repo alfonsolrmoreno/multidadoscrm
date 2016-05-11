@@ -51,7 +51,8 @@
         <!-- fim configuracoes Multidados -->
         <style>
             .lista-infinity {
-                padding: 0em;
+                padding: 0px;
+                padding-top: 7px;
             }
             .lista-infinity li{
                 font-family: sans-serif;
@@ -340,12 +341,14 @@
 
         <div data-role="page" class="pagina" data-control-title="Relatório Timesheet" data-theme="b" id="page_relatorio">
             <div data-theme="b" data-role="header" class="header_default">
-                <div data-role="fieldcontain" data-controltype="dateinput">
-                    <label for="filtro_data_trabalhada">
-                        Filtro de Data
-                    </label>
-                    <!--<input name="filtro_data_trabalhada" id="filtro_data_trabalhada" data-role="datebox" type="date" data-options='{"mode": "calbox"}' >-->
-                    <input class="click_datetime" name="filtro_data_trabalhada" id="filtro_data_trabalhada" readonly="readonly">
+                <div style="padding:0px 10px">    
+                    <div data-role="fieldcontain" data-controltype="dateinput">
+                        <label for="filtro_data_trabalhada">
+                            Filtro de Data
+                        </label>
+                        <!--<input name="filtro_data_trabalhada" id="filtro_data_trabalhada" data-role="datebox" type="date" data-options='{"mode": "calbox"}' >-->
+                        <input class="click_datetime" name="filtro_data_trabalhada" id="filtro_data_trabalhada" readonly="readonly">
+                    </div>
                 </div>
             </div>
             <div data-role="content" style="padding: 0px">
@@ -370,22 +373,13 @@
 
         <div data-role="page" class="pagina" data-control-title="Relatório Despesas" data-theme="b" id="relatorio_despesa">
             <div data-theme="b" data-role="header" class="header_default">
-                <!--<a id="novo_despesa_top" data-role="button" data-theme="a" href="#page_despesa"
-                   data-icon="add" data-iconpos="left" class="ui-btn-right">
-                    Novo
-                </a>-->
-                <a data-role="button" data-theme="a" href="#page_home" data-icon="arrow-l"
-                   data-iconpos="left" class="ui-btn-left btn_default" style="display: none">
-                    Voltar
-                </a>
-                <h3 class="header" style="display: none">
-                    MultidadosTI
-                </h3>
-                <div data-role="fieldcontain" data-controltype="dateinput">
-                    <label for="dateinput2">
-                        Filtro de Data
-                    </label>
-                    <input name="filtro_data_trabalhada" id="dateinput2">
+                <div style="padding:0px 10px">                
+                    <div data-role="fieldcontain" data-controltype="dateinput">
+                        <label for="dateinput2">
+                            Filtro de Data
+                        </label>
+                        <input name="filtro_data_trabalhada" id="dateinput2">
+                    </div>
                 </div>
             </div>
             <div data-role="content" style="padding: 0px" >
@@ -556,6 +550,11 @@
         <div data-role="page" class="class_page pagina" data-control-title="P&aacute;gina em constru&ccedil;&atilde;o" data-theme="b"
              id="page_scheduler" style="background: url('img/bg_app_new.jpg') no-repeat">
             <script type="text/javascript">
+                $("#botao_entrar").click(function ()
+                {
+                    mobile_login();
+                });
+                
                 /*$(function() {
                     var transEndEventNames = {
                         'WebkitTransition': 'webkitTransitionEnd',
