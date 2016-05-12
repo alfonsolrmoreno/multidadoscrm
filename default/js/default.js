@@ -1,17 +1,8 @@
-//Este evento serve para exibir qualquer erro de javascript.
-/*window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
-    if (typeof errorMsg != 'undefined' && typeof errorMsg.indexOf == 'function' && errorMsg.indexOf('StatusBar') !== -1) {
-        return;
-    }
-    alert("Desculpe, um erro ocorreu: \n" + errorMsg + "\n" + url + "\n" + lineNumber + "\n");
-}*/
-
-//
-var app_multi = 'crm'; // isso ser para separar os storage
+var app_multi = 'ts'; // isso ser para separar os storage
 //var app_multi = 'crm';
 var version_system = '2016.01';
 //versao do mobile para mostrar no footer
-var vs_mobile = 'v.3.0.6';
+var vs_mobile = 'v.3.0.7';
 var debug_mode = false;
 var debug_js_errors = false;
 var StatusMobiscroll = false;
@@ -483,13 +474,9 @@ function mobile_login(obj) {
                 url: COMMON_URL_MOBILE
             },
             error: function () {
-
-                if (debug_mode) {
-                    alert('ERROR MOBILE');
-                }
-
                 loading('hide');
                 $().toastmessage('showErrorToast', 'Falha de comunica&ccedil;&atilde;o com o servidor. Verifique sua conex&atilde;o e se a URL est&aacute; correta');
+                return false;
             },
             success: function (data) {
 
@@ -528,16 +515,19 @@ function mobile_login(obj) {
                         console.dir(jqXHR);
 
                         window.location.href = 'pages.html#page_login';
+                        return false;
                     },
                     success: function (data) {
                         if (data['erro']) {
                             loading('hide');
                             $().toastmessage('showErrorToast', data['erro']);
-                            window.location.href = 'pages.html#page_login';                         
+                            window.location.href = 'pages.html#page_login'; 
+                            return false;
                         }else if (version_system != data['version']) {
                             loading('hide');
                             $().toastmessage('showErrorToast', 'Aplica&ccedil;&atilde;o web incompat&iacute;vel com o Aplicativo. Entre em contato com o suporte! ' + version_system + ' -> ' + data['version']);
-                            window.location.href = 'pages.html#page_login';                               
+                            window.location.href = 'pages.html#page_login'; 
+                            return false;
                         } else {
                             var Objeto = {
                                 'db': data['db'],
@@ -554,6 +544,8 @@ function mobile_login(obj) {
                                 'cnpj': data['cnpj'],
                                 'perms_menu': data['perms_menu'],
                                 'version': data['version'],
+                                'session_id': data['session_id'],
+                                'codigo_db': data['codigo_db'],
                                 'page_home': data['page_home']};
                                 //'count_oco_pendentes': data['count_oco_pendentes']};
                             localStorage.setItem(app_multi+'mobile_login', JSON.stringify(Objeto));
@@ -568,14 +560,17 @@ function mobile_login(obj) {
                             } else {
                                 window.location.href = 'index.html';
                             }
+                            
+                            return true;
                         }
                     }
                 });
             }
         });
+    } else {
+        return false;
     }
 }
-
 
 //inacio 5/5/2016 so para saber se a sessao no server esta OK
 function verifica_sessao() {
@@ -601,11 +596,9 @@ function verifica_sessao() {
     
 }
     
-    
-
-
 //rudi 7/10/2015 retornando true tambem, e soh seguindo se for true na index.html
-function verifica_logado() {
+/*
+function verifica_logado_OLD() {
     
     if (debug_mode)
         alert('verifica_logado');
@@ -660,15 +653,11 @@ function verifica_logado() {
                 //CASO A URL ESTEJA INATIVA RETORNA PARA TELA DE LOGIN
                 window.location.href = 'pages.html#page_login';                
                 return false;
-            }/*,
-            jsonpCallback: function () {
-                alert('Erro inesperado, endereco de checagem do servidor incorreto');
-                window.location.href = 'pages.html#page_login';
-                return false;
-            }*/
+            }
         });
     }
 }
+*/
 
 function Storagelogout(){
     if(localStorage.getItem(app_multi+'mobile_login')){
@@ -677,8 +666,8 @@ function Storagelogout(){
         // inacio 04-05-2016
         // limpa todos caches e só deixa a URL e o nome usuario
         url_cache = Objeto_json.url;
-        user_bd_cache = Objeto_json.usuario_nome;
-
+        user_bd_cache = Objeto_json.user_bd;
+        
         localStorage.clear();
         
         var Objeto = {
@@ -739,9 +728,8 @@ function mobile_logout() {
         timeout: 5000,
         crossDomain: true,
         data: {
-            usuario: dados['USUARIO'],
-            senha: dados['SENHA'],
-            url: dados['URL']
+            usuario: Objeto_json.user_bd,
+            url: Objeto_json.url
         },
         error: function () {
             loading('hide');
@@ -1868,15 +1856,6 @@ function seleciona_task(idcliente, idprojeto, idtarefa_principal, selecionado) {
 $(document).delegate('#task_parent', 'change', function () {
     seleciona_task($('#codigo_auxiliar').val(), $('#codigo').val(), $('#task_parent').val());
 });
-
-// Inacio 30/09/2015
-// antigo, agora o login fica em outro aquivo.
-//$(document).on("pageinit", "pages.html#page_login", function () {
-//    $resposta = verifica_logado();
-//    if ($resposta == 'ok') {
-//        window.location.href = "index.html";
-//    }
-//});
 
 var retries = 0;
 

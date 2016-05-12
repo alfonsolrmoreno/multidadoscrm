@@ -135,7 +135,7 @@
             var objuser = localStorage[app_multi+'mobile_login'];
             //rudi 7/10/2015 escondendo o body, soh exibindo se estiver logado
             if (typeof objuser == "undefined" || !objuser || objuser === null) {
-
+                
             } else {
                 jQuery(document).ready(function () {
                     $('#body_mobile_home').css('display', '');
@@ -149,7 +149,6 @@
                     
                     //Andre Renovato - 24/02/2016
                     //setando contador de ocorrencias pendentes no botao de atalho
-                    
                     $.ajax({
                         type: 'POST',
                         url: COMMON_URL+'/ajax_bootstrap.php',
