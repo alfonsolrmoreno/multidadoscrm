@@ -74,10 +74,12 @@
             
             // no aplicativo toda vez fecha e abre de novo uma nova sessao é criada.
             // aqui vamos ficar checando de 30s em 30s se a sessao existe, caso contrario retorna uma nova sessao.
-            function checkSession(primeira) {
+            function checkSession() {
                 
                 var session_id_ativa = Objeto_json['session_id'];
                 console.log('Verifica sessao aberta: ' + session_id_ativa);
+                
+				console.log(Objeto_json);
                 
                 $.ajax({
                     type: 'POST',
@@ -88,15 +90,10 @@
                     data: Objeto_json,
                     success: function (data) {
                         console.log('Sessao = ' + data.session_ativa);
-                        if(data.session_ativa == false) {
-                            if(mobile_login(localStorage.getItem(app_multi+'mobile_login'))) {
-                                setDadosIniciais();
-                            }
+                        if(data.session_ativa == false) {					
+							console.log('Sessao false, logando novamente');
+							mobile_login(localStorage.getItem(app_multi+'mobile_login'));
                         }
-                        
-                        if(typeof primeira != 'undefined' && primeira) {
-                            setDadosIniciais();
-                        }  
                     },
                     error: function () {
                         window.location.href = 'pages.html#page_login';                
@@ -106,6 +103,9 @@
             }
             
             function setDadosIniciais() {
+		
+				console.log('Setando Dados Iniciais');
+
                 $("#conteudo").attr("src", pageHome); //Carregando home padrao
                 setSaudacao(); //inclui saudacao (nome user, dia ano e mes)  
                 popMenuDash(); //recupera menu dashboards
@@ -813,14 +813,15 @@
             //Feito por Ig, apenas repliquei para nossa versao.
             //Realiza ajuste do iframe
             //alert('width: '+$(window).width()+' - height: '+$(window).height());
+            /*
             if($(window).width() == 600 && $(window).width() == 1024) {
                     $('.wrapper').css('position', 'relative');
                     $('.wrapper').css('top', $('.page-top').height());
-            }
+            }*/
             $('.h_iframe iframe').css('height', $('.page-content').height() - $('.page-footer').height());            
         });
         
-        checkSession(true);
+        checkSession();
         
         setInterval(checkNetConnection,tempo_verificacao);
         setInterval(checkSession,10000);

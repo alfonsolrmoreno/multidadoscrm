@@ -865,7 +865,7 @@ Page container
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 450px) {
   /* Page container */
   .page-header-fixed.page-header-fixed-mobile .page-container {
     margin-top: 136px !important;
@@ -2179,7 +2179,7 @@ Page content
   /* Page content */
   .page-content-wrapper .page-content {
     margin: 0px !important;
-    padding: 20px !important;
+    padding: 15px 0px 0px 0px !important;
     min-height: 280px;
   }
 }

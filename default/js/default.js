@@ -7,6 +7,7 @@ var debug_mode = false;
 var debug_js_errors = false;
 var StatusMobiscroll = false;
 var Objeto_real = localStorage[app_multi+'mobile_login'];
+var session_id = false;
 
 var arrayDia = new construirArray(7);
 arrayDia[0] = "Domingo";
@@ -547,20 +548,22 @@ function mobile_login(obj) {
                                 'session_id': data['session_id'],
                                 'codigo_db': data['codigo_db'],
                                 'page_home': data['page_home']};
-                                //'count_oco_pendentes': data['count_oco_pendentes']};
+							
+							session_id = data['session_id'];
+							
                             localStorage.setItem(app_multi+'mobile_login', JSON.stringify(Objeto));
 
-                            var Objeto_real = localStorage.getItem(app_multi+'mobile_login')
-                            var Objeto_json = JSON.parse(Objeto_real);
+                            Objeto_real = localStorage.getItem(app_multi+'mobile_login')
+                            Objeto_json = JSON.parse(Objeto_real);
 
                             loading('hide');
                             
                             if (obj) {
                                 $().toastmessage('showSuccessToast', 'Login realizado com sucesso');
+								setDadosIniciais();
                             } else {
                                 window.location.href = 'index.html';
-                            }
-                            
+                            }                            
                             return true;
                         }
                     }
