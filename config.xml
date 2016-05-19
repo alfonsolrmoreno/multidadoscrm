@@ -154,8 +154,8 @@
     <preference value="cloud" name="BackupWebStorage" />
     <preference value="false" name="DisallowOverscroll" />
     <preference value="false" name="EnableViewportScale" />
-    <preference value="true" name="FadeSplashScreen" />
-    <preference value="2" name="FadeSplashScreenDuration" />
+    <!--<preference value="true" name="FadeSplashScreen" />
+    <preference value="2" name="FadeSplashScreenDuration" /> -->
     <preference value="false" name="HideKeyboardFormAccessoryBar" />
     <preference value="true" name="KeyboardDisplayRequiresUserAction" />
     <preference value="false" name="KeyboardShrinksView" />

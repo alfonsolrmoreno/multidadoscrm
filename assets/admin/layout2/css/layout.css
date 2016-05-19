@@ -468,6 +468,7 @@ Page Header
   /* CUSTOM MULTIDADOS - COMENTADO PQ ESTAVA QUEBRANDO LINHA COM ESTE TAMANHO */
   /*margin-right: 7px;*/
   height: 39px;
+  width: 39px;
   display: inline-block;
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown-user .dropdown-toggle > i {

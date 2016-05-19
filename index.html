@@ -70,33 +70,46 @@
         <script>
             var conexao_ativa = true;
             var verificacao_rapida = false;
+            var num_tentativas = 1;
             var tempo_verificacao = 30000;  // a cada 30 segundos verifica a conexao
             
             // no aplicativo toda vez fecha e abre de novo uma nova sessao é criada.
             // aqui vamos ficar checando de 30s em 30s se a sessao existe, caso contrario retorna uma nova sessao.
-            function checkSession() {
+            function checkSession(primeira) {
                 
                 var session_id_ativa = Objeto_json['session_id'];
                 console.log('Verifica sessao aberta: ' + session_id_ativa);
+                console.log(Objeto_json);
                 
-				console.log(Objeto_json);
+                if(primeira) {
+                    loading('show',"Verificando conexão com o servidor...");
+                }
                 
                 $.ajax({
                     type: 'POST',
                     url: COMMON_URL_MOBILE + '/checkSession.php',
                     dataType: "jsonp",
-                    timeout: 1000,
+                    timeout: 10000,
                     crossDomain: true,
                     data: Objeto_json,
                     success: function (data) {
+                        loading('hide');
                         console.log('Sessao = ' + data.session_ativa);
                         if(data.session_ativa == false) {					
-							console.log('Sessao false, logando novamente');
-							mobile_login(localStorage.getItem(app_multi+'mobile_login'));
+                            console.log('Sessao false, logando novamente');
+                            mobile_login(localStorage.getItem(app_multi+'mobile_login'));
+                        } else if(primeira) {
+                            setDadosIniciais();
                         }
                     },
                     error: function () {
-                        window.location.href = 'pages.html#page_login';                
+                        if(num_tentativas < 3) {
+                            loading('show',"O tempo de resposta do servidor está lento."); 
+                            num_tentativas++;
+                        } else {
+                            alert('Por favor verifique sua conexão e faça um novo login');
+                            window.location.href = 'pages.html#page_login';  
+                        }
                         return false;
                     }
                 });
@@ -104,7 +117,7 @@
             
             function setDadosIniciais() {
 		
-				console.log('Setando Dados Iniciais');
+                console.log('Setando Dados Iniciais');
 
                 $("#conteudo").attr("src", pageHome); //Carregando home padrao
                 setSaudacao(); //inclui saudacao (nome user, dia ano e mes)  
@@ -818,13 +831,13 @@
                     $('.wrapper').css('position', 'relative');
                     $('.wrapper').css('top', $('.page-top').height());
             }*/
-            $('.h_iframe iframe').css('height', $('.page-content').height() - $('.page-footer').height());            
+            $('.h_iframe iframe').css('height', $('.page-content').height() - $('.page-footer').height());
+        
+            checkSession(true);
+
+            setInterval(checkNetConnection,tempo_verificacao);
+            setInterval(checkSession,tempo_verificacao);            
         });
-        
-        checkSession();
-        
-        setInterval(checkNetConnection,tempo_verificacao);
-        setInterval(checkSession,10000);
     </script>
     </body>
     <!-- END BODY -->
