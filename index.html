@@ -77,10 +77,6 @@
             // aqui vamos ficar checando de 30s em 30s se a sessao existe, caso contrario retorna uma nova sessao.
             function checkSession(primeira) {
                 
-                var session_id_ativa = Objeto_json['session_id'];
-                console.log('Verifica sessao aberta: ' + session_id_ativa);
-                console.log(Objeto_json);
-                
                 if(primeira) {
                     loading('show',"Verificando conexão com o servidor...");
                 }
@@ -784,9 +780,24 @@
         
     <script>
         $(function () {
-            Metronic.init(); // init metronic core componets
-            Layout.init(); // init layout
             
+			tem_obj = localStorage[app_multi+'mobile_login'];
+			
+			if(typeof tem_obj == 'undefined' || tem_obj == '') {
+				window.location.href = 'pages.html#page_login';  
+				return false;
+			} else {
+				obj_json = JSON.parse(tem_obj);
+				
+				if(typeof obj_json.url == 'undefined' || obj_json.url == '') {						
+					window.location.href = 'pages.html#page_login';
+					return false;
+				}
+			}
+			
+			Metronic.init(); // init metronic core componets
+            Layout.init(); // init layout
+			
             //Acao do click no menu, onde encaminha para pagina correta.
             $('.link').click(function () {
 
