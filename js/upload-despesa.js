@@ -9,7 +9,8 @@ function upload() {
     var data = new FormData();
     var files = $('#arq_despesa')[0].files;
     data.append('arquivo', files[0]);
-    //loading('show');
+    loading('show','Arquivo sendo enviado...');
+    
     $.ajax({
         type: 'POST',
         url: COMMON_URL_MOBILE + '/upload.php',
@@ -26,6 +27,7 @@ function upload() {
         } else {
             $("#arquivo_md5").val(data);
         }
-        //loading('hide');
+        loading('hide');
+        
     });
 }

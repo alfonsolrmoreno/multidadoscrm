@@ -1,12 +1,12 @@
 .box_form, .box_usuario, .box_senha, .box_btentrar, .bt_voltar, .box_url
 {
-	margin:0px 30px 0px 30px;
+    margin:0px 30px 0px 30px;
 }
 .box_btentrar, .bt_voltar, .btn_default
 {
     background-color: #455A6D !important;
-    border-color: #FFF !important;    
-	margin:0px 30px 0px 30px;
+    border-color: #FFF !important;
+    margin:0px 30px 0px 30px;
 }
 .btn_default
 {
@@ -16,98 +16,98 @@
 
 #page_home
 {
-	padding:0px;
-	padding-bottom:50px;
+    padding:0px;
+    padding-bottom:50px;
 }
 
 .info-url{
     font-size: 11px;
-    color: #F08080;    
+    color: #F08080;
 }
 
 .class_page
 {
-	background-position:top;
-	background-size:cover !important;
+    background-position:top;
+    background-size:cover !important;
 }
 
 @media screen and (min-width: 500px)
 {
     .box_logotipo
     {
-            height:230px !important;
+        height:230px !important;
     }
 }
 
 @media screen and (max-width: 499px) {
     .box_logotipo
     {
-            height:100px !important;
+        height:100px !important;
     }
 }
 
 .box_pagina_construcao
 {
-	text-align:center;
-	font-size:23px;
-	letter-spacing:-1px;
+    text-align:center;
+    font-size:23px;
+    letter-spacing:-1px;
 }
 
 .icon_timesheet
 {
-	//width:90px;
-	height:90px;
-	background: url('../../default/img/icon_timesheet.png') no-repeat center;
-	border:0px;
-	display:block;
-	text-indent:-5000px;
+    //width:90px;
+    height:90px;
+    background: url('../../default/img/icon_timesheet.png') no-repeat center;
+    border:0px;
+    display:block;
+    text-indent:-5000px;
 }
 
 .icon_despesa
 {
-	//width:90px;
-	height:90px;
-	background: url('../../default/img/icon_despesa.png') no-repeat center;
-	border:0px;
-	display:block;
-	text-indent:-5000px;
+    //width:90px;
+    height:90px;
+    background: url('../../default/img/icon_despesa.png') no-repeat center;
+    border:0px;
+    display:block;
+    text-indent:-5000px;
 }
 
 .icon_ocorrencias, .icon_ocorrencia
 {
-	//width:90px;
-	height:90px;
-	background: url('../../default/img/icon_ocorrencia.png') no-repeat center;
-	border:0px;
-	display:block;
-	text-indent:-5000px;
+    //width:90px;
+    height:90px;
+    background: url('../../default/img/icon_ocorrencia.png') no-repeat center;
+    border:0px;
+    display:block;
+    text-indent:-5000px;
 }
 .icon_scheduler
 {
-	//width:90px;
-	height:90px;
-	background: url('../../default/img/icon_scheduler.png') no-repeat center;
-	border:0px;
-	display:block;
-	text-indent:-5000px;
+    //width:90px;
+    height:90px;
+    background: url('../../default/img/icon_scheduler.png') no-repeat center;
+    border:0px;
+    display:block;
+    text-indent:-5000px;
 }
 .icon_contato
 {
-	//width:90px;
-	height:90px;
-	background: url('../../default/img/icon_contato.png') no-repeat center;
-	border:0px;
-	display:block;
-	text-indent:-5000px;
+    //width:90px;
+    height:90px;
+    background: url('../../default/img/icon_contato.png') no-repeat center;
+    border:0px;
+    display:block;
+    text-indent:-5000px;
 }
 .icon_dashboard
 {
-	//width:90px;
-	height:90px;
-	background: url('../../default/img/icon_dashboard.png') no-repeat center;
-	border:0px;
-	display:block;
-	text-indent:-5000px;
+    //width:90px;
+    height:90px;
+    background: url('../../default/img/icon_dashboard.png') no-repeat center;
+    border:0px;
+    display:block;
+    text-indent:-5000px;
 }
 /* Left transition */
 li.left {
@@ -158,4 +158,27 @@ ul.touch li.ui-li-has-alt a.ui-btn {
 .loading-bar {
     padding:30px;
     font-weight: bold;
+}
+
+
+.instrucoes_uso {
+    height:90px;
+    background: url('../../img/icon_instrucao.png') no-repeat;
+    background-position: 10% center;
+    margin-top:10px;
+}
+
+.instrucoes_uso h4{
+    padding-top:10px;
+    padding-left:110px;
+    padding-bottom:0px;
+    font-size:1.0em;
+    margin:0px;
+}
+.instrucoes_uso p {
+    padding-left:110px;
+    font-size:0.8em;
+    padding-top:0px;
+    margin:0px;
+
 }

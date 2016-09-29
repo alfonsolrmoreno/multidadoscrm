@@ -1,650 +1,653 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Mobile - Multidados</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <head>
+    <meta charset="utf-8">
+    <title>Mobile - Multidados</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-        <!-- rudi 6/10/2015 manter o cordova no topo -->
-        <!-- Andre Renovato - 14/04/2015 - Este js é incluido automaticamente pelo phonegap -->
-        <!--<script type="text/javascript" src="cordova.js"></script>-->
+    <!-- rudi 6/10/2015 manter o cordova no topo -->
+    <!-- Andre Renovato - 14/04/2015 - Este js é incluido automaticamente pelo phonegap -->
+    <!--<script type="text/javascript" src="cordova.js"></script>-->
 
-        <link href="css/jqm-neue.css" rel="stylesheet">
-        <link href="css/codiqa.ext.min.css" rel="stylesheet">
-        <link href="css/jquery.toastmessage.css" rel="stylesheet">
+    <link href="css/jqm-neue.css" rel="stylesheet">
+    <link href="css/codiqa.ext.min.css" rel="stylesheet">
+    <link href="css/jquery.toastmessage.css" rel="stylesheet">
 
-        <link rel="stylesheet" type="text/css" href="css/jqm-datebox-1.4.0.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jqm-datebox-1.4.0.min.css" />
 
-        <link rel="shortcut icon" href="../favicon.ico">
-        <link rel="stylesheet" type="text/css" href="css/calendar/calendar.css" />
-        <link rel="stylesheet" type="text/css" href="css/calendar/custom_2.css" />
-        <script src="js/calendar/modernizr.custom.63321.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/calendar/calendar.css" />
+    <link rel="stylesheet" type="text/css" href="css/calendar/custom_2.css" />
+    <script src="js/calendar/modernizr.custom.63321.js"></script>
 
-        <script src="js/jquery-1.9.1.min.js"></script>
-        <script src="js/jquery.mobile-1.3.1.min.js"></script>
-        <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
-        <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />-->
-        <script src="js/codiqa.ext.min.js"></script>
-        <script src="js/mobile-multidados.js"></script>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/jquery.mobile-1.3.1.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />-->
+    <script src="js/codiqa.ext.min.js"></script>
+    <script src="js/mobile-multidados.js"></script>
 
-        <!-- NOVO PLUGINS DE DATA E HORA COM SCROOLL  -->
-        <link rel="stylesheet" href="css/mobiscroll-2.4.custom.min.css" />    
-        <script src="js/mobiscroll-2.4.custom.min.js"></script>          
-        <!-- FIM NOVO PLUGINS DE DATA E HORA COM SCROOLL -->
-        
+    <!-- NOVO PLUGINS DE DATA E HORA COM SCROOLL  -->
+    <link rel="stylesheet" href="css/mobiscroll-2.4.custom.min.css" />
+    <script src="js/mobiscroll-2.4.custom.min.js"></script>
+    <!-- FIM NOVO PLUGINS DE DATA E HORA COM SCROOLL -->
 
-        <!-- configuracoes Multidados -->
-        <link href="default/css/css.css" rel="stylesheet">
-        <script src="js/infinity-scroll.js"></script>
-        <script src="js/jquery.toastmessage.js"></script>
-        <script src="default/js/default.js"></script>
-        <script type="text/javascript" src="js/calendar/jquery.calendario.js"></script>
-        <script type="text/javascript" src="js/calendar/data.js"></script>
 
-        <script type="text/javascript">            
-            try {
-                Typekit.load();
-            } catch (e) {
-            }</script>
-        <!-- fim configuracoes Multidados -->
-        <style>
-            .lista-infinity {
-                padding: 0px;
-                padding-top: 7px;
-            }
-            .lista-infinity li{
-                font-family: sans-serif;
-                font-size: 1em;
-                line-height: 1.3;
-                background: #fff;
-                list-style: none;
-                padding: .7em 1em;
-                border-width: 1px 0 0;
-                border-style: solid;
-                border-color: #ddd;
-                color: #333;
-                text-shadow: 0 1px 0 #f3f3f3;
-                cursor: pointer; cursor: hand;
-            }
-            .lista-infinity li:hover, lista-infinity li:active{
-                background: #eee;
-            }
-            #form_arquivo{
-                width:100%;
-                display: inline-block;
-            }
-            #busca_cliente_despesa, #busca_projeto_despesa, #busca_cliente_timesheet, #busca_projeto_timesheet{
-                display: none;
-            }
-        </style>
-    </head>
-    <body style="background: url('img/bg_app_new.jpg') no-repeat; background-size: 100%;">
-        <div data-role="page" class="class_page pagina" data-control-title="Login Multidados" data-theme="b" id="page_login" style="background: url('img/bg_app_new.jpg') no-repeat">
-            <div data-role="content" style="padding: 0px">
-                <div id="box_logotipo" data-controltype="htmlblock" class="box_logotipo">
-                    <p>&nbsp;</p>
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_url">
-                    <label for="url"> 
-                        URL ou código do Sistema
-                    </label>
-                    <input name="url" id="url" placeholder="" value="" type="text" autocomplete="off" autocorrect="off" autocapitalize="off">
-                    <span class="info-url">Informe ou copie a url de seu sistema pela web. Ex:&nbsp;http://multidadosti.com.br/vmulti</span>
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_usuario">
-                    <label for="usuario">
-                        Usu&aacute;rio
-                    </label>
-                    <input name="usuario" id="usuario" placeholder="" value="" type="text" autocomplete="off" autocorrect="off" autocapitalize="off">
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_senha">
-                    <label for="senha">
-                        Senha
-                    </label>
-                    <input name="senha" id="senha" placeholder="" value="" type="password">
-                </div>
-                <a id="botao_entrar" data-role="button" href="javascript:;" data-icon="arrow-r"
-                   data-iconpos="right" class="box_btentrar">
-                    Entrar
-                </a>
+    <!-- configuracoes Multidados -->
+    <link href="default/css/css.css" rel="stylesheet">
+    <script src="js/infinity-scroll.js"></script>
+    <script src="js/jquery.toastmessage.js"></script>
+    <script src="default/js/default.js"></script>
+    <script type="text/javascript" src="js/calendar/jquery.calendario.js"></script>
+    <script type="text/javascript" src="js/calendar/data.js"></script>
 
-                <div style="margin-top:30px; text-align:center;">
-                    <label class="name_powered">
-                    </label>
-                </div>
-            </div>
+    <script type="text/javascript">
+      try {
+        Typekit.load();
+      } catch (e) {
+      }</script>
+    <!-- fim configuracoes Multidados -->
+    <style>
+      .lista-infinity {
+        padding: 0px;
+        padding-top: 7px;
+      }
+      .lista-infinity li{
+        font-family: sans-serif;
+        font-size: 1em;
+        line-height: 1.3;
+        background: #fff;
+        list-style: none;
+        padding: .7em 1em;
+        border-width: 1px 0 0;
+        border-style: solid;
+        border-color: #ddd;
+        color: #333;
+        text-shadow: 0 1px 0 #f3f3f3;
+        cursor: pointer; cursor: hand;
+      }
+      .lista-infinity li:hover, lista-infinity li:active{
+        background: #eee;
+      }
+      #form_arquivo{
+        width:100%;
+        display: inline-block;
+      }
+      #busca_cliente_despesa, #busca_projeto_despesa, #busca_cliente_timesheet, #busca_projeto_timesheet{
+        display: none;
+      }
+    </style>
+  </head>
+  <body style="background: url('img/bg_app_new.jpg') no-repeat; background-size: 100%;">
+    <div data-role="page" class="class_page pagina" data-control-title="Login Multidados" data-theme="b" id="page_login" style="background: url('img/bg_app_new.jpg') no-repeat">
+      <div data-role="content" style="padding: 0px">
+        <div id="box_logotipo" data-controltype="htmlblock" class="box_logotipo">
+          <p>&nbsp;</p>
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_url">
+          <label for="url">
+            URL ou código do Sistema
+          </label>
+          <input name="url" id="url" placeholder="" value="" type="text" autocomplete="off" autocorrect="off" autocapitalize="off">
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_usuario">
+          <label for="usuario">
+            Usu&aacute;rio
+          </label>
+          <input name="usuario" id="usuario" placeholder="" value="" type="text" autocomplete="off" autocorrect="off" autocapitalize="off">
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_senha">
+          <label for="senha">
+            Senha
+          </label>
+          <input name="senha" id="senha" placeholder="" value="" type="password">
+        </div>
+        <a id="botao_entrar" data-role="button" href="javascript:;" data-icon="arrow-r"
+           data-iconpos="right" class="box_btentrar">
+          Entrar
+        </a>
+        <div class="instrucoes_uso">
+          <h4>Instruções de uso</h4>
+          <p>Acesse o sistema Multidados no navegador, clique em Mobile no canto superior direito e siga as orientações</p>
         </div>
 
-        <div data-role="page" class="class_page pagina" data-control-title="P&aacute;gina em constru&ccedil;&atilde;o" data-theme="b" id="page5" style="background: url('img/bg_app_new.jpg') no-repeat">
-            <div data-role="content" style="padding: 0px">
-                <div data-controltype="htmlblock" class="box_logotipo">
-                    <p>
-                        &nbsp;
-                    </p>
-                </div>
-                <div id="box_pagina_construcao" data-controltype="htmlblock" class="box_pagina_construcao">
-                    <p>
-                        <strong>
-                            P&aacute;gina em constru&ccedil;&atilde;o
-                        </strong>
-                    </p>
-                </div>
-                <a id="bt_voltar" data-role="button" href="#page_home" data-icon="home"
-                   data-iconpos="left" class="bt_voltar">
-                    Voltar para a home
-                </a>
-            </div>
+        <div style="margin-top:30px; margin-bottom:20px; text-align:center;">
+          <label class="name_powered">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div data-role="page" class="class_page pagina" data-control-title="P&aacute;gina em constru&ccedil;&atilde;o" data-theme="b" id="page5" style="background: url('img/bg_app_new.jpg') no-repeat">
+      <div data-role="content" style="padding: 0px">
+        <div data-controltype="htmlblock" class="box_logotipo">
+          <p>
+            &nbsp;
+          </p>
+        </div>
+        <div id="box_pagina_construcao" data-controltype="htmlblock" class="box_pagina_construcao">
+          <p>
+            <strong>
+              P&aacute;gina em constru&ccedil;&atilde;o
+            </strong>
+          </p>
+        </div>
+        <a id="bt_voltar" data-role="button" href="#page_home" data-icon="home"
+           data-iconpos="left" class="bt_voltar">
+          Voltar para a home
+        </a>
+      </div>
+    </div>
+
+    <div data-role="page" class="class_page pagina" data-control-title="Home Page Multidados" data-theme="b" id="page_home" style="background: url('img/bg_app_new.jpg') no-repeat">
+      <div data-role="content" style="padding: 0px">
+        <div data-controltype="htmlblock" class="box_logotipo">
+          <p>
+            &nbsp;
+          </p>
+        </div>
+        <div id="grid_icones" class="ui-grid-b grid_icones">
+          <div class="ui-block-a">
+            <a id="icon_timesheet" data-role="button" href="#page_relatorio" class="icon_timesheet">
+              Timesheet
+            </a>
+          </div>
+          <div class="ui-block-b">
+            <a id="icon_despesa" data-role="button" href="#relatorio_despesa" class="icon_despesa">
+              Despesas
+            </a>
+          </div>
+          <div class="ui-block-c">
+            <a id="icon_ocorrencia" data-role="button" href="#page5" class="icon_ocorrencia">
+              Ocorrências
+            </a>
+          </div>
+          <div class="ui-block-a">
+            <a id="icon_contato" data-role="button" href="#page5" class="icon_contato">
+              Contatos
+            </a>
+          </div>
+          <div class="ui-block-b">
+            <a id="icon_scheduler" data-role="button" href="#page5" class="icon_scheduler">
+              Scheduler
+            </a>
+          </div>
+          <div class="ui-block-c">
+            <a id="icon_dashboard" data-role="button" href="javascript:window.location=Objeto_json.url+'?display=portal&m=usuarios&a=timesheet';" class="icon_dashboard">
+              Dashboard
+            </a>
+          </div>
+          <div class="ui-block-a"></div>
+
+          <div class="ui-block-c"></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-role="page" class="pagina" data-control-title="Timesheet" data-theme="b" id="page_timesheet">
+      <div id="header_default" data-theme="b" data-role="header" class="header_default" style="display: none">
+        <a id="save_timecard_top" data-role="button" data-theme="a" href="#page_timesheet"
+           data-icon="check" data-iconpos="left" class="ui-btn-right btn_default">
+          Salvar
+        </a>
+        <a data-role="button" data-theme="a" href="#page_relatorio" data-icon="arrow-l" id="voltar_timesheet"
+           data-iconpos="left" class="ui-btn-left btn_default">
+          Voltar
+        </a>
+        <h3 id="header" class="header">
+          MultidadosTI
+        </h3>
+      </div>
+      <div id="divautocomplete_timecard">
+
+        <div id="header_default" data-theme="b" data-role="header" class="header_default">
+          <a data-role="button" data-theme="a" href="#page_timesheet" data-icon="arrow-l" id="voltar_timesheet"
+             data-iconpos="left" class="ui-btn-left btn_default">
+            Voltar
+          </a>
+          <h3 id="header" class="header">
+            Busca
+          </h3>
+        </div>
+        <div style="margin-top:10px">
+          <ul id="autocomplete_prj" class="lista-infinity" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busca" data-theme="c" style="font-weight: normal !important;"></ul>
+        </div>
+      </div>
+      <div    id="page_timesheet_clientes"></div>
+      <div    id="page_timesheet_projetos"></div>
+      <div data-role="content" style="padding: 0px" id="page_timesheet_sub">
+        <input type='hidden' name='idtimecard' id='idtimecard' />
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <div id="topo"></div>
+          <label for="data_trabalhada">
+            Data
+          </label>
+          <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+          <!--<input name="data_trabalhada" id="data_trabalhada" value=""  data-role="datebox" type="date" data-options='{"mode": "calbox"}' >-->
+          <input name="data_trabalhada" id="data_trabalhada" value="" >
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <label for="search_cliente">
+            Cliente
+          </label>
+
+          <!--<ul id="autocomplete_cliente" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busque o cliente..." data-filter-theme="c"></ul>-->
+          <input type="hidden" name="codigo_auxiliar" id="codigo_auxiliar" />
+
+          <a href="javascript:;" id="selecione_cliente" data-role="button" data-icon="search" data-theme="c">Buscar Cliente</a>
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <label for="codigo_projeto">
+            Projeto
+          </label>
+
+          <!-- <ul id="autocomplete_projeto" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busque o projeto..." data-filter-theme="p"></ul> -->
+          <input type="hidden" name="codigo" id="codigo" />
+          <a href="javascript:;" id="selecione_projeto" data-role="button" data-icon="search" data-theme="c">Buscar Projeto</a>
+        </div>
+        <div id="fase_task" data-role="fieldcontain" data-controltype="selectmenu" class="box_form">
+          <label for="codigo_fase">
+            Fase
+          </label>
+          <select id="codigo_fase" name="codigo_fase" data-theme="c">
+            <option value=''>
+              Selecione uma fase
+            </option>
+          </select>
+        </div>
+        <div id="atividade_task" data-role="fieldcontain" class="box_form">
+          <label for="codigo_atividade">
+            Atividade
+          </label>
+          <select id="codigo_atividade" name="codigo_atividade" data-theme="c">
+            <option value=''>
+              Selecione uma atividade
+            </option>
+          </select>
         </div>
 
-        <div data-role="page" class="class_page pagina" data-control-title="Home Page Multidados" data-theme="b" id="page_home" style="background: url('img/bg_app_new.jpg') no-repeat">
-            <div data-role="content" style="padding: 0px">
-                <div data-controltype="htmlblock" class="box_logotipo">
-                    <p>
-                        &nbsp;
-                    </p>
-                </div>
-                <div id="grid_icones" class="ui-grid-b grid_icones">
-                    <div class="ui-block-a">
-                        <a id="icon_timesheet" data-role="button" href="#page_relatorio" class="icon_timesheet">
-                            Timesheet
-                        </a>
-                    </div>
-                    <div class="ui-block-b">
-                        <a id="icon_despesa" data-role="button" href="#relatorio_despesa" class="icon_despesa">
-                            Despesas
-                        </a>
-                    </div>
-                    <div class="ui-block-c">
-                        <a id="icon_ocorrencia" data-role="button" href="#page5" class="icon_ocorrencia">
-                            Ocorrências
-                        </a>
-                    </div>
-                    <div class="ui-block-a">
-                        <a id="icon_contato" data-role="button" href="#page5" class="icon_contato">
-                            Contatos
-                        </a>
-                    </div>
-                    <div class="ui-block-b">
-                        <a id="icon_scheduler" data-role="button" href="#page5" class="icon_scheduler">
-                            Scheduler
-                        </a>
-                    </div>
-                    <div class="ui-block-c">
-                        <a id="icon_dashboard" data-role="button" href="javascript:window.location=Objeto_json.url+'?display=portal&m=usuarios&a=timesheet';" class="icon_dashboard">
-                            Dashboard
-                        </a>
-                    </div>
-                    <div class="ui-block-a"></div>
+        <div id="porcentagem_conclusao" data-role="fieldcontain" class="box_form">
+          <label for="slider-fill">Conclusão %</label>
+          <select id="porc_conclusao_atividade" name="porc_conclusao_atividade" data-theme="c">
+            <option value=""> </option>
+          </select>
 
-                    <div class="ui-block-c"></div>
-                </div>
+          <!--<input type="range" name="porc_conclusao_atividade" id="slider-fill" class="porc_conclusao_atividade" data-mini="true" min="0" max="100" step="5" value="0" > -->
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <label for="hora_inicial">
+            Hora Inicial
+          </label>
+          <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+          <!--<input name="hora_inicial" id="hora_inicial" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>-->
+          <input class="click_datetime" name="hora_ini" id="hora_ini" readonly="readonly">
+          <div id="hora_inicial_div" style="display:none;">
+            <input type="hidden" name="hora_inicial" id="hora_inicial">
+          </div>
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <label for="hora_final">
+            Hora Final
+          </label>
+          <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+          <!--<input name="hora_final" id="hora_final" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
+          <input class="click_datetime" name="hora_fim" id="hora_fim" readonly="readonly">
+          <div id="hora_final_div" style="display:none;">
+            <input type="hidden" name="hora_final" id="hora_final">
+          </div>
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <div id="monstrarIntervalo" style="width: -moz-max-content">
+            <img data-transition="slide" src="img/icon_intervalo.png" width="32" height="32"/>
+            <label> Exibir Intervalo </label>
+          </div>
+        </div>
+        <!-- Intervalo -->
+        <div id="div_intervalo">
+          <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+            <label>
+              Intervalo Inicial
+            </label>
+            <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+            <!--<input name="intervalo_hr_inicial" id="intervalo_hr_inicial" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
+            <input class="click_datetime" name="intervalo_hr_ini" id="intervalo_hr_ini" readonly="readonly">
+            <div id="intervalo_hr_inicial_div" style="display:none;">
+              <input type="hidden" name="intervalo_hr_inicial" id="intervalo_hr_inicial">
             </div>
+          </div>
+          <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+            <label>
+              Intervalo Final
+            </label>
+            <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+            <!--<input name="intervalo_hr_final" id="intervalo_hr_final" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
+            <input class="click_datetime" name="intervalo_hr_fim" id="intervalo_hr_fim" readonly="readonly">
+            <div id="intervalo_hr_final_div" style="display:none;">
+              <input type="hidden" name="intervalo_hr_final" id="intervalo_hr_final">
+            </div>
+          </div>
         </div>
 
-        <div data-role="page" class="pagina" data-control-title="Timesheet" data-theme="b" id="page_timesheet">
-            <div id="header_default" data-theme="b" data-role="header" class="header_default" style="display: none">
-                <a id="save_timecard_top" data-role="button" data-theme="a" href="#page_timesheet"
-                   data-icon="check" data-iconpos="left" class="ui-btn-right btn_default">
-                    Salvar
-                </a>
-                <a data-role="button" data-theme="a" href="#page_relatorio" data-icon="arrow-l" id="voltar_timesheet"
-                   data-iconpos="left" class="ui-btn-left btn_default">
-                    Voltar
-                </a>
-                <h3 id="header" class="header">
-                    MultidadosTI
-                </h3>
+        <div data-role="fieldcontain" data-controltype="textarea" class="box_form">
+          <label for="narrativa_principal">
+            Narrativa
+          </label>
+          <textarea name="narrativa_principal" id="narrativa_principal" placeholder="" style="height:100px !important;"></textarea>
+        </div>
+        <a id="save_timecard_bottom" style="margin-bottom:30px" data-role="button" href="#page_timesheet" data-icon="check" data-iconpos="right" class="box_form btn_default">
+          Salvar
+        </a>
+      </div>
+    </div>
+
+    <div data-role="page" class="pagina" data-control-title="Relatório Timesheet" data-theme="b" id="page_relatorio">
+      <div data-theme="b" data-role="header" class="header_default">
+        <div style="padding:0px 10px">
+          <div data-role="fieldcontain" data-controltype="dateinput">
+            <label for="filtro_data_trabalhada">
+              Filtro de Data
+            </label>
+            <!--<input name="filtro_data_trabalhada" id="filtro_data_trabalhada" data-role="datebox" type="date" data-options='{"mode": "calbox"}' >-->
+            <input class="click_datetime" name="filtro_data_trabalhada" id="filtro_data_trabalhada" readonly="readonly">
+          </div>
+        </div>
+      </div>
+      <div data-role="content" style="padding: 0px">
+        <div role="main" class="ui-content">
+          <ul id="list" data-role="listview" data-divider-theme="b"  data-split-icon="delete" style="margin-top: auto;">
+
+          </ul>
+        </div><!-- /content -->
+        <div id="confirm" class="ui-content" data-role="popup" data-theme="a">
+          <p id="question">Confirma a exclusão ?</p>
+          <div class="ui-grid-a">
+            <div class="ui-block-a">
+              <a id="yes" class="ui-btn ui-corner-all ui-mini ui-btn-a" data-rel="back">Sim</a>
             </div>
-            <div id="divautocomplete_timecard">
-
-                <div id="header_default" data-theme="b" data-role="header" class="header_default">
-                    <a data-role="button" data-theme="a" href="#page_timesheet" data-icon="arrow-l" id="voltar_timesheet"
-                       data-iconpos="left" class="ui-btn-left btn_default">
-                        Voltar
-                    </a>
-                    <h3 id="header" class="header">
-                        Busca
-                    </h3>
-                </div>
-                <div style="margin-top:10px">
-                    <ul id="autocomplete_prj" class="lista-infinity" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busca" data-theme="c" style="font-weight: normal !important;"></ul>
-                </div>
+            <div class="ui-block-b">
+              <a id="cancel" class="ui-btn ui-corner-all ui-mini ui-btn-a" data-rel="back">Não</a>
             </div>
-            <div    id="page_timesheet_clientes"></div>
-            <div    id="page_timesheet_projetos"></div>
-            <div data-role="content" style="padding: 0px" id="page_timesheet_sub">
-                <input type='hidden' name='idtimecard' id='idtimecard' />
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <div id="topo"></div>
-                    <label for="data_trabalhada">
-                        Data
-                    </label>
-                    <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
-                    <!--<input name="data_trabalhada" id="data_trabalhada" value=""  data-role="datebox" type="date" data-options='{"mode": "calbox"}' >-->
-                    <input name="data_trabalhada" id="data_trabalhada" value="" >
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="search_cliente">
-                        Cliente
-                    </label>
+          </div>
+        </div><!-- /popup -->
+      </div>
+    </div>
 
-                    <!--<ul id="autocomplete_cliente" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busque o cliente..." data-filter-theme="c"></ul>-->
-                    <input type="hidden" name="codigo_auxiliar" id="codigo_auxiliar" />
+    <div data-role="page" class="pagina" data-control-title="Relatório Despesas" data-theme="b" id="relatorio_despesa">
+      <div data-theme="b" data-role="header" class="header_default">
+        <div style="padding:0px 10px">
+          <div data-role="fieldcontain" data-controltype="dateinput">
+            <label for="dateinput2">
+              Filtro de Data
+            </label>
+            <input name="filtro_data_trabalhada" id="dateinput2">
+          </div>
+        </div>
+      </div>
+      <div data-role="content" style="padding: 0px" >
+        <ul id="list_despesa" data-role="listview" data-divider-theme="b" data-inset="true" data-split-icon="delete"> </ul>
+      </div>
+    </div>
+    <div data-role="page" class="pagina" data-control-title="Despesas" data-theme="b" id="page_despesa">
+      <div data-theme="b" data-role="header" class="header_default" style="display: none">
+        <a id="save_despesa_top" data-role="button" data-theme="a" href="javascript:;" data-icon="check"
+           data-iconpos="left" class="ui-btn-right btn_default">
+          Salvar
+        </a>
+        <a data-role="button" data-theme="a" href="#relatorio_despesa" data-icon="arrow-l" id="voltar_despesa"
+           data-iconpos="left" class="ui-btn-left btn_default">
+          Voltar
+        </a>
+        <h3 class="header">
+          MultidadosTI
+        </h3>
+      </div>
+      <div id="divautocomplete_despesa">
+        <div id="header_default" data-theme="b" data-role="header" class="header_default">
+          <a data-role="button" data-theme="a" href="#page_despesa" data-icon="arrow-l" id="voltar_despesa"
+             data-iconpos="left" class="ui-btn-left btn_default">
+            Voltar
+          </a>
+          <h3 id="header" class="header">
+            Busca
+          </h3>
+        </div>
+        <div style="margin-top:10px">
+          <ul id="autocomplete_cli" class="lista-infinity" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busca" data-theme="c" style="font-weight: normal !important;"></ul>
+        </div>
+      </div>
+      <div id="page_despesa_clientes" ></div>
+      <div id="page_despesa_projetos">
 
-                    <a href="javascript:;" id="selecione_cliente" data-role="button" data-icon="search" data-theme="c">Buscar Cliente</a>
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="codigo_projeto">
-                        Projeto
-                    </label>
+      </div>
 
-                    <!-- <ul id="autocomplete_projeto" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busque o projeto..." data-filter-theme="p"></ul> -->
-                    <input type="hidden" name="codigo" id="codigo" />
-                    <a href="javascript:;" id="selecione_projeto" data-role="button" data-icon="search" data-theme="c">Buscar Projeto</a>
-                </div>
-                <div id="fase_task" data-role="fieldcontain" data-controltype="selectmenu" class="box_form">
-                    <label for="codigo_fase">
-                        Fase
-                    </label>
-                    <select id="codigo_fase" name="codigo_fase" data-theme="c">
-                        <option value=''>
-                            Selecione uma fase
-                        </option>
-                    </select>
-                </div>
-                <div id="atividade_task" data-role="fieldcontain" class="box_form">
-                    <label for="codigo_atividade">
-                        Atividade
-                    </label>
-                    <select id="codigo_atividade" name="codigo_atividade" data-theme="c">
-                        <option value=''>
-                            Selecione uma atividade
-                        </option>
-                    </select>
-                </div>
-
-                <div id="porcentagem_conclusao" data-role="fieldcontain" class="box_form">
-                    <label for="slider-fill">Conclusão %</label>
-                    <select id="porc_conclusao_atividade" name="porc_conclusao_atividade" data-theme="c">
-                        <option value=""> </option>
-                    </select>
-
-                    <!--<input type="range" name="porc_conclusao_atividade" id="slider-fill" class="porc_conclusao_atividade" data-mini="true" min="0" max="100" step="5" value="0" > -->
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="hora_inicial">
-                        Hora Inicial
-                    </label>
-                    <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
-                    <!--<input name="hora_inicial" id="hora_inicial" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>-->
-                    <input class="click_datetime" name="hora_ini" id="hora_ini" readonly="readonly">
-                    <div id="hora_inicial_div" style="display:none;">
-                        <input type="hidden" name="hora_inicial" id="hora_inicial">
-                    </div>
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="hora_final">
-                        Hora Final
-                    </label>
-                    <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
-                    <!--<input name="hora_final" id="hora_final" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
-                    <input class="click_datetime" name="hora_fim" id="hora_fim" readonly="readonly">
-                    <div id="hora_final_div" style="display:none;">
-                        <input type="hidden" name="hora_final" id="hora_final">
-                    </div>                    
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <div id="monstrarIntervalo" style="width: -moz-max-content">
-                        <img data-transition="slide" src="img/icon_intervalo.png" width="32" height="32"/>
-                        <label> Exibir Intervalo </label>
-                    </div>                  
-                </div>
-                <!-- Intervalo -->
-                <div id="div_intervalo">
-                    <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                        <label>
-                            Intervalo Inicial
-                        </label>
-                        <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
-                        <!--<input name="intervalo_hr_inicial" id="intervalo_hr_inicial" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
-                        <input class="click_datetime" name="intervalo_hr_ini" id="intervalo_hr_ini" readonly="readonly">
-                        <div id="intervalo_hr_inicial_div" style="display:none;">
-                            <input type="hidden" name="intervalo_hr_inicial" id="intervalo_hr_inicial">
-                        </div>
-                    </div>
-                    <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                        <label>
-                            Intervalo Final
-                        </label>
-                        <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
-                        <!--<input name="intervalo_hr_final" id="intervalo_hr_final" type="date" data-role="datebox" data-options='{"mode": "timebox"}' >-->
-                        <input class="click_datetime" name="intervalo_hr_fim" id="intervalo_hr_fim" readonly="readonly">
-                        <div id="intervalo_hr_final_div" style="display:none;">
-                            <input type="hidden" name="intervalo_hr_final" id="intervalo_hr_final">
-                        </div>
-                    </div>
-                </div>
-                
-                <div data-role="fieldcontain" data-controltype="textarea" class="box_form">
-                    <label for="narrativa_principal">
-                        Narrativa
-                    </label>
-                    <textarea name="narrativa_principal" id="narrativa_principal" placeholder="" style="height:100px !important;"></textarea>
-                </div>
-                <a id="save_timecard_bottom" style="margin-bottom:30px" data-role="button" href="#page_timesheet" data-icon="check" data-iconpos="right" class="box_form btn_default">
-                    Salvar
-                </a>
-            </div>
+      <div data-role="content" style="padding: 0px" id="page_despesa_sub">
+        <input type='hidden' name='idtabpreco' id='idtabpreco' />
+        <input type='hidden' name='idlctodespesa' id='idlctodespesa' />
+        <input type='hidden' name='arquivo_md5' id='arquivo_md5' >
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <label for="textinput8" class="ui-input-text" >
+            Data
+          </label>
+          <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
+          <!--<input name="data_lcto" id="data_lcto" value=""  data-role="datebox" type="date" data-options='{"mode": "calbox"}'>-->
+          <input name="data_lcto" id="data_lcto" value="" class="i-txt">
         </div>
 
-        <div data-role="page" class="pagina" data-control-title="Relatório Timesheet" data-theme="b" id="page_relatorio">
-            <div data-theme="b" data-role="header" class="header_default">
-                <div style="padding:0px 10px">    
-                    <div data-role="fieldcontain" data-controltype="dateinput">
-                        <label for="filtro_data_trabalhada">
-                            Filtro de Data
-                        </label>
-                        <!--<input name="filtro_data_trabalhada" id="filtro_data_trabalhada" data-role="datebox" type="date" data-options='{"mode": "calbox"}' >-->
-                        <input class="click_datetime" name="filtro_data_trabalhada" id="filtro_data_trabalhada" readonly="readonly">
-                    </div>
-                </div>
-            </div>
-            <div data-role="content" style="padding: 0px">
-                <div role="main" class="ui-content">
-                    <ul id="list" data-role="listview" data-divider-theme="b"  data-split-icon="delete" style="margin-top: auto;">
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <label for="textinput9" >
+            Cliente
+          </label>
+          <!-- <ul id="autocomplete_cliente" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busque o cliente...." data-filter-theme="c"></ul>-->
+          <input type="hidden" name="idcliente_despesa" id="idcliente_despesa" />
 
-                    </ul>
-                </div><!-- /content -->
-                <div id="confirm" class="ui-content" data-role="popup" data-theme="a">
-                    <p id="question">Confirma a exclusão ?</p>
-                    <div class="ui-grid-a">
-                        <div class="ui-block-a">
-                            <a id="yes" class="ui-btn ui-corner-all ui-mini ui-btn-a" data-rel="back">Sim</a>
-                        </div>
-                        <div class="ui-block-b">
-                            <a id="cancel" class="ui-btn ui-corner-all ui-mini ui-btn-a" data-rel="back">Não</a>
-                        </div>
-                    </div>
-                </div><!-- /popup -->
-            </div>
+          <a href="javascript:;" id="selecione_cliente" data-role="button" data-icon="search" data-theme="c">Buscar Cliente</a>
+        </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <label for="textinput13">
+            Projeto
+          </label>
+
+          <!--  <ul id="autocomplete_projeto" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busque o projeto...." data-filter-theme="p"></ul>-->
+          <input type="hidden" name="idclienteprojeto_despesa" id="idclienteprojeto_despesa" />
+
+          <a href="javascript:;" id="selecione_projeto" data-role="button" data-icon="search" data-theme="c">Buscar Projeto</a>
+        </div>
+        <div data-role="fieldcontain" data-controltype="selectmenu" class="box_form">
+          <label for="codigo_despesa">
+            Despesa
+          </label>
+          <select id="codigo_despesa" name="codigo_despesa" data-theme="c">
+            <option value="">
+              Selecione uma despesa
+            </option>
+          </select>
         </div>
 
-        <div data-role="page" class="pagina" data-control-title="Relatório Despesas" data-theme="b" id="relatorio_despesa">
-            <div data-theme="b" data-role="header" class="header_default">
-                <div style="padding:0px 10px">                
-                    <div data-role="fieldcontain" data-controltype="dateinput">
-                        <label for="dateinput2">
-                            Filtro de Data
-                        </label>
-                        <input name="filtro_data_trabalhada" id="dateinput2">
-                    </div>
-                </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <fieldset class="ui-grid-a">
+            <div class="ui-block-a">
+              <label for="vlr_unitario" style="write-space: nowrap !important">
+                Valor Unitário
+              </label>
+              <input name="vlr_unitario" id="vlr_unitario" placeholder="" value="" type="text">
             </div>
-            <div data-role="content" style="padding: 0px" >
-                <ul id="list_despesa" data-role="listview" data-divider-theme="b" data-inset="true" data-split-icon="delete"> </ul>
+            <div class="ui-block-b ">
+              <label for="qtde_despesa">
+                Qtde. Despesas
+              </label>
+              <input name="qtde_despesa" id="qtde_despesa" placeholder="" value="" type="number">
             </div>
-        </div>
-        <div data-role="page" class="pagina" data-control-title="Despesas" data-theme="b" id="page_despesa">
-            <div data-theme="b" data-role="header" class="header_default" style="display: none">
-                <a id="save_despesa_top" data-role="button" data-theme="a" href="javascript:;" data-icon="check"
-                   data-iconpos="left" class="ui-btn-right btn_default">
-                    Salvar
-                </a>
-                <a data-role="button" data-theme="a" href="#relatorio_despesa" data-icon="arrow-l" id="voltar_despesa"
-                   data-iconpos="left" class="ui-btn-left btn_default">
-                    Voltar
-                </a>
-                <h3 class="header">
-                    MultidadosTI
-                </h3>
-            </div>
-            <div id="divautocomplete_despesa">
-                <div id="header_default" data-theme="b" data-role="header" class="header_default">
-                    <a data-role="button" data-theme="a" href="#page_despesa" data-icon="arrow-l" id="voltar_despesa"
-                       data-iconpos="left" class="ui-btn-left btn_default">
-                        Voltar
-                    </a>
-                    <h3 id="header" class="header">
-                        Busca
-                    </h3>
-                </div>
-                <div style="margin-top:10px">
-                    <ul id="autocomplete_cli" class="lista-infinity" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busca" data-theme="c" style="font-weight: normal !important;"></ul>
-                </div>
-            </div>
-            <div id="page_despesa_clientes" ></div>
-            <div id="page_despesa_projetos">
-
-            </div>
-
-            <div data-role="content" style="padding: 0px" id="page_despesa_sub">
-                <input type='hidden' name='idtabpreco' id='idtabpreco' />
-                <input type='hidden' name='idlctodespesa' id='idlctodespesa' />
-                <input type='hidden' name='arquivo_md5' id='arquivo_md5' >
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="textinput8" class="ui-input-text" >
-                        Data
-                    </label>
-                    <!-- Andre Renovato - 13/01/2016 -componente antigo de data -->
-                    <!--<input name="data_lcto" id="data_lcto" value=""  data-role="datebox" type="date" data-options='{"mode": "calbox"}'>-->
-                    <input name="data_lcto" id="data_lcto" value="" class="i-txt">
-                </div>
-                
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="textinput9" >
-                        Cliente
-                    </label>
-                    <!-- <ul id="autocomplete_cliente" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busque o cliente...." data-filter-theme="c"></ul>-->
-                    <input type="hidden" name="idcliente_despesa" id="idcliente_despesa" />
-
-                    <a href="javascript:;" id="selecione_cliente" data-role="button" data-icon="search" data-theme="c">Buscar Cliente</a>
-                </div>
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="textinput13">
-                        Projeto
-                    </label>
-
-                    <!--  <ul id="autocomplete_projeto" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Busque o projeto...." data-filter-theme="p"></ul>-->
-                    <input type="hidden" name="idclienteprojeto_despesa" id="idclienteprojeto_despesa" />
-
-                    <a href="javascript:;" id="selecione_projeto" data-role="button" data-icon="search" data-theme="c">Buscar Projeto</a>
-                </div>
-                <div data-role="fieldcontain" data-controltype="selectmenu" class="box_form">
-                    <label for="codigo_despesa">
-                        Despesa
-                    </label>
-                    <select id="codigo_despesa" name="codigo_despesa" data-theme="c">
-                        <option value="">
-                            Selecione uma despesa
-                        </option>
-                    </select>
-                </div>
-                
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <fieldset class="ui-grid-a">
-                        <div class="ui-block-a">
-                            <label for="vlr_unitario" style="write-space: nowrap !important">
-                                Valor Unitário 
-                            </label>        
-                            <input name="vlr_unitario" id="vlr_unitario" placeholder="" value="" type="text">    
-                        </div>
-                        <div class="ui-block-b ">
-                            <label for="qtde_despesa">
-                                Qtde. Despesas
-                            </label>        
-                            <input name="qtde_despesa" id="qtde_despesa" placeholder="" value="" type="number"> 
-                        </div>	   
-                    </fieldset>     
-                </div>
-
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <label for="valor_total">
-                        Valor Total
-                    </label>
-                    <input name="valor_total" id="valor_total" value="" type="number" readonly="true" />
-                </div>
-
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
-                    <fieldset class="ui-grid-a">
-                        <div class="ui-block-a">
-                            <label for="num_documento">
-                                Nº Documento
-                            </label>        
-                            <input name="num_documento" id="num_documento" placeholder="" value="" type="text">    
-                        </div>
-                        <div class="ui-block-b ">
-                            <label for="local_despesa">
-                                Local Despesa
-                            </label>        
-                            <input name="local_despesa" id="local_despesa" placeholder="" value="" type="number"> 
-                        </div>	   
-                    </fieldset>     
-                </div>                
- 
-                <div data-role="fieldcontain" data-controltype="textinput" class="box_form" id="upload_despesa" >
-                    <label for="arq_despesa">
-                        Documento Fiscal
-                    </label>
-
-                    <form method="post" id="form_arquivo" action="#" enctype="multipart/form-data">
-                        <!--<div id="uploadArquivo" style="">
-                            <a href="#" class="btn_default" onclick="" data-role="button">Anexo</a>                        
-                        </div>   -->                     
-                        
-                        <div id="upload_arquivos" >
-                            <input type="file" onchange="upload();" accept="image/*" name="arq_despesa" id="arq_despesa" class="ui-input-text ui-body-c">
-                        </div>
-                        <div id="popup_imagem"> </div>
-                    </form>                    
-                </div>
-
-                <!--<div data-role="fieldcontain" data-controltype="textinput" class="box_form" id="upload_despesa" >
-                    <div id="uploadArquivo" style="">
-                        <img data-transition="slide" title="Fotografar documento" src="img/blue_cam2.png" width="32" height="32"/>
-                        <label for="arq_despesa"> Anexar Documento </label>
-                        <form method="post" id="form_arquivo" action="#" enctype="multipart/form-data">
-                            <div id="popup_imagem"> </div>
-                        </form>-->
-                        <!-- Lista de tipo foto/upload -->
-                        <!--<div id="optionsUpload" data-role="controlgroup" data-type="horizontal">
-                            <a href="#" class="btn_default" onclick="capturePhoto()" data-role="button">Foto</a>
-                            <a href="#" class="btn_default" onclick="capturePhoto(Camera.PictureSourceType.SAVEDPHOTOALBUM)" data-role="button">Galeria</a>
-                        </div>
-                    </div>
-                </div>-->
-                
-                <div data-role="fieldcontain" data-controltype="textarea" class="box_form">
-                    <label for="textarea2" class="ui-input-text">
-                        Narrativa
-                    </label>
-                    <textarea name="narrativa_principal_despesa" id="narrativa_principal_despesa" placeholder="" style="height:100px !important;"></textarea>
-                </div>
-                <div id="btn_save_despesa" style="margin-bottom:30px">
-                    <a id="save_despesa_bottom" data-role="button" href="javascript:;" data-icon="check" data-iconpos="right" class="box_form btn_default">Salvar</a>
-                </div>
-            </div>
+          </fieldset>
         </div>
 
-        <div data-role="page" class="class_page pagina" data-control-title="P&aacute;gina em constru&ccedil;&atilde;o" data-theme="b"
-             id="page_scheduler" style="background: url('img/bg_app_new.jpg') no-repeat">
-            <script type="text/javascript">
-                $("#botao_entrar").click(function ()
-                {
-                    mobile_login();
-                });
-                
-                /*$(function() {
-                    var transEndEventNames = {
-                        'WebkitTransition': 'webkitTransitionEnd',
-                        'MozTransition': 'transitionend',
-                        'OTransition': 'oTransitionEnd',
-                        'msTransition': 'MSTransitionEnd',
-                        'transition': 'transitionend'
-                    },
-                    transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ],
-                            $wrapper = $('#custom-inner'),
-                            $calendar = $('#calendar')
-                            ,
-                            cal = $calendar.calendario({
-                                onDayClick: function($el, $contentEl, dateProperties) {
-                                    alert(dateProperties['day']);
-                                    if ($contentEl.length > 0) {
-                                        showEvents($contentEl, dateProperties);
-                                    }
-
-                                },
-                                caldata: codropsEvents,
-                                displayWeekAbbr: true
-                            }),
-                            $month = $('#custom-month').html(cal.getMonthName()),
-                            $year = $('#custom-year').html(cal.getYear());
-
-                    $('#custom-next').on('click', function() {
-                        cal.gotoNextMonth(updateMonthYear);
-                    });
-                    $('#custom-prev').on('click', function() {
-                        cal.gotoPreviousMonth(updateMonthYear);
-                    });
-
-                    function updateMonthYear() {
-                        $month.html(cal.getMonthName());
-                        $year.html(cal.getYear());
-                    }
-
-                    // just an example..
-                    function showEvents($contentEl, dateProperties) {
-
-                        hideEvents();
-
-                        var $events = $('<div id="custom-content-reveal" class="custom-content-reveal"><h4>' + dateProperties.monthname + ' ' + dateProperties.day + ', ' + dateProperties.year + '</h4></div>'), $close = $('<span class="custom-content-close"></span>').on('click', hideEvents);
-
-                        $events.append($contentEl.html(), $close).insertAfter($wrapper);
-
-                        setTimeout(function() {
-                            $events.css('top', '0%');
-                        }, 25);
-
-                    }
-                    function hideEvents() {
-
-                        var $events = $('#custom-content-reveal');
-                        if ($events.length > 0) {
-
-                            $events.css('top', '100%');
-                            Modernizr.csstransitions ? $events.on(transEndEventName, function() {
-                                $(this).remove();
-                            }) : $events.remove();
-                        }
-                    }
-                });*/
-            </script>
-            <div data-role="content" style="padding: 0px">
-                <div data-controltype="htmlblock" class="box_logotipo">
-                    <p>
-                        &nbsp;
-                    </p>
-                </div>
-                <div id="box_pagina_construcao" data-controltype="htmlblock" class="box_pagina_construcao">
-                    <section class="main">
-                        <div class="custom-calendar-wrap">
-                            <div id="custom-inner" class="custom-inner">
-                                <div class="custom-header clearfix">
-                                    <nav>
-                                        <span id="custom-prev" class="custom-prev"></span>
-                                        <span id="custom-next" class="custom-next"></span>
-                                    </nav>
-                                    <h2 id="custom-month" class="custom-month"></h2>
-                                    <h3 id="custom-year" class="custom-year"></h3>
-                                </div>
-                                <div id="calendar" class="fc-calendar-container"></div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <label for="valor_total">
+            Valor Total
+          </label>
+          <input name="valor_total" id="valor_total" value="" type="number" readonly="true" />
         </div>
-        
-    </body>
+
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form">
+          <fieldset class="ui-grid-a">
+            <div class="ui-block-a">
+              <label for="num_documento">
+                Nº Documento
+              </label>
+              <input name="num_documento" id="num_documento" placeholder="" value="" type="text">
+            </div>
+            <div class="ui-block-b ">
+              <label for="local_despesa">
+                Local Despesa
+              </label>
+              <input name="local_despesa" id="local_despesa" placeholder="" value="" type="number">
+            </div>
+          </fieldset>
+        </div>
+
+        <div data-role="fieldcontain" data-controltype="textinput" class="box_form" id="upload_despesa" >
+          <label for="arq_despesa">
+            Documento Fiscal
+          </label>
+
+          <form method="post" id="form_arquivo" action="#" enctype="multipart/form-data">
+            <!--<div id="uploadArquivo" style="">
+                <a href="#" class="btn_default" onclick="" data-role="button">Anexo</a>
+            </div>   -->
+
+            <div id="upload_arquivos" >
+              <input type="file" onchange="upload();" accept="image/*" name="arq_despesa" id="arq_despesa" class="ui-input-text ui-body-c">
+            </div>
+            <div id="popup_imagem"> </div>
+          </form>
+        </div>
+
+        <!--<div data-role="fieldcontain" data-controltype="textinput" class="box_form" id="upload_despesa" >
+            <div id="uploadArquivo" style="">
+                <img data-transition="slide" title="Fotografar documento" src="img/blue_cam2.png" width="32" height="32"/>
+                <label for="arq_despesa"> Anexar Documento </label>
+                <form method="post" id="form_arquivo" action="#" enctype="multipart/form-data">
+                    <div id="popup_imagem"> </div>
+                </form>-->
+        <!-- Lista de tipo foto/upload -->
+        <!--<div id="optionsUpload" data-role="controlgroup" data-type="horizontal">
+            <a href="#" class="btn_default" onclick="capturePhoto()" data-role="button">Foto</a>
+            <a href="#" class="btn_default" onclick="capturePhoto(Camera.PictureSourceType.SAVEDPHOTOALBUM)" data-role="button">Galeria</a>
+        </div>
+    </div>
+</div>-->
+
+        <div data-role="fieldcontain" data-controltype="textarea" class="box_form">
+          <label for="textarea2" class="ui-input-text">
+            Narrativa
+          </label>
+          <textarea name="narrativa_principal_despesa" id="narrativa_principal_despesa" placeholder="" style="height:100px !important;"></textarea>
+        </div>
+        <div id="btn_save_despesa" style="margin-bottom:30px">
+          <a id="save_despesa_bottom" data-role="button" href="javascript:;" data-icon="check" data-iconpos="right" class="box_form btn_default">Salvar</a>
+        </div>
+      </div>
+    </div>
+
+    <div data-role="page" class="class_page pagina" data-control-title="P&aacute;gina em constru&ccedil;&atilde;o" data-theme="b"
+         id="page_scheduler" style="background: url('img/bg_app_new.jpg') no-repeat">
+      <script type="text/javascript">
+        $("#botao_entrar").click(function()
+        {
+          mobile_login();
+        });
+
+        /*$(function() {
+         var transEndEventNames = {
+         'WebkitTransition': 'webkitTransitionEnd',
+         'MozTransition': 'transitionend',
+         'OTransition': 'oTransitionEnd',
+         'msTransition': 'MSTransitionEnd',
+         'transition': 'transitionend'
+         },
+         transEndEventName = transEndEventNames[ Modernizr.prefixed('transition') ],
+         $wrapper = $('#custom-inner'),
+         $calendar = $('#calendar')
+         ,
+         cal = $calendar.calendario({
+         onDayClick: function($el, $contentEl, dateProperties) {
+         alert(dateProperties['day']);
+         if ($contentEl.length > 0) {
+         showEvents($contentEl, dateProperties);
+         }
+
+         },
+         caldata: codropsEvents,
+         displayWeekAbbr: true
+         }),
+         $month = $('#custom-month').html(cal.getMonthName()),
+         $year = $('#custom-year').html(cal.getYear());
+
+         $('#custom-next').on('click', function() {
+         cal.gotoNextMonth(updateMonthYear);
+         });
+         $('#custom-prev').on('click', function() {
+         cal.gotoPreviousMonth(updateMonthYear);
+         });
+
+         function updateMonthYear() {
+         $month.html(cal.getMonthName());
+         $year.html(cal.getYear());
+         }
+
+         // just an example..
+         function showEvents($contentEl, dateProperties) {
+
+         hideEvents();
+
+         var $events = $('<div id="custom-content-reveal" class="custom-content-reveal"><h4>' + dateProperties.monthname + ' ' + dateProperties.day + ', ' + dateProperties.year + '</h4></div>'), $close = $('<span class="custom-content-close"></span>').on('click', hideEvents);
+
+         $events.append($contentEl.html(), $close).insertAfter($wrapper);
+
+         setTimeout(function() {
+         $events.css('top', '0%');
+         }, 25);
+
+         }
+         function hideEvents() {
+
+         var $events = $('#custom-content-reveal');
+         if ($events.length > 0) {
+
+         $events.css('top', '100%');
+         Modernizr.csstransitions ? $events.on(transEndEventName, function() {
+         $(this).remove();
+         }) : $events.remove();
+         }
+         }
+         });*/
+      </script>
+      <div data-role="content" style="padding: 0px">
+        <div data-controltype="htmlblock" class="box_logotipo">
+          <p>
+            &nbsp;
+          </p>
+        </div>
+        <div id="box_pagina_construcao" data-controltype="htmlblock" class="box_pagina_construcao">
+          <section class="main">
+            <div class="custom-calendar-wrap">
+              <div id="custom-inner" class="custom-inner">
+                <div class="custom-header clearfix">
+                  <nav>
+                    <span id="custom-prev" class="custom-prev"></span>
+                    <span id="custom-next" class="custom-next"></span>
+                  </nav>
+                  <h2 id="custom-month" class="custom-month"></h2>
+                  <h3 id="custom-year" class="custom-year"></h3>
+                </div>
+                <div id="calendar" class="fc-calendar-container"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+  </body>
 </html>
